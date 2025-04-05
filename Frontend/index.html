@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mondial Automobile | Concessionnaire Auto</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Importation de la police Poppins depuis Google Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <!-- En-tête avec logo, menu et bannière principale -->
+    <div class="header">
+        <div class="container">
+            <div class="navbar">
+                <div class="logo">
+                    <img src="assets/images/logo.png" width="100px" alt="Logo">
+                </div>
+                <nav>
+                    <ul id="MenuItems">
+                        <li><a href="index.html">Accueil</a></li>
+                        <li><a href="products.html">Achat</a></li>
+                        <li><a href="#">Revente</a></li>
+                        <li><a href="#">Contact</a></li>
+                        <li><a href="account.html">Connexion</a></li>
+                    </ul>
+                </nav>
+                <a href="cart.html"><img src="assets/images/cart.png" width="30px" height="30px" alt="Panier"></a>
+            </div>
+
+            <!-- Bannière d’accueil -->
+            <div class="row">
+                <div class="col-2">
+                    <h1>Mondial Automobile</h1>
+                    <p>Vous cherchez la meilleure voiture d'occasion à acheter ou à revendre ? <br> Vous êtes au bon
+                        endroit !</p>
+                    <a href="products.html" class="btn">Découvrir →</a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- Script pour afficher/masquer le menu responsive -->
+    <script>
+        var MenuItems = document.getElementById("MenuItems");
+
+        MenuItems.style.maxHeight = "0px";
+
+        function menutoggle() {
+            if (MenuItems.style.maxHeight == "0px") {
+                MenuItems.style.maxHeight = "200px";
+            } else {
+                MenuItems.style.maxHeight = "0px";
+            }
+        }
+    </script>
+</body>
+
+</html>
