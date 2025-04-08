@@ -1,8 +1,4 @@
 = 🚗 Stage - MondialAutomobile
-:toc: left
-:toc-title: Sommaire
-:icons: emojis
-:source-highlighter: coderay
 
 Bienvenue sur le dépôt GitHub de mon projet de stage réalisé chez *MondialAutomobile* !  
 Ce projet a pour but de concevoir une *plateforme web dynamique* en utilisant *HTML*, *CSS*, *PHP* et *MySQL*.  
