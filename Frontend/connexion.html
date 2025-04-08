@@ -23,23 +23,31 @@
         <div class="container">
             <div class="navbar">
                 <div class="logo">
-                    <img src="assets/images/logo.png" width="100px" alt="Logo">
+                    <img src="assets/images/logo.png" width="100px" alt="Logo Mondial Automobile">
                 </div>
                 <nav>
                     <ul id="MenuItems">
                         <li><a href="/Frontend/index.html">Accueil</a></li>
                         <li><a href="/Frontend/vente.html">Ventes</a></li>
                         <li><a href="/Frontend/reprise.html">Reprise</a></li>
-                        <li><a href="/Frontend/service.html">Service</a></li>
+                        <li class="dropdown">
+                            <a href="/Frontend/service.html">Service</a>
+                            <ul class="dropdown-menu ">
+                                <li><a href="/Frontend/service-entretien.html">Entretien</a></li>
+                                <li><a href="/Frontend/service-financement.html">Financement</a></li>
+                                <li><a href="/Frontend/service-garantie.html">Garantie</a></li>
+                            </ul>
+                        </li>
                         <li><a href="/Frontend/contact.html">Contact</a></li>
-                        <li><a href="/Frontend/connexion.html">Connexion</a></li>
+                        <li class="active"><a href="/Frontend/connexion.html">Connexion</a></li>
                     </ul>
                 </nav>
                 <a href="cart.html"><img src="assets/images/cart.png" width="30px" height="30px" alt="Panier"></a>
             </div>
         </div>
     </div>
-    </div>
+
+
     <section class="login">
         <div class="main-box">
             <div class="left-box">

@@ -3,96 +3,272 @@
 /* ---------------------- */
 
 .header {
-    /* Utilise une image de fond et la centre dans la fenêtre */
-    background: url('/Frontend/assets/images/imageacceuil7.jpg') no-repeat center center;
-    /* Ajuste l'image de fond pour qu'elle couvre tout l'espace de l'élément */
+    /* Image de fond centrée et en plein écran */
+    background: url('/Frontend/assets/images/Accueil1.jpg') no-repeat center center;
     background-size: cover;
-    /* Définit la hauteur de l'en-tête à la hauteur totale de la fenêtre */
     height: 100vh;
+    position: relative;
+    /* Permet le positionnement absolu des enfants */
 }
 
 /* ---------------------- */
-/* Titre Mondial Auto + texte */
+/* Conteneur du contenu sur l'image */
 /* ---------------------- */
 
 .row {
-    /* Utilisation de Flexbox pour disposer les éléments sur une ligne */
+    position: absolute;
+    /* Fige la position sur l'image */
+    top: 20%;
+    /* Ajuste verticalement */
+    left: 100px;
+    right: 60px;
     display: flex;
-    /* Aligne les éléments à gauche dans le conteneur */
     justify-content: flex-start;
-    /* Aligne les éléments en haut par défaut */
     align-items: flex-start;
-    /* Ajoute un espace de 60px à gauche et à droite de l'élément */
-    padding: 0 60px;
-    /* Ajoute un espace de 50px au-dessus de l'élément */
-    margin-top: 50px;
+    padding: 0;
+    margin: 0;
+    z-index: 2;
 }
+
+/* ---------------------- */
+/* Colonne contenant le texte */
+/* ---------------------- */
 
 .col-2 {
-    /* Les éléments de cette colonne occupent une proportion de l'espace disponible */
     flex: 1;
-    /* Fixe une largeur minimale de 300px pour cette colonne */
     min-width: 300px;
-    /* Ajoute un espace de 20px autour du contenu à l'intérieur de la colonne */
     padding: 20px;
-    /* Aligne le texte à gauche dans cette colonne */
     text-align: left;
+    /* Améliore la lisibilité */
+    border-radius: 10px;
 }
 
+/* ---------------------- */
 /* Style du titre principal */
+/* ---------------------- */
+
 .col-2 h1 {
-    /* Définit une grande taille de police pour le titre */
     font-size: 3em;
-    /* Met le texte en gras */
     font-weight: bold;
-    /* Ajoute un espace de 20px sous le titre */
     margin-bottom: 20px;
-    /* Définit la couleur du titre à un gris foncé */
     color: #333;
 }
 
-/* Style du paragraphe sous le titre */
+/* ---------------------- */
+/* Style du paragraphe */
+/* ---------------------- */
+
 .col-2 p {
-    /* Définit une taille de police légèrement plus grande que la normale */
     font-size: 1.2em;
-    /* Ajoute un espace de 30px sous le paragraphe */
     margin-bottom: 30px;
-    /* Définit une couleur gris clair pour le texte */
-    color: #666;
-    /* Augmente l'espacement entre les lignes pour une meilleure lisibilité */
+    color: #000000;
     line-height: 1.6;
 }
 
-/* Style du bouton */
+/* ---------------------- */
+/* Bouton d'action */
+/* ---------------------- */
+
 .btn {
-    /* Définit le bouton comme un élément en ligne, mais avec une certaine structure de bloc */
     display: inline-block;
-    /* Définit la couleur de fond du bouton */
     background-color: #352e2e;
-    /* Définit la couleur du texte du bouton en blanc */
     color: white;
-    /* Ajoute un espacement intérieur de 12px en haut et en bas, 30px à gauche et à droite */
     padding: 12px 30px;
-    /* Ajoute des coins arrondis au bouton */
     border-radius: 30px;
-    /* Définit la taille de la police pour le texte du bouton */
     font-size: 1.1em;
-    /* Retire le soulignement du lien (car il s'agit d'un <a>) */
     text-decoration: none;
-    /* Ajoute une transition douce pour les changements de couleur du bouton */
     transition: background-color 0.3s ease;
 }
 
-/* Style pour le bouton au survol */
 .btn:hover {
-    /* Change la couleur de fond du bouton lorsqu'on passe la souris dessus */
-    background-color: #563434;
+    background-color: #af2e34;
 }
 
+/* ---------------------- */
+/* Couleurs personnalisées */
+/* ---------------------- */
+
 .Mondial {
-    color: #af2e34
+    color: #af2e34;
 }
 
 .Automobile {
-    color: rgb(7, 6, 6)
+    color: rgb(7, 6, 6);
+}
+
+/* ----------------------------------- */
+/* Style pour le logo de contact      */
+/* ----------------------------------- */
+
+.contact-logo {
+    position: fixed;
+    bottom: 20px;
+    right: 50px;
+    /* Augmente l'espace du coin droit */
+    z-index: 9999;
+    /* Reste au-dessus des autres éléments */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.contact-logo img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    /* Ombre douce pour donner de la profondeur */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Survol de l'icône */
+.contact-logo:hover img {
+    transform: scale(1.1);
+    /* Agrandit l'image au survol */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+    /* Ombre plus marquée */
+}
+
+
+/* ---------------------- */
+/* SECTION À PROPOS DE L'ENTREPRISE */
+/* ---------------------- */
+
+/* Style Général de la section "À propos" */
+.about-section {
+    padding: 80px 20px;
+    text-align: center;
+    color: #333;
+    transition: background-color 0.3s ease;
+    border-top: 5px solid #af2e34;
+    /* Ligne décorative en haut */
+}
+
+
+/* Style du gros titre */
+.about-section h2 {
+    font-size: 2.8em;
+    font-weight: 700;
+    color: #352e2e;
+    /* Une couleur riche pour le titre */
+    margin-bottom: 20px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    position: relative;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+/* Ligne en dessous du titre */
+.about-section h2::after {
+    content: "";
+    position: absolute;
+    width: 60px;
+    height: 3px;
+    background-color: #af2e34;
+    /* Ligne sous le titre */
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+/* Survol du gros titre couleurs rouge */
+.about-section h2:hover {
+    transform: translateY(-5px);
+    /* Légère remontée du titre au survol */
+    color: #af2e34;
+    /* Couleur plus vive au survol */
+}
+
+/* Style du petit txt */
+.about-section p {
+    font-size: 1.2em;
+    line-height: 1.8;
+    color: #555;
+    max-width: 900px;
+    margin: 20px auto 40px;
+    padding: 0 20px;
+    font-weight: 400;
+    transition: opacity 0.3s ease, color 0.3s ease;
+}
+
+/* Style du petit txt */
+.about-section p:hover {
+    opacity: 0.85;
+    /* Effet de transparence au survol */
+    color: #352e2e;
+    /* Changement de couleur pour plus de contraste */
+}
+
+/* Style du petit txt, rajoute un espace entre le titre et le txt */
+.about-section .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ---------------------- */
+/* SECTION HISTOIRE DE MONDIAL AUTOMOBILE */
+/* ---------------------- */
+
+/* Style Général de la section "Histoire" */
+.history-section {
+    padding: 80px 20px;
+    color: #333;
+    text-align: center;
+    transition: background-color 0.3s ease;
+}
+
+
+/* Style de l'image et le txt la liaison */
+.history-section .history-content {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 180px;
+    /* Espace entre l'image et le texte */
+    margin-top: 30px;
+}
+
+/* Style de l'image  */
+.history-section .history-image img {
+    width: 100%;
+    max-width: 600px;
+    /* Limite la taille de l'image */
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Style de du txt */
+.history-section .history-text {
+    max-width: 600px;
+    text-align: center;
+    color: #555;
+    font-size: 1.1em;
+    line-height: 1.7;
+    font-weight: 400;
+    transition: color 0.3s ease;
+}
+
+/* Style de la grosseur du txt et image */
+.history-section .history-text h2 {
+    font-size: 2.5em;
+    font-weight: 700;
+    color: #352e2e;
+    margin-bottom: 20px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    position: relative;
+}
+
+/* Barre rouge */
+.history-section .history-text h2::after {
+    content: "";
+    position: absolute;
+    width: 60px;
+    height: 3px;
+    background-color: #af2e34;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
 }

@@ -27,10 +27,17 @@
                 </div>
                 <nav>
                     <ul id="MenuItems">
-                        <li><a href="/Frontend/index.html">Accueil</a></li>
+                        <li class="active"><a href="/Frontend/index.html">Accueil</a></li>
                         <li><a href="/Frontend/vente.html">Ventes</a></li>
                         <li><a href="/Frontend/reprise.html">Reprise</a></li>
-                        <li><a href="/Frontend/service.html">Service</a></li>
+                        <li class="dropdown">
+                            <a href="/Frontend/service.html">Service</a>
+                            <ul class="dropdown-menu ">
+                                <li><a href="/Frontend/service-entretien.html">Entretien</a></li>
+                                <li><a href="/Frontend/service-financement.html">Financement</a></li>
+                                <li><a href="/Frontend/service-garantie.html">Garantie</a></li>
+                            </ul>
+                        </li>
                         <li><a href="/Frontend/contact.html">Contact</a></li>
                         <li><a href="/Frontend/connexion.html">Connexion</a></li>
                     </ul>
@@ -42,13 +49,65 @@
             <section class="row">
                 <div class="col-2">
                     <h1><span class="Mondial">Mondial</span> <span class="Automobile">Automobile</span></h1>
-                    <p>Vous cherchez la meilleure voiture d'occasion à acheter ou à revendre ? <br> Vous êtes au bon
-                        endroit !</p>
                     <a href="/Frontend/vente.html" class="btn">Découvrir →</a>
                 </div>
             </section>
         </div>
     </div>
+
+    <!-- Logo de contact en bas à gauche -->
+    <div class="contact-logo">
+        <a href="/Frontend/index.html">
+            <img src="assets/images/imagecontact2.png" alt="Logo Contact" />
+        </a>
+    </div>
+
+
+    <!-- Section À propos de l'entreprise -->
+    <section class="about-section">
+        <div class="container">
+            <h2>À propos de Mondial Automobile</h2>
+            <p>
+                Mondial Automobile est votre partenaire de confiance pour l'achat, la vente ou la reprise de véhicules
+                d'occasion.
+                Forts de plusieurs années d'expérience, nous vous accompagnons avec professionnalisme et transparence
+                pour trouver
+                la voiture qui vous convient. Notre objectif : vous offrir un service de qualité, à des prix
+                compétitifs.
+            </p>
+        </div>
+    </section>
+
+    <!-- Section Histoire de Mondial Automobile -->
+    <section class="history-section">
+        <div class="container">
+            <div class="history-content">
+                <div class="history-image">
+                    <img src="assets/images/ImageAbout.jpg" alt="Histoire de Mondial Automobile">
+                </div>
+                <div class="history-text">
+                    <h2>L'Histoire de <br> Mondial Automobile</h2>
+                    <p>
+                        Mondial Automobile a été fondée il y a plus de 20 ans avec une mission simple : offrir aux
+                        clients
+                        des véhicules d'occasion de qualité à des prix compétitifs. Notre équipe s'efforce de vous
+                        fournir
+                        un service transparent, honnête et personnalisé pour chaque achat, vente ou reprise. Nous
+                        croyons en
+                        une expérience d'achat sans stress, avec des véhicules soigneusement sélectionnés et testés.
+                        Au fil des années, Mondial Automobile est devenu un nom de confiance dans le domaine automobile,
+                        offrant une large gamme de voitures d'occasion de toutes marques.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="https://widget.trustmary.com/GklrG7MFI"></script>
+
+
+
+
 </body>
 
 </html>

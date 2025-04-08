@@ -9,14 +9,13 @@
 
 body {
     height: 100vh;
-    overflow: hidden;
     font-family: "Poppins", sans-serif;
     background: #f4f4f4;
 }
 
 a {
     text-decoration: none;
-    color: #555;
+    color: #000000;
 }
 
 /* ---------------------- */
@@ -73,4 +72,123 @@ nav ul li {
 /* ---------------------- */
 .logo {
     margin-left: 150px;
+}
+
+
+/* ---------------------- */
+/* Class Active           */
+/* ---------------------- */
+
+/* ----------------------------------- */
+/* Style moderne de l'onglet actif    */
+/* ----------------------------------- */
+
+#MenuItems li.active>a {
+    padding: 12px 18px;
+    color: #fff;
+    background-color: #af2e34;
+    /* Fond coloré moderne */
+    border-radius: 50px;
+    font-weight: 600;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    /* Ombre légère */
+    transition: all 0.3s ease;
+}
+
+
+/* Style pour les liens dans les autres onglets */
+#MenuItems li a {
+    padding: 12px 18px;
+    color: #333;
+    text-decoration: none;
+    font-weight: 500;
+    border-radius: 30px;
+    transition: all 0.3s ease;
+}
+
+/* Survol des autres liens */
+#MenuItems li a:hover {
+    background-color: #f2f2f2;
+    color: #af2e34;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+
+
+/* ------------------------------ */
+/* Dropdown "Service" moderne    */
+/* ------------------------------ */
+
+.dropdown {
+    position: relative;
+}
+
+.dropdown>a {
+    display: inline-block;
+    padding: 10px 15px;
+    color: #333;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 1rem;
+    transition: color 0.3s ease;
+    position: relative;
+}
+
+.dropdown>a::after {
+    content: '▾';
+    margin-left: 6px;
+    font-size: 0.7em;
+    transition: transform 0.3s ease;
+}
+
+.dropdown:hover>a::after {
+    transform: rotate(-180deg);
+}
+
+/* Sous-menu */
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%) translateY(10px);
+    background-color: #ffffffcc;
+    /* blanc avec légère transparence */
+    backdrop-filter: blur(6px);
+    /* flou moderne */
+    border-radius: 10px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    min-width: 140px;
+    padding: 6px 0;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    z-index: 999;
+}
+
+.dropdown:hover .dropdown-menu {
+    display: block;
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+}
+
+/* Liens du menu */
+.dropdown-menu li {
+    list-style: none;
+}
+
+.dropdown-menu li a {
+    display: block;
+    padding: 8px 12px;
+    font-size: 0.85rem;
+    color: #333;
+    text-decoration: none;
+    transition: background-color 0.2s ease;
+}
+
+.dropdown-menu li a:hover {
+    background-color: #f2f2f2;
+    border-radius: 5px;
 }
