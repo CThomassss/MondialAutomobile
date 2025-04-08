@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mondial Automobile | Concessionnaire Auto</title>
+
+    <link rel="stylesheet" href="/Frontend/css/style_connexion.css">
+    <link rel="stylesheet" href="/Frontend/css/style.css">
+
+    <!-- Importation de la police Poppins depuis Google Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+
+</head>
+
+<body>
+    <!-- En-tête avec logo, menu et bannière principale -->
+    <div class="header">
+        <div class="container">
+            <div class="navbar">
+                <div class="logo">
+                    <img src="assets/images/logo.png" width="100px" alt="Logo">
+                </div>
+                <nav>
+                    <ul id="MenuItems">
+                        <li><a href="/Frontend/index.html">Accueil</a></li>
+                        <li><a href="/Frontend/vente.html">Ventes</a></li>
+                        <li><a href="/Frontend/reprise.html">Reprise</a></li>
+                        <li><a href="/Frontend/service.html">Service</a></li>
+                        <li><a href="/Frontend/contact.html">Contact</a></li>
+                        <li><a href="/Frontend/connexion.html">Connexion</a></li>
+                    </ul>
+                </nav>
+                <a href="cart.html"><img src="assets/images/cart.png" width="30px" height="30px" alt="Panier"></a>
+            </div>
+        </div>
+    </div>
+    </div>
+    <section class="login">
+        <div class="main-box">
+            <div class="left-box">
+                <div class="img-box">
+
+                </div>
+            </div>
+            <div class="right-box">
+                <div class="login-form">
+                    <article class="wellcome">
+                        <h1>
+                            Bienvenue sur
+                            <span>
+                                Mondial Automobile
+                            </span>
+                        </h1>
+                    </article>
+                    <section class="google-login">
+                        <button>
+                            <img src="assets/images/google.svg" alt="google svg">
+                            Login par Google
+                        </button>
+                    </section>
+                    <div class="line">
+                        <span class="left-line"></span>
+                        <i class="middle"> OR</i>
+                        <span class="right-line"></span>
+                    </div>
+                    <div class="main-form-section">
+                        <form action="">
+                            <p class="email">
+                                <i class="fa-solid fa-envelope fa-lg"></i>
+                                <input type="email" placeholder="Email" required>
+                            </p>
+                            <p class="password">
+                                <i class="fa-solid fa-key fa-lg"></i>
+                                <input type="password" maxlength="65" minlength="12" placeholder="Password" required>
+                            </p>
+
+                            <div class="remember">
+                                <div class="left-side">
+                                    <input type="checkbox" name="remember" id="remember" class="checkbox">
+                                    <label for="remember">Se souvenir</label>
+                                </div>
+                                <a href="#">mot de passe oublié?</a>
+                            </div>
+                            <input type="submit" value="Login">
+                        </form>
+
+                        <div class="singup">
+                            <p>Vous n'avez pas de compte ? <a href="#">Register</a> </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+
+</html>
