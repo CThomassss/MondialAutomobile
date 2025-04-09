@@ -1,0 +1,178 @@
+/* ---------------------- */
+/* GLOBAL */
+/* ---------------------- */
+body {
+    font-family: "Poppins", sans-serif;
+    background-color: #f9f9f9;
+    margin: 0;
+    padding: 0;
+    color: #333;
+}
+
+h1,
+h2 {
+    color: #333;
+    font-weight: 700;
+}
+
+/* ---------------------- */
+/* HEADER */
+/* ---------------------- */
+.admin-header {
+    background: linear-gradient(135deg, #af2e34, #86181f);
+    color: #fff;
+    padding: 20px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.admin-header h1 {
+    font-size: 2rem;
+    margin: 0;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.btn-logout {
+    background-color: #fff;
+    color: #af2e34;
+    padding: 10px 20px;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.btn-logout:hover {
+    background-color: #f4f4f4;
+    color: #86181f;
+    transform: scale(1.05);
+}
+
+/* ---------------------- */
+/* MAIN CONTAINER */
+/* ---------------------- */
+.admin-container {
+    padding: 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+    animation: fadeIn 0.8s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.admin-section {
+    background-color: #fff;
+    border-radius: 15px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    margin-bottom: 30px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.admin-section:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
+.admin-section h2 {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+    color: #af2e34;
+    position: relative;
+}
+
+.admin-section h2::after {
+    content: "";
+    position: absolute;
+    width: 60px;
+    height: 4px;
+    background: linear-gradient(90deg, #af2e34, #86181f);
+    bottom: -10px;
+    left: 0;
+    border-radius: 2px;
+}
+
+/* ---------------------- */
+/* TABLE */
+/* ---------------------- */
+.admin-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    overflow: hidden;
+    border-radius: 10px;
+}
+
+.admin-table th,
+.admin-table td {
+    text-align: left;
+    padding: 15px;
+    border-bottom: 1px solid #ddd;
+    font-size: 0.95rem;
+}
+
+.admin-table th {
+    background: linear-gradient(135deg, #f4f4f4, #eaeaea);
+    color: #333;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.admin-table tr:hover {
+    background-color: #f9f9f9;
+    transition: background-color 0.3s ease;
+}
+
+.admin-table td {
+    color: #555;
+}
+
+/* ---------------------- */
+/* BUTTONS */
+/* ---------------------- */
+.btn-edit,
+.btn-delete {
+    padding: 10px 15px;
+    border-radius: 30px;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    display: inline-block;
+    text-align: center;
+}
+
+.btn-edit {
+    background-color: #4caf50;
+    color: #fff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.btn-edit:hover {
+    background-color: #45a049;
+    transform: scale(1.05);
+}
+
+.btn-delete {
+    background-color: #f44336;
+    color: #fff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.btn-delete:hover {
+    background-color: #e53935;
+    transform: scale(1.05);
+}

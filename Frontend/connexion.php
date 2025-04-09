@@ -1,5 +1,33 @@
 <?php
-// PHP code can be added here if needed in the future
+// Inclusion de la configuration de la base de données
+include '../Backend/config/db_connection.php';
+session_start();
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Récupération des données du formulaire
+    $email = $conn->real_escape_string($_POST['email']);
+    $password = $_POST['password'];
+
+    // Vérification des informations de connexion
+    $query = "SELECT * FROM utilisateurs WHERE email = '$email'";
+    $result = $conn->query($query);
+
+    if ($result->num_rows === 1) {
+        $user = $result->fetch_assoc();
+        if (password_verify($password, $user['mot_de_passe'])) {
+            // Connexion réussie, stockage des informations utilisateur dans la session
+            $_SESSION['user_id'] = $user['id'];
+            $_SESSION['username'] = $user['username'];
+            $_SESSION['role'] = $user['role'];
+            header("Location: /MondialAutomobile/Frontend/index.php");
+            exit();
+        } else {
+            $error = "Mot de passe incorrect.";
+        }
+    } else {
+        $error = "Aucun compte trouvé avec cet email.";
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -12,11 +40,13 @@
     <!-- Feuilles de style -->
     <link rel="stylesheet" href="/MondialAutomobile/Frontend/css/style_connexion.css">
     <link rel="stylesheet" href="/MondialAutomobile/Frontend/css/style.css">
+    <link rel="stylesheet" href="/MondialAutomobile/Frontend/css/style_alert.css">
 
     <!-- Importation de la police Poppins depuis Google Fonts -->
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap"
         rel="stylesheet">
+    <script src="/MondialAutomobile/Frontend/js/alert.js" defer></script>
 </head>
 
 <body>
@@ -42,7 +72,14 @@
                             </ul>
                         </li>
                         <li><a href="/MondialAutomobile/Frontend/contact.php">Contact</a></li>
-                        <li class ="active" ><a href="/MondialAutomobile/Frontend/connexion.php">Connexion</a></li>
+                        <?php if (isset($_SESSION['user_id'])): ?>
+                            <?php if ($_SESSION['role'] === 'admin'): ?>
+                                <li><a href="/MondialAutomobile/Frontend/admin.php">Administrateur</a></li>
+                            <?php endif; ?>
+                            <li><a href="#" class="logout-link">Déconnexion</a></li>
+                        <?php else: ?>
+                            <li class="active"><a href="/MondialAutomobile/Frontend/connexion.php">Connexion</a></li>
+                        <?php endif; ?>
                     </ul>
                 </nav>
                 <a href="cart.html">
@@ -66,22 +103,10 @@
             <div class="form-container">
                 <h1>Bienvenue sur <span>Mondial Automobile</span></h1>
                 <p>Connectez-vous pour accéder à votre espace personnel.</p>
-
-                <!-- Connexion avec Google -->
-                <button class="google-login">
-                    <img src="assets/images/google.svg" alt="Icône Google">
-                    Connexion avec Google
-                </button>
-
-                <!-- Séparateur -->
-                <div class="separator">
-                    <span class="line"></span>
-                    <span class="or">OU</span>
-                    <span class="line"></span>
-                </div>
-
-                <!-- Formulaire de connexion -->
-                <form action="#" method="POST">
+                <?php if (isset($error)): ?>
+                    <p style="color: red;"><?php echo $error; ?></p>
+                <?php endif; ?>
+                <form action="" method="POST">
                     <div class="input-group">
                         <label for="email">Email</label>
                         <input type="email" id="email" name="email" placeholder="Entrez votre email" required>
@@ -93,19 +118,11 @@
                             required>
                     </div>
 
-                    <div class="options">
-                        <label>
-                            <input type="checkbox" name="remember"> Se souvenir de moi
-                        </label>
-                        <a href="#">Mot de passe oublié ?</a>
-                    </div>
-
                     <button type="submit" class="btn-submit">Se connecter</button>
                 </form>
 
                 <!-- Lien vers l'inscription -->
-                <p class="signup-link">Pas encore de compte ? <a href="/Frontend/inscription.html">Inscrivez-vous</a>
-                </p>
+                <p class="signup-link">Pas encore de compte ? <a href="/MondialAutomobile/Frontend/inscription.php">Inscrivez-vous</a></p>
             </div>
         </div>
     </main>

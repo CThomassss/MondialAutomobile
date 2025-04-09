@@ -1,6 +1,7 @@
 <?php
 // Inclusion de la configuration de la base de données
 include '../Backend/config/db_connection.php';
+session_start();
 
 ?>
 <!DOCTYPE html>
@@ -15,11 +16,29 @@ include '../Backend/config/db_connection.php';
 
     <link rel="stylesheet" href="/MondialAutomobile/Frontend/css/style_index.css">
     <link rel="stylesheet" href="/MondialAutomobile/Frontend/css/style.css">
+    <link rel="stylesheet" href="/MondialAutomobile/Frontend/css/style_alert.css">
+    <script src="/MondialAutomobile/Frontend/js/alert.js" defer></script>
 
     <!-- Importation de la police Poppins depuis Google Fonts -->
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap"
         rel="stylesheet">
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const logoutLinks = document.querySelectorAll(".logout-link");
+            logoutLinks.forEach(link => {
+                link.addEventListener("click", (e) => {
+                    e.preventDefault();
+                    // Utilisation de l'alerte moderne
+                    showAlert("Êtes-vous sûr de vouloir vous déconnecter ?", () => {
+                        fetch('/MondialAutomobile/Backend/logout_handler.php', { method: 'POST' })
+                            .then(() => window.location.reload());
+                    });
+                });
+            });
+        });
+    </script>
 </head>
 
 <body>
@@ -45,7 +64,14 @@ include '../Backend/config/db_connection.php';
                             </ul>
                         </li>
                         <li><a href="/MondialAutomobile/Frontend/contact.php">Contact</a></li>
-                        <li><a href="/MondialAutomobile/Frontend/connexion.php">Connexion</a></li>
+                        <?php if (isset($_SESSION['user_id'])): ?>
+                            <?php if ($_SESSION['role'] === 'admin'): ?>
+                                <li><a href="/MondialAutomobile/Frontend/admin.php">Administrateur</a></li>
+                            <?php endif; ?>
+                            <li><a href="javascript:void(0)" class="logout-link">Déconnexion</a></li>
+                        <?php else: ?>
+                            <li><a href="/MondialAutomobile/Frontend/connexion.php">Connexion</a></li>
+                        <?php endif; ?>
                     </ul>
                 </nav>
                 <a href="cart.php"><img src="assets/images/cart.png" width="30px" height="30px" alt="Panier"></a>
@@ -63,7 +89,7 @@ include '../Backend/config/db_connection.php';
 
     <!-- Logo de contact en bas à gauche -->
     <div class="contact-logo">
-        <a href="/Frontend/contact.php"> <!-- Lien vers la page "contact.php" -->
+        <a href="/MondialAutomobile/Frontend/contact.php"> <!-- Lien vers la page "contact.php" -->
             <img src="assets/images/imagecontact2.png" alt="Logo Contact" />
         </a>
     </div>
