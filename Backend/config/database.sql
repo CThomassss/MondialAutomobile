@@ -1,9 +1,9 @@
 -- Création de la base de données
-CREATE DATABASE IF NOT EXISTS MondialAutomobile
+CREATE DATABASE IF NOT EXISTS mondialautomobile
 DEFAULT CHARACTER SET utf8mb4
 COLLATE utf8mb4_unicode_ci;
 
-USE MondialAutomobile;
+USE mondialautomobile;
 
 -- Table : utilisateurs
 CREATE TABLE IF NOT EXISTS utilisateurs (
