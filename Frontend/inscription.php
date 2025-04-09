@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $error = "Cet email est déjà utilisé.";
     } else {
         // Insertion dans la base de données
-        $insertQuery = "INSERT INTO utilisateurs (username, email, mot_de_passe, role) VALUES ('$name', '$email', '$password', 'client')";
+        $insertQuery = "INSERT INTO utilisateurs (username, email, mot_de_passe, role) VALUES ('$name', '$email', '$password', 'attente')";
         if ($conn->query($insertQuery)) {
             // Redirection après une inscription réussie
             header("Location: /MondialAutomobile/Frontend/connexion.php?success=1");
@@ -70,7 +70,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin'): ?>
                             <li class="active"><a href="/MondialAutomobile/Frontend/admin.php">Administrateur</a></li>
                         <?php endif; ?>
-                        <li><a href="/MondialAutomobile/Frontend/connexion.php">Connexion</a></li>
+                        <li class="active"><a href="/MondialAutomobile/Frontend/connexion.php">Connexion</a></li>
                     </ul>
                 </nav>
                 <a href="cart.html">

@@ -9,6 +9,33 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
     exit();
 }
 
+// Suppression d'un utilisateur
+if (isset($_GET['delete_user'])) {
+    $user_id = intval($_GET['delete_user']);
+    $delete_query = "DELETE FROM utilisateurs WHERE id = $user_id";
+    $conn->query($delete_query);
+    header("Location: admin.php");
+    exit();
+}
+
+// Modification d'un utilisateur
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['edit_user'])) {
+    $user_id = intval($_POST['user_id']);
+    $username = $conn->real_escape_string($_POST['username']);
+    $email = $conn->real_escape_string($_POST['email']);
+    $role = $conn->real_escape_string($_POST['role']);
+
+    // Vérification du rôle
+    if (!in_array($role, ['admin', 'attente'])) {
+        $role = 'attente'; // Par défaut, rôle "attente"
+    }
+
+    $update_query = "UPDATE utilisateurs SET username = '$username', email = '$email', role = '$role' WHERE id = $user_id";
+    $conn->query($update_query);
+    header("Location: admin.php");
+    exit();
+}
+
 // Récupération des membres pour affichage
 $query = "SELECT id, username, email, role, date_creation FROM utilisateurs";
 $result = $conn->query($query);
@@ -20,8 +47,8 @@ $result = $conn->query($query);
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Administrateur | Mondial Automobile</title>
-    <link rel="stylesheet" href="/MondialAutomobile/Frontend/css/style_admin.css">
     <link rel="stylesheet" href="/MondialAutomobile/Frontend/css/style.css">
+    <link rel="stylesheet" href="/MondialAutomobile/Frontend/css/style_admin.css">
     <link rel="stylesheet" href="/MondialAutomobile/Frontend/css/style_alert.css">
 
     <!-- Importation de la police Poppins depuis Google Fonts -->
@@ -92,14 +119,44 @@ $result = $conn->query($query);
                             <td><?php echo ucfirst($row['role']); ?></td>
                             <td><?php echo $row['date_creation']; ?></td>
                             <td>
-                                <a href="#" class="btn-edit">Modifier</a>
-                                <a href="#" class="btn-delete">Supprimer</a>
+                                <a href="?edit_user=<?php echo $row['id']; ?>" class="btn-edit">Modifier</a>
+                                <a href="?delete_user=<?php echo $row['id']; ?>" class="btn-delete" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ?');">Supprimer</a>
                             </td>
                         </tr>
                     <?php endwhile; ?>
                 </tbody>
             </table>
         </section>
+
+        <?php if (isset($_GET['edit_user'])): 
+            $edit_user_id = intval($_GET['edit_user']);
+            $edit_query = "SELECT * FROM utilisateurs WHERE id = $edit_user_id";
+            $edit_result = $conn->query($edit_query);
+            $edit_user = $edit_result->fetch_assoc();
+        ?>
+        <section class="admin-section2">
+            <h2>Modifier un Utilisateur</h2>
+            <form action="" method="POST">
+                <input type="hidden" name="user_id" value="<?php echo $edit_user['id']; ?>">
+                <div class="input-group">
+                    <label for="username">Nom d'utilisateur</label>
+                    <input type="text" id="username" name="username" value="<?php echo $edit_user['username']; ?>" required>
+                </div>
+                <div class="input-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" value="<?php echo $edit_user['email']; ?>" required>
+                </div>
+                <div class="input-group">
+                    <label for="role">Rôle</label>
+                    <select id="role" name="role" required>
+                        <option value="admin" <?php echo $edit_user['role'] === 'admin' ? 'selected' : ''; ?>>Admin</option>
+                        <option value="attente" <?php echo $edit_user['role'] === 'attente' ? 'selected' : ''; ?>>Attente</option>
+                    </select>
+                </div>
+                <button type="submit" name="edit_user" class="btn-submit">Enregistrer les modifications</button>
+            </form>
+        </section>
+        <?php endif; ?>
     </main>
 </body>
 

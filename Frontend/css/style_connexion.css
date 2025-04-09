@@ -2,11 +2,6 @@
 /* CONNEXION - GLOBAL */
 /* ---------------------- */
 
-body {
-    overflow: hidden;
-    /* Disable scrolling */
-    margin-bottom: 100px;
-}
 
 .login-container {
     display: flex;
@@ -26,7 +21,6 @@ body {
     border-radius: 20px;
     overflow: auto;
     /* Allow scrolling */
-    background-color: #fff;
     margin-bottom: 100px;
 }
 
@@ -45,7 +39,6 @@ body {
 
 .illustration img {
     width: 80%;
-    max-width: 400px;
     animation: float 3s ease-in-out infinite;
 }
 

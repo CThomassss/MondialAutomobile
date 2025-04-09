@@ -1,59 +1,11 @@
 /* ---------------------- */
-/* GLOBAL */
-/* ---------------------- */
-body {
-    font-family: "Poppins", sans-serif;
-    background-color: #f9f9f9;
-    margin: 0;
-    padding: 0;
-    color: #333;
-}
-
-h1,
-h2 {
-    color: #333;
-    font-weight: 700;
-}
-
-/* ---------------------- */
-/* HEADER */
-/* ---------------------- */
-.admin-header {
-    background: linear-gradient(135deg, #af2e34, #86181f);
-    color: #fff;
-    padding: 20px 40px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-}
-
-.admin-header h1 {
-    font-size: 2rem;
-    margin: 0;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
-}
-
-.btn-logout {
-    background-color: #fff;
-    color: #af2e34;
-    padding: 10px 20px;
-    border-radius: 30px;
-    text-decoration: none;
-    font-weight: 600;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.btn-logout:hover {
-    background-color: #f4f4f4;
-    color: #86181f;
-    transform: scale(1.05);
-}
-
-/* ---------------------- */
 /* MAIN CONTAINER */
 /* ---------------------- */
+
+.body {
+    background: url('/MondialAutomobile/Frontend/assets/images/Apropos.jpg') no-repeat center center fixed;
+}
+
 .admin-container {
     padding: 40px;
     max-width: 1200px;
@@ -103,6 +55,123 @@ h2 {
     bottom: -10px;
     left: 0;
     border-radius: 2px;
+}
+
+/* ---------------------- */
+/* SECTION ADMIN 2 */
+/* ---------------------- */
+
+.admin-section2 {
+    background-color: #fff;
+    border-radius: 15px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    margin-bottom: 30px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.admin-section2:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
+.admin-section2 h2 {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+    color: #af2e34;
+    position: relative;
+}
+
+.admin-section2 h2::after {
+    content: "";
+    position: absolute;
+    width: 60px;
+    height: 4px;
+    background: linear-gradient(90deg, #af2e34, #86181f);
+    bottom: -10px;
+    left: 0;
+    border-radius: 2px;
+}
+
+/* ---------------------- */
+/* FORMULAIRE DE MODIFICATION */
+/* ---------------------- */
+
+.admin-section2 form {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 15px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    animation: fadeIn 0.8s ease-in-out;
+}
+
+.admin-section2 form h2 {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+    color: #af2e34;
+    text-align: center;
+    position: relative;
+}
+
+.admin-section2 form h2::after {
+    content: "";
+    position: absolute;
+    width: 60px;
+    height: 4px;
+    background: linear-gradient(90deg, #af2e34, #86181f);
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 2px;
+}
+
+.admin-section2 form .input-group {
+    margin-bottom: 20px;
+}
+
+.admin-section2 form .input-group label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #333;
+}
+
+.admin-section2 form .input-group input,
+.admin-section2 form .input-group select {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    font-size: 1rem;
+    background: #fff;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.admin-section2 form .input-group input:focus,
+.admin-section2 form .input-group select:focus {
+    border-color: #af2e34;
+    box-shadow: 0 0 5px rgba(175, 46, 52, 0.5);
+    outline: none;
+}
+
+.admin-section2 form .btn-submit {
+    width: 100%;
+    padding: 12px 15px;
+    background: #af2e34;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.admin-section2 form .btn-submit:hover {
+    background: #86181f;
+    transform: translateY(-3px);
 }
 
 /* ---------------------- */
@@ -175,4 +244,12 @@ h2 {
 .btn-delete:hover {
     background-color: #e53935;
     transform: scale(1.05);
+}
+
+/* ---------------------- */
+/* BACKGROUND IMAGE */
+/* ---------------------- */
+body {
+    background: url('/MondialAutomobile/Frontend/assets/images/Apropos.jpg') no-repeat center center fixed;
+    background-size: cover;
 }

@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS utilisateurs (
     id INT AUTO_INCREMENT PRIMARY KEY,
     username VARCHAR(50) NOT NULL UNIQUE,
     mot_de_passe VARCHAR(255) NOT NULL, -- Mot de passe hashé
-    role ENUM('admin', 'vendeur', 'client') DEFAULT 'admin',
+    role ENUM('admin', 'attente') DEFAULT 'attente', -- Mise à jour des rôles
     email VARCHAR(150) NOT NULL UNIQUE,
     date_creation DATETIME DEFAULT CURRENT_TIMESTAMP
 );
@@ -29,7 +29,6 @@ CREATE TABLE IF NOT EXISTS voitures (
     images TEXT DEFAULT NULL, -- Chaîne JSON ou séparée
     date_publication DATETIME DEFAULT CURRENT_TIMESTAMP,
     est_vendu BOOLEAN DEFAULT FALSE,
-    lien_tiktok VARCHAR(255) DEFAULT NULL,
     vendeur_id INT DEFAULT NULL,
     FOREIGN KEY (vendeur_id) REFERENCES utilisateurs(id) ON DELETE SET NULL ON UPDATE CASCADE
 );

@@ -38,8 +38,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <title>Mondial Automobile | Concessionnaire Auto</title>
 
     <!-- Feuilles de style -->
-    <link rel="stylesheet" href="/MondialAutomobile/Frontend/css/style_connexion.css">
     <link rel="stylesheet" href="/MondialAutomobile/Frontend/css/style.css">
+    <link rel="stylesheet" href="/MondialAutomobile/Frontend/css/style_connexion.css">
     <link rel="stylesheet" href="/MondialAutomobile/Frontend/css/style_alert.css">
 
     <!-- Importation de la police Poppins depuis Google Fonts -->

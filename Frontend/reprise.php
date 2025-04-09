@@ -11,7 +11,6 @@ session_start();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mondial Automobile | Concessionnaire Auto</title>
 
-    <link rel="stylesheet" href="/MondialAutomobile/Frontend/css/style_index.css">
     <link rel="stylesheet" href="/MondialAutomobile/Frontend/css/style.css">
     <link rel="stylesheet" href="/MondialAutomobile/Frontend/css/style_alert.css">
     <script src="/MondialAutomobile/Frontend/js/alert.js" defer></script>
