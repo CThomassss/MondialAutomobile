@@ -192,3 +192,104 @@ nav ul li {
     background-color: #f2f2f2;
     border-radius: 5px;
 }
+
+/* ---------------------- */
+/* MEDIA QUERIES */
+/* ---------------------- */
+
+/* Écrans larges (PC - Desktop) */
+@media (min-width: 1025px) {
+    .navbar {
+        padding-right: 100px;
+        padding-left: 50px;
+    }
+
+    nav ul li {
+        margin-right: 60px;
+    }
+
+    #MenuItems li a {
+        font-size: 1rem;
+    }
+
+    .dropdown-menu {
+        min-width: 160px;
+    }
+}
+
+/* Écrans moyens (Tablette) */
+@media (max-width: 1024px) {
+    .navbar {
+        flex-direction: column;
+        align-items: center;
+        padding: 20px;
+    }
+
+    nav ul {
+        text-align: center;
+    }
+
+    nav ul li {
+        margin-right: 20px;
+        margin-bottom: 10px;
+    }
+
+    #MenuItems li a {
+        font-size: 0.9rem;
+        padding: 10px 15px;
+    }
+
+    .dropdown-menu {
+        min-width: 140px;
+    }
+}
+
+/* Écrans petits (Téléphone portable) */
+@media (max-width: 768px) {
+    .navbar {
+        padding: 10px;
+    }
+
+    nav ul li {
+        margin-right: 10px;
+    }
+
+    #MenuItems li a {
+        font-size: 0.85rem;
+        padding: 8px 12px;
+    }
+
+    .dropdown-menu {
+        min-width: 120px;
+    }
+
+    .dropdown-menu li a {
+        font-size: 0.8rem;
+        padding: 6px 10px;
+    }
+}
+
+/* Écrans très petits (Téléphones compacts) */
+@media (max-width: 480px) {
+    .navbar {
+        padding: 5px;
+    }
+
+    nav ul li {
+        margin-right: 5px;
+    }
+
+    #MenuItems li a {
+        font-size: 0.8rem;
+        padding: 6px 8px;
+    }
+
+    .dropdown-menu {
+        min-width: 100px;
+    }
+
+    .dropdown-menu li a {
+        font-size: 0.75rem;
+        padding: 4px 8px;
+    }
+}

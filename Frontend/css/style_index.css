@@ -1,82 +1,46 @@
 /* ---------------------- */
-/* EN-TÊTE PRINCIPALE */
+/* EN-TÊTE PRINCIPALE (HEADER) */
 /* ---------------------- */
 
+/* Style pour l'en-tête principale avec une image de fond */
 .header {
-    /* Image de fond centrée et en plein écran */
     background: url('/Frontend/assets/images/ChatGPT\ Image\ 9\ avr.\ 2025\,\ 07_31_32.png') no-repeat center center;
     background-size: cover;
     height: 100vh;
     position: relative;
-    /* Permet le positionnement absolu des enfants */
 }
 
-/* ---------------------- */
-/* Conteneur du contenu sur l'image */
-/* ---------------------- */
-
+/* Conteneur pour le contenu de l'en-tête */
 .row {
-    position: absolute;
-    /* Fige la position sur l'image */
-    top: 20%;
-    /* Ajuste verticalement */
-    left: 100px;
-    right: 60px;
     display: flex;
     justify-content: flex-start;
-    align-items: flex-start;
-    padding: 0;
-    margin: 0;
-    z-index: 2;
+    align-items: center;
+    padding-top: 7vh;
+    padding-left: 10vw;
+    padding-right: 5vw;
+    width: 100%;
+    max-width: 90%;
+    box-sizing: border-box;
 }
 
-/* ---------------------- */
-/* Colonne contenant le texte */
-/* ---------------------- */
-
-.col-2 {
-    flex: 1;
-    min-width: 300px;
-    padding: 20px;
-    text-align: left;
-    /* Améliore la lisibilité */
-    border-radius: 10px;
-}
-
-/* ---------------------- */
-/* Style du titre principal */
-/* ---------------------- */
-
+/* Style pour le titre principal dans l'en-tête */
 .col-2 h1 {
-    font-size: 3em;
-    font-weight: bold;
-    margin-bottom: 20px;
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
     color: #333;
+    text-align: center;
 }
 
-/* ---------------------- */
-/* Style du paragraphe */
-/* ---------------------- */
-
-.col-2 p {
-    font-size: 1.2em;
-    margin-bottom: 30px;
-    color: #000000;
-    line-height: 1.6;
-}
-
-/* ---------------------- */
-/* Bouton d'action */
-/* ---------------------- */
-
+/* Style pour le bouton d'action dans l'en-tête */
 .btn {
     display: inline-block;
     background-color: #352e2e;
     color: white;
-    padding: 12px 30px;
+    padding: 0.8rem 1.5rem;
     border-radius: 30px;
-    font-size: 1.1em;
+    font-size: 1rem;
     text-decoration: none;
+    text-align: center;
     transition: background-color 0.3s ease;
 }
 
@@ -85,28 +49,33 @@
 }
 
 /* ---------------------- */
-/* Couleurs personnalisées */
+/* COULEURS PERSONNALISÉES */
 /* ---------------------- */
 
+/* Couleur pour le mot "Mondial" */
 .Mondial {
     color: #af2e34;
+    font-size: 3.5rem;
+    /* Agrandit le texte */
 }
 
+/* Couleur pour le mot "Automobile" */
 .Automobile {
     color: rgb(7, 6, 6);
+    font-size: 3.5rem;
+    /* Agrandit le texte */
 }
 
-/* ----------------------------------- */
-/* Style pour le logo de contact      */
-/* ----------------------------------- */
+/* ---------------------- */
+/* LOGO DE CONTACT */
+/* ---------------------- */
 
+/* Style pour le logo de contact en bas à gauche */
 .contact-logo {
     position: fixed;
     bottom: 20px;
     right: 50px;
-    /* Augmente l'espace du coin droit */
     z-index: 9999;
-    /* Reste au-dessus des autres éléments */
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
@@ -115,40 +84,33 @@
     height: 60px;
     border-radius: 50%;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-    /* Ombre douce pour donner de la profondeur */
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* Survol de l'icône */
 .contact-logo:hover img {
     transform: scale(1.1);
-    /* Agrandit l'image au survol */
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
-    /* Ombre plus marquée */
 }
 
-
 /* ---------------------- */
-/* SECTION À PROPOS DE L'ENTREPRISE */
+/* SECTION "À PROPOS" */
 /* ---------------------- */
 
-/* Style Général de la section "À propos" */
+/* Style général pour la section "À propos" */
 .about-section {
     padding: 80px 20px;
     text-align: center;
     color: #333;
     transition: background-color 0.3s ease;
-    border-top: 5px solid #af2e34;
-    /* Ligne décorative en haut */
+    border-top: 5px solid;
+    border-image: linear-gradient(to right, #86181f, #a74045, #fff) 2;
 }
 
-
-/* Style du gros titre */
+/* Style pour le titre principal de la section "À propos" */
 .about-section h2 {
     font-size: 2.8em;
     font-weight: 700;
     color: #352e2e;
-    /* Une couleur riche pour le titre */
     margin-bottom: 20px;
     letter-spacing: 1px;
     text-transform: uppercase;
@@ -156,28 +118,25 @@
     transition: color 0.3s ease, transform 0.3s ease;
 }
 
-/* Ligne en dessous du titre */
+/* Ligne décorative sous le titre */
 .about-section h2::after {
     content: "";
     position: absolute;
     width: 60px;
     height: 3px;
-    background-color: #af2e34;
-    /* Ligne sous le titre */
+    background-image: linear-gradient(to right, #af2e34, #000, #fff);
     bottom: -10px;
     left: 50%;
     transform: translateX(-50%);
 }
 
-/* Survol du gros titre couleurs rouge */
+/* Effet au survol du titre */
 .about-section h2:hover {
     transform: translateY(-5px);
-    /* Légère remontée du titre au survol */
     color: #af2e34;
-    /* Couleur plus vive au survol */
 }
 
-/* Style du petit txt */
+/* Style pour le texte descriptif de la section "À propos" */
 .about-section p {
     font-size: 1.2em;
     line-height: 1.8;
@@ -189,15 +148,12 @@
     transition: opacity 0.3s ease, color 0.3s ease;
 }
 
-/* Style du petit txt */
 .about-section p:hover {
     opacity: 0.85;
-    /* Effet de transparence au survol */
     color: #352e2e;
-    /* Changement de couleur pour plus de contraste */
 }
 
-/* Style du petit txt, rajoute un espace entre le titre et le txt */
+/* Conteneur pour centrer le contenu de la section "À propos" */
 .about-section .container {
     display: flex;
     flex-direction: column;
@@ -206,40 +162,38 @@
 }
 
 /* ---------------------- */
-/* SECTION HISTOIRE DE MONDIAL AUTOMOBILE */
+/* SECTION "HISTOIRE" */
 /* ---------------------- */
 
-/* Style Général de la section "Histoire" */
+/* Style général pour la section "Histoire" */
 .history-section {
     padding: 80px 20px;
     color: #333;
     text-align: center;
     transition: background-color 0.3s ease;
+    margin-bottom: 100px;
 }
 
-
-/* Style de l'image et le txt la liaison */
+/* Conteneur pour l'image et le texte dans la section "Histoire" */
 .history-section .history-content {
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
     gap: 180px;
-    /* Espace entre l'image et le texte */
     margin-top: 30px;
 }
 
-/* Style de l'image  */
+/* Style pour l'image dans la section "Histoire" */
 .history-section .history-image img {
     width: 100%;
     max-width: 600px;
-    /* Limite la taille de l'image */
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* Style de du txt */
+/* Style pour le texte dans la section "Histoire" */
 .history-section .history-text {
     max-width: 600px;
     text-align: center;
@@ -250,7 +204,7 @@
     transition: color 0.3s ease;
 }
 
-/* Style de la grosseur du txt et image */
+/* Style pour le titre dans la section "Histoire" */
 .history-section .history-text h2 {
     font-size: 2.5em;
     font-weight: 700;
@@ -261,14 +215,167 @@
     position: relative;
 }
 
-/* Barre rouge */
+/* Ligne décorative sous le titre */
 .history-section .history-text h2::after {
     content: "";
     position: absolute;
     width: 60px;
     height: 3px;
-    background-color: #af2e34;
+    background-image: linear-gradient(to right, #af2e34, #000, #fff);
     bottom: -10px;
     left: 50%;
     transform: translateX(-50%);
+}
+
+/* ---------------------- */
+/* SECTION "À PROPOS", "HISTOIRE" ET "AVIS GOOGLE" */
+/* ---------------------- */
+
+/* Style général pour la section combinée */
+.about-history {
+    background: url('/Frontend/assets/images/Apropos.jpg') no-repeat center center;
+    /* Image de fond centrée */
+    background-size: cover;
+}
+
+/* ---------------------- */
+/* MEDIA QUERIES */
+/* ---------------------- */
+
+/* Écrans larges (PC - Desktop) */
+@media (min-width: 1025px) {
+    .header {
+        height: 100vh;
+    }
+
+    .row {
+        padding-top: 10vh;
+        padding-left: 15vw;
+        padding-right: 15vw;
+    }
+
+    .col-2 h1 {
+        font-size: 3.5rem;
+    }
+
+    .btn {
+        font-size: 1.2rem;
+        padding: 1rem 2rem;
+    }
+
+    .contact-logo img {
+        width: 70px;
+        height: 70px;
+    }
+}
+
+/* Écrans moyens (Tablette) */
+@media (max-width: 1024px) {
+    .row {
+        flex-direction: column;
+        align-items: center;
+        padding: 5vh 5vw;
+    }
+
+    .col-2 h1 {
+        font-size: 2.8rem;
+        text-align: center;
+    }
+
+    .btn {
+        font-size: 1rem;
+        padding: 0.8rem 1.5rem;
+    }
+
+    .contact-logo img {
+        width: 60px;
+        height: 60px;
+    }
+
+    .about-section h2 {
+        font-size: 2.5rem;
+    }
+
+    .history-section .history-content {
+        flex-direction: column;
+        gap: 50px;
+    }
+
+    .history-section .history-image img {
+        max-width: 80%;
+    }
+}
+
+/* Écrans petits (Téléphone portable) */
+@media (max-width: 768px) {
+    .row {
+        padding: 4vh 3vw;
+    }
+
+    .col-2 h1 {
+        font-size: 2.2rem;
+    }
+
+    .btn {
+        font-size: 0.9rem;
+        padding: 0.7rem 1.2rem;
+    }
+
+    .contact-logo img {
+        width: 50px;
+        height: 50px;
+    }
+
+    .about-section h2 {
+        font-size: 2rem;
+    }
+
+    .about-section p {
+        font-size: 1rem;
+    }
+
+    .history-section .history-content {
+        gap: 30px;
+    }
+
+    .history-section .history-image img {
+        max-width: 90%;
+    }
+}
+
+/* Écrans très petits (Téléphones compacts) */
+@media (max-width: 480px) {
+    .row {
+        padding: 3vh 2vw;
+    }
+
+    .col-2 h1 {
+        font-size: 1.8rem;
+    }
+
+    .btn {
+        font-size: 0.8rem;
+        padding: 0.6rem 1rem;
+    }
+
+    .contact-logo img {
+        width: 40px;
+        height: 40px;
+    }
+
+    .about-section h2 {
+        font-size: 1.8rem;
+    }
+
+    .about-section p {
+        font-size: 0.9rem;
+    }
+
+    .history-section .history-content {
+        gap: 20px;
+    }
+
+    .history-section .history-image img {
+        max-width: 100%;
+    }
 }

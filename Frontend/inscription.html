@@ -4,19 +4,19 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mondial Automobile | Concessionnaire Auto</title>
-
-    <!-- Feuilles de style -->
-    <link rel="stylesheet" href="/Frontend/css/style_connexion.css">
+    <title>Inscription | Mondial Automobile</title>
+    <link rel="stylesheet" href="/Frontend/css/style_inscription.css">
     <link rel="stylesheet" href="/Frontend/css/style.css">
 
     <!-- Importation de la police Poppins depuis Google Fonts -->
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap"
         rel="stylesheet">
+
 </head>
 
 <body>
+
     <!-- En-tête avec logo, menu et bannière principale -->
     <header class="header">
         <div class="container">
@@ -48,60 +48,33 @@
         </div>
     </header>
 
-    <!-- Conteneur principal de connexion -->
     <main class="login-container">
-        <!-- Colonne gauche : illustration -->
         <div class="login-left">
             <div class="illustration">
-                <img src="assets/images/Imagecoexio.webp" alt="Illustration Connexion">
+                <img src="assets/images/Imagecoexio.webp" alt="Illustration Inscription">
             </div>
         </div>
-
-        <!-- Colonne droite : formulaire -->
         <div class="login-right">
             <div class="form-container">
-                <h1>Bienvenue sur <span>Mondial Automobile</span></h1>
-                <p>Connectez-vous pour accéder à votre espace personnel.</p>
-
-                <!-- Connexion avec Google -->
-                <button class="google-login">
-                    <img src="assets/images/google.svg" alt="Icône Google">
-                    Connexion avec Google
-                </button>
-
-                <!-- Séparateur -->
-                <div class="separator">
-                    <span class="line"></span>
-                    <span class="or">OU</span>
-                    <span class="line"></span>
-                </div>
-
-                <!-- Formulaire de connexion -->
+                <h1>Créer un compte sur <span>Mondial Automobile</span></h1>
+                <p>Remplissez le formulaire ci-dessous pour vous inscrire.</p>
                 <form action="#" method="POST">
+                    <div class="input-group">
+                        <label for="name">Nom</label>
+                        <input type="text" id="name" name="name" placeholder="Entrez votre nom" required>
+                    </div>
                     <div class="input-group">
                         <label for="email">Email</label>
                         <input type="email" id="email" name="email" placeholder="Entrez votre email" required>
                     </div>
-
                     <div class="input-group">
                         <label for="password">Mot de passe</label>
                         <input type="password" id="password" name="password" placeholder="Entrez votre mot de passe"
                             required>
                     </div>
-
-                    <div class="options">
-                        <label>
-                            <input type="checkbox" name="remember"> Se souvenir de moi
-                        </label>
-                        <a href="#">Mot de passe oublié ?</a>
-                    </div>
-
-                    <button type="submit" class="btn-submit">Se connecter</button>
+                    <button type="submit" class="btn-submit">S'inscrire</button>
                 </form>
-
-                <!-- Lien vers l'inscription -->
-                <p class="signup-link">Pas encore de compte ? <a href="/Frontend/inscription.html">Inscrivez-vous</a>
-                </p>
+                <p class="signup-link">Déjà un compte ? <a href="/Frontend/connexion.html">Connectez-vous</a></p>
             </div>
         </div>
     </main>
