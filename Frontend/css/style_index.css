@@ -4,7 +4,7 @@
 
 /* Style pour l'en-tête principale avec une image de fond */
 .header {
-    background: url('/Frontend/assets/images/ChatGPT\ Image\ 9\ avr.\ 2025\,\ 07_31_32.png') no-repeat center center;
+    background: url('/MondialAutomobile/Frontend/assets/images/ChatGPT\ Image\ 9\ avr.\ 2025\,\ 07_31_32.png') no-repeat center center;
     background-size: cover;
     height: 100vh;
     position: relative;
@@ -233,7 +233,7 @@
 
 /* Style général pour la section combinée */
 .about-history {
-    background: url('/Frontend/assets/images/Apropos.jpg') no-repeat center center;
+    background: url('/MondialAutomobile/Frontend/assets/images/Apropos.jpg') no-repeat center center;
     /* Image de fond centrée */
     background-size: cover;
 }

@@ -1,3 +1,6 @@
+<?php
+// PHP code can be added here if needed in the future
+?>
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -7,8 +10,8 @@
     <title>Mondial Automobile | Concessionnaire Auto</title>
 
     <!-- Feuilles de style -->
-    <link rel="stylesheet" href="/Frontend/css/style_connexion.css">
-    <link rel="stylesheet" href="/Frontend/css/style.css">
+    <link rel="stylesheet" href="/MondialAutomobile/Frontend/css/style_connexion.css">
+    <link rel="stylesheet" href="/MondialAutomobile/Frontend/css/style.css">
 
     <!-- Importation de la police Poppins depuis Google Fonts -->
     <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -26,19 +29,20 @@
                 </div>
                 <nav>
                     <ul id="MenuItems">
-                        <li><a href="/Frontend/index.html">Accueil</a></li>
-                        <li><a href="/Frontend/vente.html">Ventes</a></li>
-                        <li><a href="/Frontend/reprise.html">Reprise</a></li>
+                        <li class="active"><a href="/MondialAutomobile/Frontend/index.php">Accueil</a></li>
+                        <li><a href="/MondialAutomobile/Frontend/vente.php">Ventes</a></li>
+                        <li><a href="/MondialAutomobile/Frontend/reprise.php">Reprise</a></li>
                         <li class="dropdown">
-                            <a href="/Frontend/service.html">Service</a>
-                            <ul class="dropdown-menu">
-                                <li><a href="/Frontend/service-entretien.html">Entretien</a></li>
-                                <li><a href="/Frontend/service-financement.html">Financement</a></li>
-                                <li><a href="/Frontend/service-garantie.html">Garantie</a></li>
+                            <a href="/MondialAutomobile/Frontend/service.php">Service</a>
+                            <ul class="dropdown-menu ">
+                                <li><a href="/MondialAutomobile/Frontend/service-entretien.php">Carte grise / immatriculation</a></li>
+                                <li><a href="/MondialAutomobile/Frontend/service-financement.php">Achat/Revente</a></li>
+                                <li><a href="/MondialAutomobile/Frontend/service-financement.php">Nettoyage</a></li>
+                                <li><a href="/MondialAutomobile/Frontend/service-garantie.php">Contrôle technique</a></li>
                             </ul>
                         </li>
-                        <li><a href="/Frontend/contact.html">Contact</a></li>
-                        <li class="active"><a href="/Frontend/connexion.html">Connexion</a></li>
+                        <li><a href="/MondialAutomobile/Frontend/contact.php">Contact</a></li>
+                        <li><a href="/MondialAutomobile/Frontend/connexion.php">Connexion</a></li>
                     </ul>
                 </nav>
                 <a href="cart.html">
