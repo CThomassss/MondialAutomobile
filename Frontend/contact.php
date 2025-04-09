@@ -26,7 +26,7 @@
                 </div>
                 <nav>
                     <ul id="MenuItems">
-                        <li class="active"><a href="/MondialAutomobile/Frontend/index.php">Accueil</a></li>
+                        <li><a href="/MondialAutomobile/Frontend/index.php">Accueil</a></li>
                         <li><a href="/MondialAutomobile/Frontend/vente.php">Ventes</a></li>
                         <li><a href="/MondialAutomobile/Frontend/reprise.php">Reprise</a></li>
                         <li class="dropdown">
@@ -38,7 +38,7 @@
                                 <li><a href="/MondialAutomobile/Frontend/service-garantie.php">Contrôle technique</a></li>
                             </ul>
                         </li>
-                        <li><a href="/MondialAutomobile/Frontend/contact.php">Contact</a></li>
+                        <li class ="active" ><a href="/MondialAutomobile/Frontend/contact.php">Contact</a></li>
                         <li><a href="/MondialAutomobile/Frontend/connexion.php">Connexion</a></li>
                     </ul>
                 </nav>
