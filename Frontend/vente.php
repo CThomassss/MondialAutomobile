@@ -5,6 +5,9 @@ session_start();
 
 // Récupération des véhicules disponibles
 $filter_query = "SELECT * FROM voitures WHERE est_vendu = 0";
+if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
+    $filter_query .= " AND est_visible = 1"; // Only show visible vehicles for non-admin users
+}
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $filters = [];
     if (!empty($_GET['marque'])) {
@@ -56,6 +59,54 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_vehicle']) && $_S
               VALUES ('$marque', '$modele', $annee, $prix, $kilometrage, '$carburant', '$boite', '$description', '$image_path')";
     $conn->query($query);
     header("Location: vente.php?success=1");
+    exit();
+}
+
+// Modification d'une annonce (réservé aux administrateurs)
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['edit_vehicle']) && $_SESSION['role'] === 'admin') {
+    $id = intval($_POST['id']);
+    $marque = $conn->real_escape_string($_POST['marque']);
+    $modele = $conn->real_escape_string($_POST['modele']);
+    $annee = intval($_POST['annee']);
+    $prix = floatval($_POST['prix']);
+    $kilometrage = intval($_POST['kilometrage']);
+    $carburant = $conn->real_escape_string($_POST['carburant']);
+    $boite = $conn->real_escape_string($_POST['boite']);
+    $description = $conn->real_escape_string($_POST['description']);
+    $est_visible = isset($_POST['est_visible']) ? 1 : 0;
+
+    // Gestion de l'upload de l'image
+    $image_path = $_POST['current_image'];
+    if (!empty($_FILES['image']['name'])) {
+        $target_dir = "../Frontend/assets/uploads/";
+        $target_file = $target_dir . basename($_FILES['image']['name']);
+        $file_type = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
+
+        // Vérifiez que le fichier est une image valide
+        $valid_extensions = ['jpg', 'jpeg', 'png', 'gif'];
+        if (in_array($file_type, $valid_extensions)) {
+            if (move_uploaded_file($_FILES['image']['tmp_name'], $target_file)) {
+                $image_path = "assets/uploads/" . basename($_FILES['image']['name']);
+            }
+        }
+    }
+
+    $query = "UPDATE voitures SET 
+              marque = '$marque', modele = '$modele', annee = $annee, prix = $prix, 
+              kilometrage = $kilometrage, carburant = '$carburant', boite = '$boite', 
+              description = '$description', image_path = '$image_path', est_visible = $est_visible 
+              WHERE id = $id";
+    $conn->query($query);
+    header("Location: vente.php?success=2");
+    exit();
+}
+
+// Suppression d'une annonce (réservé aux administrateurs)
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_vehicle']) && $_SESSION['role'] === 'admin') {
+    $id = intval($_POST['id']);
+    $query = "DELETE FROM voitures WHERE id = $id";
+    $conn->query($query);
+    header("Location: vente.php?success=3");
     exit();
 }
 ?>
@@ -181,15 +232,114 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_vehicle']) && $_S
     <section class="vitrine-venda">
         <?php while ($vehicle = $result->fetch_assoc()): ?>
             <div class="carte">
-                <img src="<?php echo htmlspecialchars($vehicle['image_path']); ?>" alt="Image voiture">
+                <img src="<?php echo htmlspecialchars($vehicle['image_path']); ?>" alt="Image voiture" onclick="openImageModal('<?php echo htmlspecialchars($vehicle['image_path']); ?>')">
                 <h2><?php echo htmlspecialchars($vehicle['marque'] . ' ' . $vehicle['modele']); ?></h2>
                 <p>Année : <?php echo htmlspecialchars($vehicle['annee']); ?></p>
                 <p>Kilométrage : <?php echo htmlspecialchars($vehicle['kilometrage']); ?> km</p>
                 <p class="prix"><?php echo htmlspecialchars(number_format($vehicle['prix'], 2, ',', ' ')); ?> €</p>
                 <p><?php echo htmlspecialchars($vehicle['description']); ?></p>
+                <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin'): ?>
+                    <p>Visible : <?php echo isset($vehicle['est_visible']) && $vehicle['est_visible'] ? 'Oui' : 'Non'; ?></p>
+                    <button class="btn-submit" onclick="openEditPopup(<?php echo htmlspecialchars(json_encode($vehicle)); ?>)">Modifier</button>
+                    <form method="POST" action="vente.php" style="display:inline;">
+                        <input type="hidden" name="id" value="<?php echo $vehicle['id']; ?>">
+                        <button type="submit" name="delete_vehicle" class="btn-submit" style="background-color: #af2e34;">Supprimer</button>
+                    </form>
+                <?php endif; ?>
             </div>
         <?php endwhile; ?>
     </section>
+
+    <!-- Modal for Image -->
+    <div id="imageModal" class="image-modal">
+        <span class="close-image-modal" onclick="closeImageModal()">&times;</span>
+        <img class="image-modal-content" id="modalImage">
+    </div>
+
+    <div id="editPopupForm" class="popup">
+        <div class="popup-content">
+            <span class="close-popup" id="closeEditPopup">&times;</span>
+            <h2>Modifier une annonce</h2>
+            <form method="POST" action="vente.php" enctype="multipart/form-data">
+                <input type="hidden" id="edit_id" name="id">
+                <input type="hidden" id="current_image" name="current_image">
+                <div class="input-group">
+                    <label for="edit_marque">Marque</label>
+                    <input type="text" id="edit_marque" name="marque" required>
+                </div>
+                <div class="input-group">
+                    <label for="edit_modele">Modèle</label>
+                    <input type="text" id="edit_modele" name="modele" required>
+                </div>
+                <div class="input-group">
+                    <label for="edit_annee">Année</label>
+                    <input type="number" id="edit_annee" name="annee" required>
+                </div>
+                <div class="input-group">
+                    <label for="edit_prix">Prix</label>
+                    <input type="number" id="edit_prix" name="prix" required>
+                </div>
+                <div class="input-group">
+                    <label for="edit_kilometrage">Kilométrage</label>
+                    <input type="number" id="edit_kilometrage" name="kilometrage" required>
+                </div>
+                <div class="input-group">
+                    <label for="edit_carburant">Carburant</label>
+                    <input type="text" id="edit_carburant" name="carburant">
+                </div>
+                <div class="input-group">
+                    <label for="edit_boite">Boîte</label>
+                    <input type="text" id="edit_boite" name="boite">
+                </div>
+                <div class="input-group">
+                    <label for="edit_description">Description</label>
+                    <textarea id="edit_description" name="description" rows="4"></textarea>
+                </div>
+                <div class="input-group">
+                    <label for="edit_image">Image</label>
+                    <input type="file" id="edit_image" name="image" accept="image/*">
+                </div>
+                <div class="input-group">
+                    <label for="edit_est_visible">Visible</label>
+                    <input type="checkbox" id="edit_est_visible" name="est_visible">
+                </div>
+                <button type="submit" name="edit_vehicle" class="btn-submit">Modifier</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function openEditPopup(vehicle) {
+            document.getElementById('edit_id').value = vehicle.id;
+            document.getElementById('edit_marque').value = vehicle.marque;
+            document.getElementById('edit_modele').value = vehicle.modele;
+            document.getElementById('edit_annee').value = vehicle.annee;
+            document.getElementById('edit_prix').value = vehicle.prix;
+            document.getElementById('edit_kilometrage').value = vehicle.kilometrage;
+            document.getElementById('edit_carburant').value = vehicle.carburant;
+            document.getElementById('edit_boite').value = vehicle.boite;
+            document.getElementById('edit_description').value = vehicle.description;
+            document.getElementById('current_image').value = vehicle.image_path;
+            document.getElementById('edit_est_visible').checked = vehicle.est_visible == 1;
+            document.getElementById('editPopupForm').style.display = 'block';
+        }
+
+        document.getElementById('closeEditPopup').onclick = function() {
+            document.getElementById('editPopupForm').style.display = 'none';
+        };
+
+        function openImageModal(imageSrc) {
+            const modal = document.getElementById('imageModal');
+            const modalImage = document.getElementById('modalImage');
+            modalImage.src = imageSrc;
+            modal.style.display = 'block';
+        }
+
+        function closeImageModal() {
+            const modal = document.getElementById('imageModal');
+            modal.style.display = 'none';
+        }
+    </script>
 </body>
 
 </html>
