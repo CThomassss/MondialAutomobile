@@ -32,7 +32,15 @@ $vehicle = $result->fetch_assoc();
 <body>
     <div class="container">
         <h1><?php echo htmlspecialchars($vehicle['marque'] . ' ' . $vehicle['modele']); ?></h1>
-        <img src="<?php echo htmlspecialchars($vehicle['image_path']); ?>" alt="Image voiture" style="width: 100%; max-width: 600px; height: auto; border-radius: 8px; margin-bottom: 20px;">
+        <?php 
+        $images = json_decode($vehicle['images'], true);
+        if (!empty($images)): ?>
+            <div class="image-gallery">
+                <?php foreach ($images as $image): ?>
+                    <img src="<?php echo htmlspecialchars($image); ?>" alt="Image voiture" style="width: 100%; max-width: 600px; height: auto; border-radius: 8px; margin-bottom: 20px;">
+                <?php endforeach; ?>
+            </div>
+        <?php endif; ?>
         <p><strong>Année :</strong> <?php echo htmlspecialchars($vehicle['annee']); ?></p>
         <p><strong>Kilométrage :</strong> <?php echo htmlspecialchars($vehicle['kilometrage']); ?> km</p>
         <p><strong>Prix :</strong> <?php echo htmlspecialchars(number_format($vehicle['prix'], 2, ',', ' ')); ?> €</p>

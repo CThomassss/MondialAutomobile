@@ -39,24 +39,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_vehicle']) && $_S
     $boite = $conn->real_escape_string($_POST['boite']);
     $description = $conn->real_escape_string($_POST['description']);
 
-    // Gestion de l'upload de l'image
-    $image_path = 'assets/images/car_placeholder.png'; // Valeur par défaut
-    if (!empty($_FILES['image']['name'])) {
+    // Gestion de l'upload des images
+    $image_paths = [];
+    if (!empty($_FILES['images']['name'][0])) {
         $target_dir = "../Frontend/assets/uploads/";
-        $target_file = $target_dir . basename($_FILES['image']['name']);
-        $file_type = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
+        foreach ($_FILES['images']['name'] as $key => $image_name) {
+            $target_file = $target_dir . basename($image_name);
+            $file_type = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
 
-        // Vérifiez que le fichier est une image valide
-        $valid_extensions = ['jpg', 'jpeg', 'png', 'gif'];
-        if (in_array($file_type, $valid_extensions)) {
-            if (move_uploaded_file($_FILES['image']['tmp_name'], $target_file)) {
-                $image_path = "assets/uploads/" . basename($_FILES['image']['name']);
+            // Vérifiez que le fichier est une image valide
+            $valid_extensions = ['jpg', 'jpeg', 'png', 'gif'];
+            if (in_array($file_type, $valid_extensions)) {
+                if (move_uploaded_file($_FILES['images']['tmp_name'][$key], $target_file)) {
+                    $image_paths[] = "assets/uploads/" . basename($image_name);
+                }
             }
         }
     }
 
-    $query = "INSERT INTO voitures (marque, modele, annee, prix, kilometrage, carburant, boite, description, image_path) 
-              VALUES ('$marque', '$modele', $annee, $prix, $kilometrage, '$carburant', '$boite', '$description', '$image_path')";
+    // Convertir les chemins des images en JSON pour stockage
+    $images_json = json_encode($image_paths);
+
+    $query = "INSERT INTO voitures (marque, modele, annee, prix, kilometrage, carburant, boite, description, images) 
+              VALUES ('$marque', '$modele', $annee, $prix, $kilometrage, '$carburant', '$boite', '$description', '$images_json')";
     $conn->query($query);
     header("Location: vente.php?success=1");
     exit();
@@ -94,7 +99,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['edit_vehicle']) && $_
     $query = "UPDATE voitures SET 
               marque = '$marque', modele = '$modele', annee = $annee, prix = $prix, 
               kilometrage = $kilometrage, carburant = '$carburant', boite = '$boite', 
-              description = '$description', image_path = '$image_path', est_visible = $est_visible 
+              description = '$description', images = '$image_path', est_visible = $est_visible 
               WHERE id = $id";
     $conn->query($query);
     header("Location: vente.php?success=2");
@@ -219,8 +224,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_vehicle']) && 
                     <textarea id="description" name="description" rows="4"></textarea>
                 </div>
                 <div class="input-group">
-                    <label for="image">Image</label>
-                    <input type="file" id="image" name="image" accept="image/*">
+                    <label for="images">Images</label>
+                    <input type="file" id="images" name="images[]" accept="image/*" multiple>
                 </div>
                 <button type="submit" name="add_vehicle" class="btn-submit">Poster</button>
             </form>
@@ -232,7 +237,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_vehicle']) && 
     <section class="vitrine-venda">
         <?php while ($vehicle = $result->fetch_assoc()): ?>
             <div class="carte">
-                <img src="<?php echo htmlspecialchars($vehicle['image_path']); ?>" alt="Image voiture" onclick="openImageModal('<?php echo htmlspecialchars($vehicle['image_path']); ?>')">
+                <?php 
+                // Décoder les chemins d'images stockés en JSON
+                $images = json_decode($vehicle['images'], true);
+                $first_image = !empty($images) ? $images[0] : 'assets/images/car_placeholder.png'; // Image par défaut si aucune image n'est disponible
+                ?>
+                <img src="<?php echo htmlspecialchars($first_image); ?>" alt="Image voiture" onclick="openImageModal('<?php echo htmlspecialchars($first_image); ?>')">
                 <h2><?php echo htmlspecialchars($vehicle['marque'] . ' ' . $vehicle['modele']); ?></h2>
                 <p>Année : <?php echo htmlspecialchars($vehicle['annee']); ?></p>
                 <p>Kilométrage : <?php echo htmlspecialchars($vehicle['kilometrage']); ?> km</p>
@@ -319,7 +329,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_vehicle']) && 
             document.getElementById('edit_carburant').value = vehicle.carburant;
             document.getElementById('edit_boite').value = vehicle.boite;
             document.getElementById('edit_description').value = vehicle.description;
-            document.getElementById('current_image').value = vehicle.image_path;
+            document.getElementById('current_image').value = vehicle.images;
             document.getElementById('edit_est_visible').checked = vehicle.est_visible == 1;
             document.getElementById('editPopupForm').style.display = 'block';
         }

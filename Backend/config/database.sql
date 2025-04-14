@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS utilisateurs (
     id INT AUTO_INCREMENT PRIMARY KEY,
     username VARCHAR(50) NOT NULL UNIQUE,
     mot_de_passe VARCHAR(255) NOT NULL, -- Mot de passe hashé
-    role ENUM('admin', 'attente') DEFAULT 'attente', -- Mise à jour des rôles
+    role ENUM('admin', 'attente') DEFAULT 'attente', -- Rôle de l'utilisateur
     email VARCHAR(150) NOT NULL UNIQUE,
     date_creation DATETIME DEFAULT CURRENT_TIMESTAMP
 );
@@ -26,9 +26,10 @@ CREATE TABLE IF NOT EXISTS voitures (
     carburant VARCHAR(50) DEFAULT NULL,
     boite VARCHAR(50) DEFAULT NULL,
     description TEXT DEFAULT NULL,
-    images TEXT DEFAULT NULL, -- Chaîne JSON ou séparée
+    images TEXT DEFAULT NULL, -- Stockage des chemins d'images en JSON
     date_publication DATETIME DEFAULT CURRENT_TIMESTAMP,
     est_vendu BOOLEAN DEFAULT FALSE,
+    est_visible TINYINT(1) DEFAULT 0,
     vendeur_id INT DEFAULT NULL,
     FOREIGN KEY (vendeur_id) REFERENCES utilisateurs(id) ON DELETE SET NULL ON UPDATE CASCADE
 );
@@ -87,5 +88,3 @@ CREATE TABLE IF NOT EXISTS panier (
     FOREIGN KEY (utilisateur_id) REFERENCES utilisateurs(id) ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (voiture_id) REFERENCES voitures(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
-
-ALTER TABLE voitures ADD COLUMN image_path VARCHAR(255) DEFAULT 'assets/images/car_placeholder.png';
