@@ -84,6 +84,21 @@
     background-color: #af2e34;
 }
 
+.btn-reset {
+    display: inline-block;
+    background-color: #af2e34;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.btn-reset:hover {
+    background-color: #bbb;
+    color: #000;
+}
+
 .popup {
     display: none;
     position: fixed;

@@ -174,11 +174,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_vehicle']) && 
     <!-- Section de filtrage -->
     <section class="filtre-section">
         <form method="GET" action="vente.php">
-            <input type="text" name="marque" placeholder="Marque">
-            <input type="text" name="modele" placeholder="Modèle">
-            <input type="number" name="prix_min" placeholder="Prix min">
-            <input type="number" name="prix_max" placeholder="Prix max">
+            <input type="text" name="marque" placeholder="Marque" value="<?php echo isset($_GET['marque']) ? htmlspecialchars($_GET['marque']) : ''; ?>">
+            <input type="text" name="modele" placeholder="Modèle" value="<?php echo isset($_GET['modele']) ? htmlspecialchars($_GET['modele']) : ''; ?>">
+            <input type="number" name="prix_min" placeholder="Prix min" value="<?php echo isset($_GET['prix_min']) ? htmlspecialchars($_GET['prix_min']) : ''; ?>">
+            <input type="number" name="prix_max" placeholder="Prix max" value="<?php echo isset($_GET['prix_max']) ? htmlspecialchars($_GET['prix_max']) : ''; ?>">
             <button type="submit" class="btn-submit">Filtrer</button>
+            <a href="vente.php" class="btn-reset">Réinitialiser</a>
         </form>
         <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin'): ?>
             <button type="button" class="btn-submit" id="openPopup">Poster une annonce</button>
