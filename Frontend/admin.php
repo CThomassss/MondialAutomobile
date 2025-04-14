@@ -9,13 +9,45 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
     exit();
 }
 
+// Function to reset the IDs of the utilisateurs table
+function resetUserIds($conn) {
+    $conn->query("SET @count = 0");
+    $conn->query("UPDATE utilisateurs SET id = (@count := @count + 1) ORDER BY id");
+    $conn->query("ALTER TABLE utilisateurs AUTO_INCREMENT = 1");
+}
+
 // Suppression d'un utilisateur
 if (isset($_GET['delete_user'])) {
     $user_id = intval($_GET['delete_user']);
     $delete_query = "DELETE FROM utilisateurs WHERE id = $user_id";
     $conn->query($delete_query);
+
+    // Reset IDs after deletion
+    resetUserIds($conn);
+
     header("Location: admin.php");
     exit();
+}
+
+// Suppression du compte de l'administrateur avec vérification du mot de passe
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirm_delete_account'])) {
+    $admin_id = $_SESSION['user_id'];
+    $password = $_POST['password'];
+
+    // Vérification du mot de passe
+    $query = "SELECT mot_de_passe FROM utilisateurs WHERE id = $admin_id";
+    $result = $conn->query($query);
+    $user = $result->fetch_assoc();
+
+    if ($user && password_verify($password, $user['mot_de_passe'])) {
+        $delete_query = "DELETE FROM utilisateurs WHERE id = $admin_id";
+        $conn->query($delete_query);
+        session_destroy(); // Déconnexion automatique
+        header("Location: /MondialAutomobile/Frontend/connexion.php");
+        exit();
+    } else {
+        $error = "Mot de passe incorrect.";
+    }
 }
 
 // Modification d'un utilisateur
@@ -36,9 +68,41 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['edit_user'])) {
     exit();
 }
 
-// Récupération des membres pour affichage
-$query = "SELECT id, username, email, role, date_creation FROM utilisateurs";
+// Gestion du compte de l'administrateur
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_account'])) {
+    $admin_id = $_SESSION['user_id'];
+    $username = $conn->real_escape_string($_POST['username']);
+    $email = $conn->real_escape_string($_POST['email']);
+    $password = !empty($_POST['password']) ? $_POST['password'] : null;
+    $confirm_password = !empty($_POST['confirm_password']) ? $_POST['confirm_password'] : null;
+
+    if ($password && $password === $confirm_password) {
+        $hashed_password = password_hash($password, PASSWORD_BCRYPT);
+        $update_query = "UPDATE utilisateurs SET username = '$username', email = '$email', mot_de_passe = '$hashed_password' WHERE id = $admin_id";
+        $success_message = "Le mot de passe a été modifié avec succès.";
+    } elseif ($password && $password !== $confirm_password) {
+        $error = "Les mots de passe ne correspondent pas.";
+    } else {
+        $update_query = "UPDATE utilisateurs SET username = '$username', email = '$email' WHERE id = $admin_id";
+        $success_message = "Les informations ont été mises à jour avec succès.";
+    }
+
+    if (!isset($error)) {
+        $conn->query($update_query);
+        header("Location: admin.php?success=1");
+        exit();
+    }
+}
+
+// Récupération des membres pour affichage (exclure l'administrateur connecté)
+$admin_id = $_SESSION['user_id'];
+$query = "SELECT id, username, email, role, date_creation FROM utilisateurs WHERE id != $admin_id";
 $result = $conn->query($query);
+
+// Récupération des informations de l'administrateur
+$account_query = "SELECT username, email, role, date_creation FROM utilisateurs WHERE id = $admin_id";
+$account_result = $conn->query($account_query);
+$account_info = $account_result->fetch_assoc();
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -98,6 +162,72 @@ $result = $conn->query($query);
 
     <main class="admin-container">
         <section class="admin-section">
+            <h2>Mon Compte</h2>
+            <?php if (isset($_GET['success']) && $_GET['success'] == 1): ?>
+                <p id="success-message" style="color: green; text-align: center;">Le mot de passe a été modifié avec succès.</p>
+                <script>
+                    setTimeout(() => {
+                        const successMessage = document.getElementById('success-message');
+                        if (successMessage) {
+                            successMessage.style.display = 'none';
+                        }
+                    }, 3000); // 3 secondes
+                </script>
+            <?php endif; ?>
+            <table class="admin-table">
+                <thead>
+                    <tr>
+                        <th>Nom d'utilisateur</th>
+                        <th>Email</th>
+                        <th>Rôle</th>
+                        <th>Date de création</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><?php echo $account_info['username']; ?></td>
+                        <td><?php echo $account_info['email']; ?></td>
+                        <td><?php echo ucfirst($account_info['role']); ?></td>
+                        <td><?php echo $account_info['date_creation']; ?></td>
+                        <td>
+                            <a href="?edit_account=true" class="btn-edit">Modifier Mon Compte</a>
+                            <a href="?delete_account=true" class="btn-delete">Supprimer</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <?php if (isset($_GET['edit_account'])): ?>
+        <section class="admin-section2">
+            <h2>Modifier Mon Compte</h2>
+            <?php if (isset($error)): ?>
+                <p style="color: red;"><?php echo $error; ?></p>
+            <?php endif; ?>
+            <form action="" method="POST">
+                <div class="input-group">
+                    <label for="username">Nom d'utilisateur</label>
+                    <input type="text" id="username" name="username" value="<?php echo $account_info['username']; ?>" required>
+                </div>
+                <div class="input-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" value="<?php echo $account_info['email']; ?>" required>
+                </div>
+                <div class="input-group">
+                    <label for="password">Nouveau mot de passe (laisser vide pour ne pas changer)</label>
+                    <input type="password" id="password" name="password">
+                </div>
+                <div class="input-group">
+                    <label for="confirm_password">Confirmer le nouveau mot de passe</label>
+                    <input type="password" id="confirm_password" name="confirm_password">
+                </div>
+                <button type="submit" name="update_account" class="btn-submit">Enregistrer les modifications</button>
+            </form>
+        </section>
+        <?php endif; ?>
+
+        <section class="admin-section">
             <h2>Gestion des Membres</h2>
             <table class="admin-table">
                 <thead>
@@ -119,7 +249,7 @@ $result = $conn->query($query);
                             <td><?php echo ucfirst($row['role']); ?></td>
                             <td><?php echo $row['date_creation']; ?></td>
                             <td>
-                                <a href="?edit_user=<?php echo $row['id']; ?>" class="btn-edit">Modifier</a>
+                                <a href="?edit_user=<?php echo $row['id']; ?>" class="btn-edit">Modifier Membre</a>
                                 <a href="?delete_user=<?php echo $row['id']; ?>" class="btn-delete" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ?');">Supprimer</a>
                             </td>
                         </tr>
