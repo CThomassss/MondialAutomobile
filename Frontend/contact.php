@@ -15,12 +15,6 @@ session_start();
     <link rel="stylesheet" href="/MondialAutomobile/Frontend/css/style_alert.css">
     <script src="/MondialAutomobile/Frontend/js/alert.js" defer></script>
     <script src="/MondialAutomobile/Frontend/js/contact.js" defer></script>
-    <style>
-        /* Désactiver le défilement */
-        body {
-            overflow: hidden;
-        }
-    </style>
     <!-- Importation de la police Poppins depuis Google Fonts -->
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap"
@@ -96,7 +90,6 @@ session_start();
                 </form>
                 <!-- Section pour appeler directement -->
                 <div class="call-section">
-                    <p>Appelez-nous directement </p>
                     <a href="tel:0623154908" class="btn-call">Appeler le 06 23 15 49 08</a>
                 </div>
             </section>

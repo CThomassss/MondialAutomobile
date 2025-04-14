@@ -8,7 +8,14 @@
     max-width: 1200px;
     margin: 0 auto;
     animation: fadeIn 0.8s ease-in-out;
+
 }
+
+body {
+    overflow: hidden;
+
+}
+
 
 @keyframes fadeIn {
     from {
