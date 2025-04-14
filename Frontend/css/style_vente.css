@@ -65,14 +65,14 @@
 
 .prix {
     font-weight: bold;
-    color: #6358dc;
+    color: #af2e34;
     font-size: 18px;
     margin: 10px 0;
 }
 
 .btn-submit {
     display: inline-block;
-    background-color: #6358dc;
+    background-color: #af2e34;
     color: white;
     padding: 10px 20px;
     border-radius: 8px;
@@ -81,7 +81,7 @@
 }
 
 .btn-submit:hover {
-    background-color: #4d45b4;
+    background-color: #af2e34;
 }
 
 .popup {
@@ -154,7 +154,7 @@
 .popup-content h2 {
     font-size: 1.8rem;
     margin-bottom: 20px;
-    color: #6358dc;
+    color: #af2e34;
     text-align: center;
     font-weight: 600;
 }
@@ -179,15 +179,15 @@
 
 .popup-content .input-group input:focus,
 .popup-content .input-group textarea:focus {
-    border-color: #6358dc;
-    box-shadow: 0 0 5px rgba(99, 88, 220, 0.5);
+    border-color: #af2e34;
+    box-shadow: 0 0 5px rgba(212, 39, 39, 0.5);
     outline: none;
 }
 
 .popup-content .btn-submit {
     width: 100%;
     padding: 12px 15px;
-    background: #6358dc;
+    background: #af2e34;
     color: #fff;
     border: none;
     border-radius: 10px;
@@ -198,7 +198,7 @@
 }
 
 .popup-content .btn-submit:hover {
-    background: #4d45b4;
+    background: #af2e34;
     transform: translateY(-3px);
 }
 
@@ -266,7 +266,7 @@
 
 .details-modal-content h2 {
     text-align: center;
-    color: #6358dc;
+    color: #af2e34;
     margin-bottom: 20px;
 }
 
