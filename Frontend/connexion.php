@@ -4,13 +4,14 @@ include '../Backend/config/db_connection.php';
 session_start();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Récupération des données du formulaire
-    $email = $conn->real_escape_string($_POST['email']);
+    $email = $_POST['email'];
     $password = $_POST['password'];
 
-    // Vérification des informations de connexion
-    $query = "SELECT * FROM utilisateurs WHERE email = '$email'";
-    $result = $conn->query($query);
+    // Préparer la requête pour éviter les injections SQL
+    $stmt = $conn->prepare("SELECT * FROM utilisateurs WHERE email = ?");
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+    $result = $stmt->get_result();
 
     if ($result->num_rows === 1) {
         $user = $result->fetch_assoc();
@@ -27,6 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } else {
         $error = "Aucun compte trouvé avec cet email.";
     }
+    $stmt->close();
 }
 ?>
 <!DOCTYPE html>

@@ -3,27 +3,37 @@
 include '../Backend/config/db_connection.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Récupération des données du formulaire
-    $name = $conn->real_escape_string($_POST['name']);
-    $email = $conn->real_escape_string($_POST['email']);
-    $password = password_hash($_POST['password'], PASSWORD_BCRYPT); // Hashage du mot de passe
+    $name = htmlspecialchars(trim($_POST['name']));
+    $email = filter_var($_POST['email'], FILTER_VALIDATE_EMAIL);
+    $password = $_POST['password'];
 
-    // Vérification si l'email existe déjà
-    $checkEmailQuery = "SELECT id FROM utilisateurs WHERE email = '$email'";
-    $result = $conn->query($checkEmailQuery);
-
-    if ($result->num_rows > 0) {
-        $error = "Cet email est déjà utilisé.";
+    if (!$email) {
+        $error = "Email invalide.";
+    } elseif (strlen($password) < 8) {
+        $error = "Le mot de passe doit contenir au moins 8 caractères.";
     } else {
-        // Insertion dans la base de données
-        $insertQuery = "INSERT INTO utilisateurs (username, email, mot_de_passe, role) VALUES ('$name', '$email', '$password', 'attente')";
-        if ($conn->query($insertQuery)) {
-            // Redirection après une inscription réussie
-            header("Location: /MondialAutomobile/Frontend/connexion.php?success=1");
-            exit();
+        $hashed_password = password_hash($password, PASSWORD_BCRYPT);
+
+        // Vérifier si l'email existe déjà
+        $stmt = $conn->prepare("SELECT id FROM utilisateurs WHERE email = ?");
+        $stmt->bind_param("s", $email);
+        $stmt->execute();
+        $stmt->store_result();
+
+        if ($stmt->num_rows > 0) {
+            $error = "Cet email est déjà utilisé.";
         } else {
-            $error = "Erreur lors de l'inscription : " . $conn->error;
+            // Insérer l'utilisateur
+            $stmt = $conn->prepare("INSERT INTO utilisateurs (username, email, mot_de_passe, role) VALUES (?, ?, ?, 'attente')");
+            $stmt->bind_param("sss", $name, $email, $hashed_password);
+            if ($stmt->execute()) {
+                header("Location: /MondialAutomobile/Frontend/connexion.php?success=1");
+                exit();
+            } else {
+                $error = "Erreur lors de l'inscription.";
+            }
         }
+        $stmt->close();
     }
 }
 ?>

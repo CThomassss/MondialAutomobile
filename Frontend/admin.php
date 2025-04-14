@@ -18,9 +18,15 @@ function resetUserIds($conn) {
 
 // Suppression d'un utilisateur
 if (isset($_GET['delete_user'])) {
+    if ($_SESSION['role'] !== 'admin') {
+        header("HTTP/1.1 403 Forbidden");
+        exit();
+    }
     $user_id = intval($_GET['delete_user']);
-    $delete_query = "DELETE FROM utilisateurs WHERE id = $user_id";
-    $conn->query($delete_query);
+    $stmt = $conn->prepare("DELETE FROM utilisateurs WHERE id = ?");
+    $stmt->bind_param("i", $user_id);
+    $stmt->execute();
+    $stmt->close();
 
     // Reset IDs after deletion
     resetUserIds($conn);
@@ -52,9 +58,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirm_delete_accoun
 
 // Suppression d'un message
 if (isset($_GET['delete_message'])) {
+    if ($_SESSION['role'] !== 'admin') {
+        header("HTTP/1.1 403 Forbidden");
+        exit();
+    }
     $message_id = intval($_GET['delete_message']);
-    $delete_query = "DELETE FROM messages_contact WHERE id = $message_id";
-    $conn->query($delete_query);
+    $stmt = $conn->prepare("DELETE FROM messages_contact WHERE id = ?");
+    $stmt->bind_param("i", $message_id);
+    $stmt->execute();
+    $stmt->close();
 
     header("Location: admin.php");
     exit();

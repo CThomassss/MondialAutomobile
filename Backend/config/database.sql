@@ -87,3 +87,5 @@ CREATE TABLE IF NOT EXISTS panier (
     FOREIGN KEY (utilisateur_id) REFERENCES utilisateurs(id) ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (voiture_id) REFERENCES voitures(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
+
+ALTER TABLE voitures ADD COLUMN image_path VARCHAR(255) DEFAULT 'assets/images/car_placeholder.png';

@@ -2,19 +2,27 @@
 include 'config/db_connection.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $name = $conn->real_escape_string($_POST['name']);
-    $email = $conn->real_escape_string($_POST['email']);
-    $phone = $conn->real_escape_string($_POST['phone']);
-    $subject = $conn->real_escape_string($_POST['subject']);
-    $message = $conn->real_escape_string($_POST['message']);
+    $name = htmlspecialchars(trim($_POST['name']));
+    $email = filter_var($_POST['email'], FILTER_VALIDATE_EMAIL);
+    $phone = htmlspecialchars(trim($_POST['phone']));
+    $subject = htmlspecialchars(trim($_POST['subject']));
+    $message = htmlspecialchars(trim($_POST['message']));
 
-    // Insérer le message dans la table `messages_contact`
-    $query = "INSERT INTO messages_contact (nom, email, phone, sujet, message) VALUES ('$name', '$email', '$phone', '$subject', '$message')";
-    if ($conn->query($query)) {
+    if (!$email) {
+        header("Location: /MondialAutomobile/Frontend/contact.php?error=email_invalid");
+        exit();
+    }
+
+    // Préparer la requête pour éviter les injections SQL
+    $stmt = $conn->prepare("INSERT INTO messages_contact (nom, email, phone, sujet, message) VALUES (?, ?, ?, ?, ?)");
+    $stmt->bind_param("sssss", $name, $email, $phone, $subject, $message);
+
+    if ($stmt->execute()) {
         header("Location: /MondialAutomobile/Frontend/contact.php?success=1");
     } else {
         header("Location: /MondialAutomobile/Frontend/contact.php?error=1");
     }
+    $stmt->close();
     exit();
 }
 ?>
