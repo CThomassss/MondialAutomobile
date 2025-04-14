@@ -1,0 +1,240 @@
+/* ---------------------- */
+/* CONTAINER PRINCIPAL */
+/* ---------------------- */
+
+/* Conteneur général pour la page de contact */
+.contact-container {
+    padding: 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+    animation: fadeIn 0.8s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ---------------------- */
+/* LAYOUT DES SECTIONS */
+/* ---------------------- */
+
+/* Mise en page pour les sections contact et localisation */
+.contact-layout {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 40px;
+}
+
+/* ---------------------- */
+/* SECTION CONTACT */
+/* ---------------------- */
+
+/* Styles pour la section "Contactez-nous" */
+.contact-section {
+    flex: 0 0 60%;
+    /* Largeur de 60% */
+    background-color: #fff;
+    border-radius: 15px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.contact-section:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
+/* Titre de la section contact */
+.contact-section h2 {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+    color: #af2e34;
+    position: relative;
+}
+
+.contact-section h2::after {
+    content: "";
+    position: absolute;
+    width: 60px;
+    height: 4px;
+    background: linear-gradient(90deg, #af2e34, #86181f);
+    bottom: -10px;
+    left: 0;
+    border-radius: 2px;
+}
+
+/* Groupes d'entrées pour le formulaire */
+.input-group {
+    margin-bottom: 20px;
+}
+
+.input-group label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #333;
+}
+
+.input-group input,
+.input-group textarea {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    font-size: 1rem;
+    background: #fff;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.input-group input:focus,
+.input-group textarea:focus {
+    border-color: #af2e34;
+    box-shadow: 0 0 5px rgba(175, 46, 52, 0.5);
+    outline: none;
+}
+
+/* Bouton d'envoi du formulaire */
+.btn-submit {
+    width: 100%;
+    padding: 12px 15px;
+    background: #af2e34;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.btn-submit:hover {
+    background: #86181f;
+    transform: translateY(-3px);
+}
+
+/* Section pour appeler directement */
+.call-section {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.call-section p {
+    font-size: 1rem;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.btn-call {
+    display: inline-block;
+    background-color: #af2e34;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-size: 1rem;
+    text-decoration: none;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.btn-call:hover {
+    background-color: #af2e34;
+    transform: translateY(-3px);
+}
+
+/* ---------------------- */
+/* SECTION LOCALISATION */
+/* ---------------------- */
+
+/* Styles pour la section "Localisation" */
+.map-section {
+    flex: 0 0 45%;
+    /* Largeur de 45% */
+    background-color: #fff;
+    border-radius: 15px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    text-align: center;
+    height: 100%;
+    /* S'assure qu'elle correspond à la hauteur de la section contact */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* Style pour l'iframe de la carte */
+.map-section iframe {
+    flex-grow: 1;
+    /* Permet à la carte de s'étendre pour remplir l'espace disponible */
+    border-radius: 10px;
+}
+
+/* Titre de la section localisation */
+.map-section h2 {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+    color: #af2e34;
+}
+
+/* ---------------------- */
+/* BOUTON D'ACTION FLOTTANT */
+/* ---------------------- */
+
+/* Styles pour le bouton flottant en bas à droite */
+.fab {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000;
+}
+
+.fab a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 60px;
+    height: 60px;
+    background-color: #af2e34;
+    border-radius: 50%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.fab a:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+.fab img {
+    width: 30px;
+    height: 30px;
+    filter: invert(1);
+}
+
+/* ---------------------- */
+/* RESPONSIVE DESIGN */
+/* ---------------------- */
+
+/* Ajustements pour les écrans plus petits */
+@media (max-width: 768px) {
+    .contact-layout {
+        flex-direction: column;
+        /* Empile les sections verticalement */
+        align-items: center;
+        gap: 20px;
+    }
+
+    .contact-section,
+    .map-section {
+        max-width: 100%;
+        /* Prend toute la largeur disponible */
+    }
+}

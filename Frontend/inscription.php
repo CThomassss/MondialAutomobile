@@ -68,7 +68,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </li>
                         <li><a href="/MondialAutomobile/Frontend/contact.php">Contact</a></li>
                         <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin'): ?>
-                            <li class="active"><a href="/MondialAutomobile/Frontend/admin.php">Administrateur</a></li>
+                            <li class="active"><a href="/MondialAutomobile/Frontend/admin.php">Compte</a></li>
                         <?php endif; ?>
                         <li class="active"><a href="/MondialAutomobile/Frontend/connexion.php">Connexion</a></li>
                     </ul>

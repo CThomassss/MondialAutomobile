@@ -149,7 +149,7 @@ $account_info = $account_result->fetch_assoc();
                         <li><a href="/MondialAutomobile/Frontend/contact.php">Contact</a></li>
                         <?php if (isset($_SESSION['user_id'])): ?>
                             <?php if ($_SESSION['role'] === 'admin'): ?>
-                                <li class="active"><a href="/MondialAutomobile/Frontend/admin.php">Administrateur</a></li>
+                                <li class="active"><a href="/MondialAutomobile/Frontend/admin.php">Compte</a></li>
                             <?php endif; ?>
                             <li><a href="javascript:void(0)" class="logout-link">Déconnexion</a></li>
                         <?php else: ?>
@@ -287,6 +287,38 @@ $account_info = $account_result->fetch_assoc();
             </form>
         </section>
         <?php endif; ?>
+
+        <section class="admin-section">
+            <h2>Messagerie</h2>
+            <table class="admin-table">
+                <thead>
+                    <tr>
+                        <th>Nom</th>
+                        <th>Email</th>
+                        <th>Téléphone</th>
+                        <th>Sujet</th>
+                        <th>Message</th>
+                        <th>Date d'envoi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    $messages_query = "SELECT nom, email, phone, sujet, message, date_envoi FROM messages_contact ORDER BY date_envoi DESC";
+                    $messages_result = $conn->query($messages_query);
+                    while ($message = $messages_result->fetch_assoc()):
+                    ?>
+                        <tr>
+                            <td><?php echo htmlspecialchars($message['nom']); ?></td>
+                            <td><?php echo htmlspecialchars($message['email']); ?></td>
+                            <td><?php echo htmlspecialchars($message['phone']); ?></td>
+                            <td><?php echo htmlspecialchars($message['sujet']); ?></td>
+                            <td><?php echo htmlspecialchars($message['message']); ?></td>
+                            <td><?php echo $message['date_envoi']; ?></td>
+                        </tr>
+                    <?php endwhile; ?>
+                </tbody>
+            </table>
+        </section>
     </main>
 </body>
 

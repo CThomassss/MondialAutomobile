@@ -74,7 +74,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <li><a href="/MondialAutomobile/Frontend/contact.php">Contact</a></li>
                         <?php if (isset($_SESSION['user_id'])): ?>
                             <?php if ($_SESSION['role'] === 'admin'): ?>
-                                <li><a href="/MondialAutomobile/Frontend/admin.php">Administrateur</a></li>
+                                <li><a href="/MondialAutomobile/Frontend/admin.php">Compte</a></li>
                             <?php endif; ?>
                             <li><a href="#" class="logout-link">Déconnexion</a></li>
                         <?php else: ?>
