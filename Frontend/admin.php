@@ -50,6 +50,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirm_delete_accoun
     }
 }
 
+// Suppression d'un message
+if (isset($_GET['delete_message'])) {
+    $message_id = intval($_GET['delete_message']);
+    $delete_query = "DELETE FROM messages_contact WHERE id = $message_id";
+    $conn->query($delete_query);
+
+    header("Location: admin.php");
+    exit();
+}
+
 // Modification d'un utilisateur
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['edit_user'])) {
     $user_id = intval($_POST['user_id']);
@@ -299,11 +309,12 @@ $account_info = $account_result->fetch_assoc();
                         <th>Sujet</th>
                         <th>Message</th>
                         <th>Date d'envoi</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php
-                    $messages_query = "SELECT nom, email, phone, sujet, message, date_envoi FROM messages_contact ORDER BY date_envoi DESC";
+                    $messages_query = "SELECT id, nom, email, phone, sujet, message, date_envoi FROM messages_contact ORDER BY date_envoi DESC";
                     $messages_result = $conn->query($messages_query);
                     while ($message = $messages_result->fetch_assoc()):
                     ?>
@@ -314,6 +325,9 @@ $account_info = $account_result->fetch_assoc();
                             <td><?php echo htmlspecialchars($message['sujet']); ?></td>
                             <td><?php echo htmlspecialchars($message['message']); ?></td>
                             <td><?php echo $message['date_envoi']; ?></td>
+                            <td>
+                                <a href="?delete_message=<?php echo $message['id']; ?>" class="btn-delete" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce message ?');">Supprimer</a>
+                            </td>
                         </tr>
                     <?php endwhile; ?>
                 </tbody>
