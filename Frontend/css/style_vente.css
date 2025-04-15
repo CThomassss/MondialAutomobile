@@ -318,3 +318,58 @@
         opacity: 1;
     }
 }
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .filtre-section {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .vitrine-venda {
+        gap: 15px;
+    }
+
+    .carte {
+        width: 250px;
+    }
+}
+
+@media (max-width: 768px) {
+    .carte img {
+        width: 220px;
+        height: 120px;
+    }
+
+    .carte h2 {
+        font-size: 18px;
+    }
+
+    .carte p {
+        font-size: 12px;
+    }
+
+    .prix {
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 480px) {
+    .carte {
+        width: 200px;
+    }
+
+    .carte img {
+        width: 180px;
+        height: 100px;
+    }
+
+    .carte h2 {
+        font-size: 16px;
+    }
+
+    .btn-submit {
+        font-size: 0.8rem;
+        padding: 8px 10px;
+    }
+}

@@ -238,144 +238,122 @@
     background-size: cover;
 }
 
-/* ---------------------- */
-/* MEDIA QUERIES */
-/* ---------------------- */
-
-/* Écrans larges (PC - Desktop) */
-@media (min-width: 1025px) {
-    .header {
-        height: 100vh;
-    }
-
-    .row {
-        padding-top: 10vh;
-        padding-left: 15vw;
-        padding-right: 15vw;
-    }
-
-    .col-2 h1 {
-        font-size: 3.5rem;
-    }
-
-    .btn {
-        font-size: 1.2rem;
-        padding: 1rem 2rem;
-    }
-
-    .contact-logo img {
-        width: 70px;
-        height: 70px;
-    }
-}
-
-/* Écrans moyens (Tablette) */
+/* Responsive Design */
 @media (max-width: 1024px) {
-    .row {
+    .history-section .history-content {
         flex-direction: column;
         align-items: center;
-        padding: 5vh 5vw;
-    }
-
-    .col-2 h1 {
-        font-size: 2.8rem;
-        text-align: center;
-    }
-
-    .btn {
-        font-size: 1rem;
-        padding: 0.8rem 1.5rem;
-    }
-
-    .contact-logo img {
-        width: 60px;
-        height: 60px;
-    }
-
-    .about-section h2 {
-        font-size: 2.5rem;
-    }
-
-    .history-section .history-content {
-        flex-direction: column;
-        gap: 50px;
-    }
-
-    .history-section .history-image img {
-        max-width: 80%;
-    }
-}
-
-/* Écrans petits (Téléphone portable) */
-@media (max-width: 768px) {
-    .row {
-        padding: 4vh 3vw;
-    }
-
-    .col-2 h1 {
-        font-size: 2.2rem;
-    }
-
-    .btn {
-        font-size: 0.9rem;
-        padding: 0.7rem 1.2rem;
-    }
-
-    .contact-logo img {
-        width: 50px;
-        height: 50px;
-    }
-
-    .about-section h2 {
-        font-size: 2rem;
-    }
-
-    .about-section p {
-        font-size: 1rem;
-    }
-
-    .history-section .history-content {
-        gap: 30px;
-    }
-
-    .history-section .history-image img {
-        max-width: 90%;
-    }
-}
-
-/* Écrans très petits (Téléphones compacts) */
-@media (max-width: 480px) {
-    .row {
-        padding: 3vh 2vw;
-    }
-
-    .col-2 h1 {
-        font-size: 1.8rem;
-    }
-
-    .btn {
-        font-size: 0.8rem;
-        padding: 0.6rem 1rem;
-    }
-
-    .contact-logo img {
-        width: 40px;
-        height: 40px;
-    }
-
-    .about-section h2 {
-        font-size: 1.8rem;
-    }
-
-    .about-section p {
-        font-size: 0.9rem;
-    }
-
-    .history-section .history-content {
         gap: 20px;
     }
 
     .history-section .history-image img {
         max-width: 100%;
+        height: auto;
+        margin: 0 auto;
+    }
+
+    .history-section .history-text {
+        text-align: center;
+    }
+}
+
+@media (max-width: 768px) {
+    .history-section .history-image img {
+        max-width: 90%;
+        height: auto;
+    }
+
+    .history-section .history-text h2 {
+        font-size: 2rem;
+    }
+
+    .history-section .history-text p {
+        font-size: 1rem;
+    }
+
+    .header h1 {
+        display: none;
+        /* Hide the "Mondial Automobile" text */
+    }
+
+    .btn {
+        display: none;
+        /* Hide the "Découvrir" button */
+    }
+
+    .btn {
+        display: none;
+        /* Hide the "Découvrir" button */
+    }
+
+    .history-image img {
+        display: none;
+        /* Hide the "ImageAbout.jpg" */
+    }
+
+    .about-section .container img[src*="imagepersonne.webp"] {
+        display: none;
+        /* Hide the imagepersonne.webp */
+    }
+
+    .contact-logo {
+        bottom: 10px;
+        /* Adjust position */
+        right: 10px;
+        /* Adjust position */
+    }
+
+    .contact-logo img {
+        width: 40px;
+        /* Make the logo smaller */
+        height: 40px;
+        /* Maintain aspect ratio */
+    }
+}
+
+@media (max-width: 480px) {
+    .history-section .history-image img {
+        max-width: 100%;
+        height: auto;
+    }
+
+    .history-section .history-text h2 {
+        font-size: 1.2rem;
+        /* Reduce title size */
+        margin-bottom: 10px;
+        /* Adjust spacing */
+    }
+
+    .history-section .history-text p {
+        font-size: 0.8rem;
+        /* Reduce text size */
+        line-height: 1.5;
+        /* Adjust line height for readability */
+    }
+
+    .about-section h2 {
+        font-size: 1.2rem;
+        /* Reduce title size */
+    }
+
+    .about-section p {
+        font-size: 0.8rem;
+        /* Reduce text size */
+        line-height: 1.5;
+        /* Adjust line height for readability */
+    }
+
+    .contact-logo {
+        bottom: 5px;
+        /* Further adjust position */
+        right: 5px;
+        /* Further adjust position */
+    }
+
+    .contact-logo img {
+        width: 30px;
+        /* Make the logo even smaller */
+        height: 30px;
+        /* Maintain aspect ratio */
     }
 }

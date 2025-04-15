@@ -3,6 +3,12 @@
 /* ---------------------- */
 
 
+body {
+    overflow: hidden;
+    /* Disable scrolling */
+    margin-bottom: 100px;
+}
+
 .login-container {
     display: flex;
     flex-wrap: wrap;
@@ -22,6 +28,13 @@
     overflow: auto;
     /* Allow scrolling */
     margin-bottom: 100px;
+}
+
+@media (max-width: 420px) {
+    body {
+        overflow: auto;
+        /* Allow scrolling */
+    }
 }
 
 /* ---------------------- */
@@ -227,26 +240,4 @@
 
 .signup-link a:hover {
     text-decoration: underline;
-}
-
-/* ---------------------- */
-/* RESPONSIVE */
-/* ---------------------- */
-
-@media (max-width: 1024px) {
-    .login-container {
-        flex-direction: column;
-        height: auto;
-        margin-top: 40px;
-    }
-
-    .login-left,
-    .login-right {
-        flex: none;
-        width: 100%;
-    }
-
-    .login-right {
-        padding: 30px;
-    }
 }

@@ -58,6 +58,10 @@ session_start();
             </div>
         </div>
     </div>
+    <!-- Image à gauche -->
+    <div class="contact-image">
+                <img src="assets/images/bras.png" alt="Contact Image">
+            </div>
 
     <!-- Section principale de contact -->
     <main class="contact-container">

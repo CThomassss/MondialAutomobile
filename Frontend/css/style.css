@@ -194,103 +194,51 @@ nav ul li {
     border-radius: 5px;
 }
 
-/* ---------------------- */
-/* MEDIA QUERIES */
-/* ---------------------- */
-
-/* Écrans larges (PC - Desktop) */
-@media (min-width: 1025px) {
-    .navbar {
-        padding-right: 100px;
-        padding-left: 50px;
-    }
-
-    nav ul li {
-        margin-right: 60px;
-    }
-
-    #MenuItems li a {
-        font-size: 1rem;
-    }
-
-    .dropdown-menu {
-        min-width: 160px;
-    }
-}
-
-/* Écrans moyens (Tablette) */
-@media (max-width: 1024px) {
+/* Extra small screens (compact phones) */
+@media (max-width: 480px) {
     .navbar {
         flex-direction: column;
         align-items: center;
-        padding: 20px;
+        padding: 5px;
+    }
+
+    .logo {
+        margin: 0 auto;
+        /* Center the logo horizontally */
+        text-align: center;
+    }
+
+    .logo img {
+        width: 80px;
+        /* Adjust logo size for smaller screens */
     }
 
     nav ul {
         text-align: center;
+        padding: 0;
     }
 
     nav ul li {
-        margin-right: 20px;
-        margin-bottom: 10px;
-    }
-
-    #MenuItems li a {
-        font-size: 0.9rem;
-        padding: 10px 15px;
-    }
-
-    .dropdown-menu {
-        min-width: 140px;
+        margin: 5px 0;
+        /* Add spacing between menu items */
     }
 }
 
-/* Écrans petits (Téléphone portable) */
-@media (max-width: 768px) {
-    .navbar {
-        padding: 10px;
-    }
-
-    nav ul li {
-        margin-right: 10px;
-    }
-
+@media (max-width: 420px) {
     #MenuItems li a {
-        font-size: 0.85rem;
-        padding: 8px 12px;
-    }
-
-    .dropdown-menu {
-        min-width: 120px;
-    }
-
-    .dropdown-menu li a {
-        font-size: 0.8rem;
-        padding: 6px 10px;
-    }
-}
-
-/* Écrans très petits (Téléphones compacts) */
-@media (max-width: 480px) {
-    .navbar {
-        padding: 5px;
+        font-size: 0.6rem;
+        /* Reduce font size */
+        padding: 8px 10px;
+        /* Adjust padding */
     }
 
     nav ul li {
         margin-right: 5px;
+        /* Reduce spacing between menu items */
     }
 
-    #MenuItems li a {
-        font-size: 0.8rem;
-        padding: 6px 8px;
-    }
-
-    .dropdown-menu {
-        min-width: 100px;
-    }
-
-    .dropdown-menu li a {
-        font-size: 0.75rem;
-        padding: 4px 8px;
+    img[src*="cart.png"] {
+        display: none;
+        /* Hide the cart.png image */
     }
 }
