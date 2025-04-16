@@ -59,11 +59,11 @@ session_start();
     <!-- Section principale de reprise -->
     <main class="reprise-container">
         <h2>Proposez votre véhicule à la reprise</h2>
-        <form action="/MondialAutomobile/Backend/reprise_handler.php" method="POST" enctype="multipart/form-data">
+        <form action="/MondialAutomobile/Backend/reprise_handler.php" method="POST" enctype="multipart/form-data" onsubmit="return validateForm()">
             <div class="form-row">
                 <div class="input-group">
                     <label for="name">Nom</label>
-                    <input type="text" id="name" name="name" placeholder="Entrez votre nom" required>
+                    <input type="text" id="name" name="name" placeholder="Entrez votre nom" required pattern="[A-Za-zÀ-ÖØ-öø-ÿ\s]+" title="Le nom ne doit contenir que des lettres et des espaces.">
                 </div>
                 <div class="input-group">
                     <label for="email">Email</label>
@@ -71,13 +71,13 @@ session_start();
                 </div>
                 <div class="input-group">
                     <label for="phone">Téléphone</label>
-                    <input type="tel" id="phone" name="phone" placeholder="Entrez votre numéro de téléphone" required>
+                    <input type="tel" id="phone" name="phone" placeholder="Entrez votre numéro de téléphone" required pattern="\d{10}" title="Le numéro de téléphone doit contenir exactement 10 chiffres.">
                 </div>
             </div>
             <div class="form-row">
                 <div class="input-group">
                     <label for="marque">Marque</label>
-                    <input type="text" id="marque" name="marque" placeholder="Entrez la marque de votre véhicule" required>
+                    <input type="text" id="marque" name="marque" placeholder="Entrez la marque de votre véhicule" required pattern="[A-Za-zÀ-ÖØ-öø-ÿ\s]+" title="La marque ne doit contenir que des lettres et des espaces.">
                 </div>
                 <div class="input-group">
                     <label for="modele">Modèle</label>
@@ -85,13 +85,13 @@ session_start();
                 </div>
                 <div class="input-group">
                     <label for="annee">Année</label>
-                    <input type="number" id="annee" name="annee" placeholder="Entrez l'année de mise en circulation" required>
+                    <input type="number" id="annee" name="annee" placeholder="Entrez l'année de mise en circulation" required min="1900" max="2099" title="L'année doit être comprise entre 1900 et 2099.">
                 </div>
             </div>
             <div class="form-row">
                 <div class="input-group">
                     <label for="kilometrage">Kilométrage</label>
-                    <input type="number" id="kilometrage" name="kilometrage" placeholder="Entrez le kilométrage" required>
+                    <input type="number" id="kilometrage" name="kilometrage" placeholder="Entrez le kilométrage" required min="0" title="Le kilométrage doit être un nombre positif.">
                 </div>
                 <div class="input-group">
                     <label for="description">Description</label>
@@ -102,9 +102,38 @@ session_start();
                     <input type="file" id="images" name="images[]" accept="image/*" multiple>
                 </div>
             </div>
+            <div class="form-row">
+                <div class="input-group">
+                    <label for="immatriculation">Immatriculation</label>
+                    <input type="text" id="immatriculation" name="immatriculation" placeholder="Entrez l'immatriculation" required pattern="[A-Z]{2}-\d{3}-[A-Z]{2}" title="Le format doit être AA-123-BB (exemple : AB-123-CD).">
+                </div>
+                <div class="input-group">
+                    <label for="etat">État de la voiture</label>
+                    <select id="etat" name="etat" required>
+                        <option value="">Sélectionnez l'état</option>
+                        <option value="neuf">Neuf</option>
+                        <option value="occasion">Occasion</option>
+                        <option value="accidente">Accidenté</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label for="historique">Historique d'achat</label>
+                    <textarea id="historique" name="historique" rows="2" placeholder="Entrez l'historique d'achat"></textarea>
+                </div>
+            </div>
             <button type="submit" class="btn-submit">Envoyer</button>
         </form>
     </main>
+    <script>
+        function validateForm() {
+            const phone = document.getElementById('phone').value;
+            if (!/^\d{10}$/.test(phone)) {
+                alert('Le numéro de téléphone doit contenir exactement 10 chiffres.');
+                return false;
+            }
+            return true;
+        }
+    </script>
 </body>
 
 </html>

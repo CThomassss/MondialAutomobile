@@ -38,13 +38,16 @@ CREATE TABLE IF NOT EXISTS voitures (
 CREATE TABLE IF NOT EXISTS reprises (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nom VARCHAR(100) NOT NULL,
-    prenom VARCHAR(100) NOT NULL,
     telephone VARCHAR(20) DEFAULT NULL,
     email VARCHAR(150) DEFAULT NULL,
     marque VARCHAR(100) DEFAULT NULL,
     modele VARCHAR(100) DEFAULT NULL,
     annee INT DEFAULT NULL,
     kilometrage INT DEFAULT NULL,
+    immatriculation VARCHAR(20) DEFAULT NULL,
+    etat ENUM('neuf', 'occasion', 'accidente') DEFAULT 'occasion',
+    historique TEXT DEFAULT NULL,
+    description TEXT DEFAULT NULL,
     statut ENUM('En attente', 'Acceptée', 'Refusée') DEFAULT 'En attente',
     date_demande DATETIME DEFAULT CURRENT_TIMESTAMP
 );
