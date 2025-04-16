@@ -177,8 +177,22 @@
 /* ---------------------- */
 /* TABLE */
 /* ---------------------- */
+
+/* Add a wrapper for the table to enable horizontal scrolling */
+.admin-table-wrapper {
+    overflow-x: auto;
+    /* Enable horizontal scrolling */
+    -webkit-overflow-scrolling: touch;
+    /* Smooth scrolling for touch devices */
+    margin-bottom: 20px;
+    /* Add some spacing below the table */
+}
+
 .admin-table {
     width: 100%;
+    /* Ensure the table takes full width */
+    min-width: 1000px;
+    /* Set a minimum width for the table */
     border-collapse: collapse;
     margin-top: 20px;
     overflow: hidden;
@@ -207,6 +221,28 @@
 
 .admin-table td {
     color: #555;
+    word-wrap: normal;
+    max-width: none;
+    overflow: visible;
+    text-overflow: clip;
+    white-space: normal;
+    position: static;
+}
+
+.admin-table td:hover::after {
+    content: none;
+}
+
+.admin-table td:empty {
+    display: table-cell;
+}
+
+/* Adjustments for responsive design */
+@media (max-width: 768px) {
+    .admin-table td {
+        max-width: 150px;
+        /* Reduce max width for smaller screens */
+    }
 }
 
 /* ---------------------- */

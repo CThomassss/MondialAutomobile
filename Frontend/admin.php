@@ -72,6 +72,22 @@ if (isset($_GET['delete_message'])) {
     exit();
 }
 
+// Suppression d'une demande de reprise
+if (isset($_GET['delete_reprise'])) {
+    if ($_SESSION['role'] !== 'admin') {
+        header("HTTP/1.1 403 Forbidden");
+        exit();
+    }
+    $reprise_id = intval($_GET['delete_reprise']);
+    $stmt = $conn->prepare("DELETE FROM reprises WHERE id = ?");
+    $stmt->bind_param("i", $reprise_id);
+    $stmt->execute();
+    $stmt->close();
+
+    header("Location: admin.php");
+    exit();
+}
+
 // Modification d'un utilisateur
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['edit_user'])) {
     $user_id = intval($_POST['user_id']);
@@ -344,6 +360,56 @@ $account_info = $account_result->fetch_assoc();
                     <?php endwhile; ?>
                 </tbody>
             </table>
+        </section>
+
+        <section class="admin-section">
+            <h2>Messagerie Reprise</h2>
+            <div class="admin-table-wrapper">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>Nom</th>
+                            <th>Téléphone</th>
+                            <th>Email</th>
+                            <th>Marque</th>
+                            <th>Modèle</th>
+                            <th>Année</th>
+                            <th>Kilométrage</th>
+                            <th>Immatriculation</th>
+                            <th>État</th>
+                            <th>Historique</th>
+                            <th>Description</th>
+                            <th>Date de demande</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        $reprises_query = "SELECT id, nom, telephone, email, marque, modele, annee, kilometrage, immatriculation, etat, historique, description, date_demande FROM reprises ORDER BY date_demande DESC";
+                        $reprises_result = $conn->query($reprises_query);
+                        while ($reprise = $reprises_result->fetch_assoc()):
+                        ?>
+                            <tr>
+                                <td><?php echo htmlspecialchars($reprise['nom']); ?></td>
+                                <td><?php echo htmlspecialchars($reprise['telephone']); ?></td>
+                                <td><?php echo htmlspecialchars($reprise['email']); ?></td>
+                                <td><?php echo htmlspecialchars($reprise['marque']); ?></td>
+                                <td><?php echo htmlspecialchars($reprise['modele']); ?></td>
+                                <td><?php echo htmlspecialchars($reprise['annee']); ?></td>
+                                <td><?php echo htmlspecialchars($reprise['kilometrage']); ?> km</td>
+                                <td><?php echo htmlspecialchars($reprise['immatriculation']); ?></td>
+                                <td><?php echo htmlspecialchars($reprise['etat']); ?></td>
+                                <td><?php echo htmlspecialchars($reprise['historique']); ?></td>
+                                <td><?php echo htmlspecialchars($reprise['description']); ?></td>
+                                <td><?php echo $reprise['date_demande']; ?></td>
+                                <td>
+                                    <a href="?delete_reprise=<?php echo $reprise['id']; ?>" class="btn-delete" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette demande ?');">Supprimer</a>
+                                </td>
+                            </tr>
+                        <?php endwhile; ?>
+                    </tbody>
+                </table>
+            </div>
         </section>
     </main>
 </body>
