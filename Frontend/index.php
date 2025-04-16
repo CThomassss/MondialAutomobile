@@ -87,13 +87,6 @@ session_start();
         </div>
     </div>
 
-    <!-- Logo de contact en bas à gauche -->
-    <div class="contact-logo">
-        <a href="/MondialAutomobile/Frontend/contact.php"> <!-- Lien vers la page "contact.php" -->
-            <img src="assets/images/imagecontact2.png" alt="Logo Contact" />
-        </a>
-    </div>
-
 
     <!-- Section combinée À propos et Histoire -->
     <main class="about-history">
@@ -133,6 +126,8 @@ session_start();
                 </div>
             </div>
         </section>
+
+        <link rel="stylesheet" href="/MondialAutomobile/Frontend/css/chatbot.css">
 
         <!-- Elfsight Google Reviews | Untitled Google Reviews -->
         <script src="https://static.elfsight.com/platform/platform.js" async></script>
@@ -229,7 +224,23 @@ session_start();
 
     </script>
 
+    <!-- Chatbot Interface -->
+    <div id="chatbot" class="chatbot-container">
+        <div class="chatbot-header">
+            <h3>Chatbot</h3>
+            <button id="closeChatbot">&times;</button>
+        </div>
+        <div class="chatbot-messages" id="chatbotMessages">
+            <div class="message bot">Bienvenue sur MondialAutomobile, que voulez-vous savoir sur notre activité ?</div>
+        </div>
+        <form id="chatbotForm">
+            <input type="text" id="chatbotInput" placeholder="Écrivez un message..." required>
+            <button type="submit">Envoyer</button>
+        </form>
+    </div>
+    <button id="openChatbot" class="chatbot-toggle">💬</button>
 
+    <script src="/MondialAutomobile/Frontend/js/chatbot.js" defer></script>
 
 </body>
 

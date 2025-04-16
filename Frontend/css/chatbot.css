@@ -1,0 +1,113 @@
+.chatbot-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    /* Move the chatbot container to the right */
+    width: 350px;
+    height: 500px;
+    background-color: #fff;
+    border-radius: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    display: none;
+    flex-direction: column;
+    overflow: hidden;
+    z-index: 1000;
+    border: 2px solid #af2e34;
+}
+
+.chatbot-header {
+    background-color: #af2e34;
+    color: #fff;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+}
+
+.chatbot-header h3 {
+    margin: 0;
+    font-size: 1rem;
+}
+
+.chatbot-header button {
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+
+.chatbot-messages {
+    flex: 1;
+    padding: 10px;
+    overflow-y: auto;
+    background-color: #f9f9f9;
+}
+
+.message {
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 0.9rem;
+}
+
+.message.bot {
+    background-color: #e0e0e0;
+    align-self: flex-start;
+}
+
+.message.user {
+    background-color: #af2e34;
+    color: #fff;
+    align-self: flex-end;
+}
+
+#chatbotForm {
+    display: flex;
+    border-top: 1px solid #ddd;
+}
+
+#chatbotInput {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    font-size: 0.9rem;
+}
+
+#chatbotForm button {
+    background-color: #af2e34;
+    color: #fff;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+}
+
+#chatbotForm button:hover {
+    background-color: #86181f;
+}
+
+.chatbot-toggle {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    /* Move the toggle button to the right */
+    background-color: #af2e34;
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    font-size: 1.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+}
+
+.chatbot-toggle:hover {
+    background-color: #86181f;
+}

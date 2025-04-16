@@ -112,7 +112,26 @@ session_start();
                 </iframe>
             </section>
         </div>
+        <link rel="stylesheet" href="/MondialAutomobile/Frontend/css/chatbot.css">
     </main>
+
+    <!-- Chatbot Interface -->
+    <div id="chatbot" class="chatbot-container">
+        <div class="chatbot-header">
+            <h3>Chatbot</h3>
+            <button id="closeChatbot">&times;</button>
+        </div>
+        <div class="chatbot-messages" id="chatbotMessages">
+            <div class="message bot">Bienvenue sur MondialAutomobile, que voulez-vous savoir sur notre activité ?</div>
+        </div>
+        <form id="chatbotForm">
+            <input type="text" id="chatbotInput" placeholder="Écrivez un message..." required>
+            <button type="submit">Envoyer</button>
+        </form>
+    </div>
+    <button id="openChatbot" class="chatbot-toggle">💬</button>
+
+    <script src="/MondialAutomobile/Frontend/js/chatbot.js" defer></script>
 </body>
 
 </html>
