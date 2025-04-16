@@ -91,3 +91,10 @@ CREATE TABLE IF NOT EXISTS panier (
     FOREIGN KEY (utilisateur_id) REFERENCES utilisateurs(id) ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (voiture_id) REFERENCES voitures(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
+
+-- Table : faq
+CREATE TABLE IF NOT EXISTS faq (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    question TEXT NOT NULL,
+    reponse TEXT NOT NULL
+);

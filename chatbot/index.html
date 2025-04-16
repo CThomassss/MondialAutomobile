@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot FAQ</title>
+    <link rel="stylesheet" href="/MondialAutomobile/Frontend/css/style.css">
+</head>
+
+<body>
+    <div class="chatbot-container">
+        <h1>Posez votre question :</h1>
+        <form method="get" action="chatbot.php">
+            <input type="text" name="question" placeholder="Votre question ici" required>
+            <button type="submit">Envoyer</button>
+        </form>
+        <div id="response"></div>
+    </div>
+    <script>
+        const form = document.querySelector("form");
+        const responseDiv = document.getElementById("response");
+
+        form.addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const formData = new FormData(form);
+            const question = formData.get("question");
+
+            const response = await fetch(`chatbot.php?question=${encodeURIComponent(question)}`);
+            const text = await response.text();
+            responseDiv.textContent = text;
+        });
+    </script>
+</body>
+
+</html>
