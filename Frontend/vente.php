@@ -28,6 +28,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 }
 $result = $conn->query($filter_query);
 
+// Récupérer les marques distinctes
+$marques_result = $conn->query("SELECT DISTINCT marque FROM voitures WHERE est_vendu = 0");
+$marques = $marques_result->fetch_all(MYSQLI_ASSOC);
+
+// Récupérer les modèles distincts
+$modeles_result = $conn->query("SELECT DISTINCT modele FROM voitures WHERE est_vendu = 0");
+$modeles = $modeles_result->fetch_all(MYSQLI_ASSOC);
+
 // Ajout d'une annonce (réservé aux administrateurs)
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_vehicle']) && $_SESSION['role'] === 'admin') {
     $marque = $conn->real_escape_string($_POST['marque']);
@@ -174,8 +182,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_vehicle']) && 
     <!-- Section de filtrage -->
     <section class="filtre-section">
         <form method="GET" action="vente.php">
-            <input type="text" name="marque" placeholder="Marque" value="<?php echo isset($_GET['marque']) ? htmlspecialchars($_GET['marque']) : ''; ?>">
-            <input type="text" name="modele" placeholder="Modèle" value="<?php echo isset($_GET['modele']) ? htmlspecialchars($_GET['modele']) : ''; ?>">
+            <select name="marque">
+                <option value="">Toutes les marques</option>
+                <?php foreach ($marques as $marque): ?>
+                    <option value="<?php echo htmlspecialchars($marque['marque']); ?>" 
+                        <?php echo isset($_GET['marque']) && $_GET['marque'] === $marque['marque'] ? 'selected' : ''; ?>>
+                        <?php echo htmlspecialchars($marque['marque']); ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
+            <select name="modele">
+                <option value="">Tous les modèles</option>
+                <?php foreach ($modeles as $modele): ?>
+                    <option value="<?php echo htmlspecialchars($modele['modele']); ?>" 
+                        <?php echo isset($_GET['modele']) && $_GET['modele'] === $modele['modele'] ? 'selected' : ''; ?>>
+                        <?php echo htmlspecialchars($modele['modele']); ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
             <input type="number" name="prix_min" placeholder="Prix min" value="<?php echo isset($_GET['prix_min']) ? htmlspecialchars($_GET['prix_min']) : ''; ?>">
             <input type="number" name="prix_max" placeholder="Prix max" value="<?php echo isset($_GET['prix_max']) ? htmlspecialchars($_GET['prix_max']) : ''; ?>">
             <button type="submit" class="btn-submit">Filtrer</button>
@@ -243,12 +267,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_vehicle']) && 
                 $images = json_decode($vehicle['images'], true);
                 $first_image = !empty($images) ? $images[0] : 'assets/images/car_placeholder.png'; // Image par défaut si aucune image n'est disponible
                 ?>
-                <img src="<?php echo htmlspecialchars($first_image); ?>" alt="Image voiture" onclick="openImageModal('<?php echo htmlspecialchars($first_image); ?>')">
+                <img src="<?php echo htmlspecialchars($first_image); ?>" alt="Image voiture">
                 <h2><?php echo htmlspecialchars($vehicle['marque'] . ' ' . $vehicle['modele']); ?></h2>
                 <p>Année : <?php echo htmlspecialchars($vehicle['annee']); ?></p>
                 <p>Kilométrage : <?php echo htmlspecialchars($vehicle['kilometrage']); ?> km</p>
                 <p class="prix"><?php echo htmlspecialchars(number_format($vehicle['prix'], 2, ',', ' ')); ?> €</p>
-                <a href="details.php?id=<?php echo $vehicle['id']; ?>" class="btn-submit">Plus de détails</a>
+                <button class="btn-submit">Plus de détails</button>
                 <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin'): ?>
                     <p>Visible : <?php echo isset($vehicle['est_visible']) && $vehicle['est_visible'] ? 'Oui' : 'Non'; ?></p>
                     <button class="btn-submit" onclick="openEditPopup(<?php echo htmlspecialchars(json_encode($vehicle)); ?>)">Modifier</button>
@@ -260,12 +284,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_vehicle']) && 
             </div>
         <?php endwhile; ?>
     </section>
-
-    <!-- Modal for Image -->
-    <div id="imageModal" class="image-modal">
-        <span class="close-image-modal" onclick="closeImageModal()">&times;</span>
-        <img class="image-modal-content" id="modalImage">
-    </div>
 
     <div id="editPopupForm" class="popup">
         <div class="popup-content">
@@ -338,18 +356,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_vehicle']) && 
         document.getElementById('closeEditPopup').onclick = function() {
             document.getElementById('editPopupForm').style.display = 'none';
         };
-
-        function openImageModal(imageSrc) {
-            const modal = document.getElementById('imageModal');
-            const modalImage = document.getElementById('modalImage');
-            modalImage.src = imageSrc;
-            modal.style.display = 'block';
-        }
-
-        function closeImageModal() {
-            const modal = document.getElementById('imageModal');
-            modal.style.display = 'none';
-        }
     </script>
 </body>
 

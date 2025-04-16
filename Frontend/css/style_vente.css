@@ -14,11 +14,38 @@
 }
 
 .filtre-section input,
-.filtre-section button {
+.filtre-section button,
+.filtre-section .btn-reset,
+.filtre-section select,
+.btn-submit {
     padding: 10px;
     border-radius: 8px;
     border: 1px solid #ccc;
     font-size: 16px;
+    background-color: #fff;
+    color: #333;
+    transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+}
+
+.filtre-section button:hover {
+    background-color: #af2e34;
+    color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.filtre-section .btn-reset:hover {
+    background-color: #af2e34;
+    color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.btn-submit:hover {
+    background-color: #af2e34;
+    color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .vitrine-venda {
