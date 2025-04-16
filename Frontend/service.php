@@ -9,9 +9,9 @@ session_start();
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mondial Automobile | Concessionnaire Auto</title>
-
+    <title>Services | Mondial Automobile</title>
     <link rel="stylesheet" href="/MondialAutomobile/Frontend/css/style.css">
+    <link rel="stylesheet" href="/MondialAutomobile/Frontend/css/style_service.css">
     <link rel="stylesheet" href="/MondialAutomobile/Frontend/css/style_alert.css">
     <script src="/MondialAutomobile/Frontend/js/alert.js" defer></script>
     <!-- Importation de la police Poppins depuis Google Fonts -->
@@ -21,9 +21,8 @@ session_start();
 </head>
 
 <body>
-   
-<!-- En-tête avec logo, menu et bannière principale -->
-<div class="header">
+     <!-- En-tête avec logo, menu et bannière principale -->
+     <div class="header">
         <div class="container">
             <div class="navbar">
                 <div class="logo">
@@ -34,9 +33,9 @@ session_start();
                         <li><a href="/MondialAutomobile/Frontend/index.php">Accueil</a></li>
                         <li><a href="/MondialAutomobile/Frontend/vente.php">Ventes</a></li>
                         <li><a href="/MondialAutomobile/Frontend/reprise.php">Reprise</a></li>
-                        <li class="dropdown active">
+                        <li class="dropdown">
                             <a href="/MondialAutomobile/Frontend/service.php">Service</a>
-                            <ul class="dropdown-menu ">
+                            <ul class="dropdown-menu " class="active">
                                 <li><a href="/MondialAutomobile/Frontend/service-entretien.php">Carte grise / immatriculation</a></li>
                                 <li><a href="/MondialAutomobile/Frontend/service-financement.php">Achat/Revente</a></li>
                                 <li><a href="/MondialAutomobile/Frontend/service-financement.php">Nettoyage</a></li>
@@ -58,6 +57,76 @@ session_start();
             </div>
         </div>
     </div>
-</body>
 
+    <!-- Section principale des services -->
+    <main class="service-container">
+        <section class="service-row">
+            <div class="service-text">
+                <h2>Carte grise / immatriculation</h2>
+                <p>Vendez votre véhicule rapidement en toute simplicité :</p>
+                <ul>
+                    <li>Une estimation gratuite et sans engagement</li>
+                    <li>Une vente rapide et paiement garanti</li>
+                    <li>Meilleur prix garanti</li>
+                    <li>Aucune contrainte administrative</li>
+                </ul>
+                <a href="/MondialAutomobile/Frontend/contact.php" class="btn-service">Prendre RDV</a>
+            </div>
+            <div class="service-image">
+                <img src="assets/images/Accueil1.jpg" alt="Service 1">
+            </div>
+        </section>
+
+        <section class="service-row reverse">
+            <div class="service-image">
+                <img src="assets/images/Accueil1.jpg" alt="Service 2">
+            </div>
+            <div class="service-text">
+                <h2>Achat/Revente</h2>
+                <p>Besoin d'un remplacement ou d'une réparation d'impact sur votre pare-brise ?</p>
+                <ul>
+                    <li>Intervention rapide et efficace</li>
+                    <li>Garantie sur les réparations</li>
+                    <li>Prise en charge des démarches administratives</li>
+                </ul>
+                <a href="/MondialAutomobile/Frontend/vente.php" class="btn-service">Contactez-nous</a>
+            </div>
+        </section>
+
+        <section class="service-row">
+            <div class="service-text">
+                <h2>Nettoyage</h2>
+                <p>Confiez-nous l'entretien et la réparation de votre véhicule :</p>
+                <ul>
+                    <li>Révision complète</li>
+                    <li>Changement de pneus</li>
+                    <li>Diagnostic électronique</li>
+                    <li>Réparations mécaniques</li>
+                </ul>
+                <a href="/MondialAutomobile/Frontend/contact.php" class="btn-service">Prendre RDV</a>
+            </div>
+            <div class="service-image">
+                <img src="assets/images/Accueil1.jpg" alt="Service 3">
+            </div>
+        </section>
+
+        <section class="service-row">
+            <div class="service-text">
+                <h2>Contrôle technique</h2>
+                <p>Confiez-nous l'entretien et la réparation de votre véhicule :</p>
+                <ul>
+                    <li>Révision complète</li>
+                    <li>Changement de pneus</li>
+                    <li>Diagnostic électronique</li>
+                    <li>Réparations mécaniques</li>
+                </ul>
+                <a href="/MondialAutomobile/Frontend/contact.php" class="btn-service">Prendre RDV</a>
+            </div>
+            <div class="service-image">
+                <img src="assets/images/Accueil1.jpg" alt="Service 3">
+            </div>
+        </section>
+    </main>
+</body>
+// manque le controle technique comme service : Contrôle technique
 </html>
