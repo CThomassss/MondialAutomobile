@@ -128,5 +128,4 @@ session_start();
         </section>
     </main>
 </body>
-// manque le controle technique comme service : Contrôle technique
 </html>

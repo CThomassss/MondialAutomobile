@@ -147,7 +147,10 @@
     border-radius: 15px;
     width: 80%;
     max-width: 600px;
-    /* Reduced width */
+    max-height: 80vh;
+    /* Limit the height to 80% of the viewport */
+    overflow-y: auto;
+    /* Enable vertical scrolling if content overflows */
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
     position: relative;
     animation: slideIn 0.4s ease-in-out;
