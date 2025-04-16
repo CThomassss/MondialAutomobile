@@ -1,6 +1,4 @@
 <?php
-// Inclusion de la configuration de la base de données
-include '../Backend/config/db_connection.php';
 session_start();
 ?>
 <!DOCTYPE html>
@@ -9,9 +7,9 @@ session_start();
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mondial Automobile | Concessionnaire Auto</title>
-
+    <title>Reprise | Mondial Automobile</title>
     <link rel="stylesheet" href="/MondialAutomobile/Frontend/css/style.css">
+    <link rel="stylesheet" href="/MondialAutomobile/Frontend/css/style_reprise.css">
     <link rel="stylesheet" href="/MondialAutomobile/Frontend/css/style_alert.css">
     <script src="/MondialAutomobile/Frontend/js/alert.js" defer></script>
     <!-- Importation de la police Poppins depuis Google Fonts -->
@@ -35,7 +33,7 @@ session_start();
                         <li class="active"><a href="/MondialAutomobile/Frontend/reprise.php">Reprise</a></li>
                         <li class="dropdown">
                             <a href="/MondialAutomobile/Frontend/service.php">Service</a>
-                            <ul class="dropdown-menu ">
+                            <ul class="dropdown-menu">
                                 <li><a href="/MondialAutomobile/Frontend/service-entretien.php">Carte grise / immatriculation</a></li>
                                 <li><a href="/MondialAutomobile/Frontend/service-financement.php">Achat/Revente</a></li>
                                 <li><a href="/MondialAutomobile/Frontend/service-financement.php">Nettoyage</a></li>
@@ -57,6 +55,56 @@ session_start();
             </div>
         </div>
     </div>
+
+    <!-- Section principale de reprise -->
+    <main class="reprise-container">
+        <h2>Proposez votre véhicule à la reprise</h2>
+        <form action="/MondialAutomobile/Backend/reprise_handler.php" method="POST" enctype="multipart/form-data">
+            <div class="form-row">
+                <div class="input-group">
+                    <label for="name">Nom</label>
+                    <input type="text" id="name" name="name" placeholder="Entrez votre nom" required>
+                </div>
+                <div class="input-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" placeholder="Entrez votre email" required>
+                </div>
+                <div class="input-group">
+                    <label for="phone">Téléphone</label>
+                    <input type="tel" id="phone" name="phone" placeholder="Entrez votre numéro de téléphone" required>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="input-group">
+                    <label for="marque">Marque</label>
+                    <input type="text" id="marque" name="marque" placeholder="Entrez la marque de votre véhicule" required>
+                </div>
+                <div class="input-group">
+                    <label for="modele">Modèle</label>
+                    <input type="text" id="modele" name="modele" placeholder="Entrez le modèle de votre véhicule" required>
+                </div>
+                <div class="input-group">
+                    <label for="annee">Année</label>
+                    <input type="number" id="annee" name="annee" placeholder="Entrez l'année de mise en circulation" required>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="input-group">
+                    <label for="kilometrage">Kilométrage</label>
+                    <input type="number" id="kilometrage" name="kilometrage" placeholder="Entrez le kilométrage" required>
+                </div>
+                <div class="input-group">
+                    <label for="description">Description</label>
+                    <textarea id="description" name="description" rows="2" placeholder="Ajoutez une description"></textarea>
+                </div>
+                <div class="input-group">
+                    <label for="images">Images</label>
+                    <input type="file" id="images" name="images[]" accept="image/*" multiple>
+                </div>
+            </div>
+            <button type="submit" class="btn-submit">Envoyer</button>
+        </form>
+    </main>
 </body>
 
 </html>

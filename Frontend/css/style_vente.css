@@ -350,7 +350,7 @@
 @media (max-width: 1024px) {
     .filtre-section {
         flex-direction: column;
-        gap: 10px;
+        gap: 15px;
     }
 
     .vitrine-venda {
@@ -360,9 +360,7 @@
     .carte {
         width: 250px;
     }
-}
 
-@media (max-width: 768px) {
     .carte img {
         width: 220px;
         height: 120px;
@@ -373,15 +371,27 @@
     }
 
     .carte p {
-        font-size: 12px;
+        font-size: 14px;
     }
 
     .prix {
         font-size: 16px;
     }
+
+    .btn-submit {
+        font-size: 0.9rem;
+        padding: 10px;
+    }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 768px) {
+
+    .filtre-section input,
+    .filtre-section select,
+    .filtre-section button {
+        width: 100%;
+    }
+
     .carte {
         width: 200px;
     }
@@ -395,8 +405,48 @@
         font-size: 16px;
     }
 
+    .carte p {
+        font-size: 12px;
+    }
+
+    .prix {
+        font-size: 14px;
+    }
+
     .btn-submit {
         font-size: 0.8rem;
-        padding: 8px 10px;
+        padding: 8px;
+    }
+}
+
+@media (max-width: 480px) {
+    .filtre-section {
+        gap: 10px;
+    }
+
+    .carte {
+        width: 180px;
+    }
+
+    .carte img {
+        width: 160px;
+        height: 90px;
+    }
+
+    .carte h2 {
+        font-size: 14px;
+    }
+
+    .carte p {
+        font-size: 10px;
+    }
+
+    .prix {
+        font-size: 12px;
+    }
+
+    .btn-submit {
+        font-size: 0.7rem;
+        padding: 6px;
     }
 }
