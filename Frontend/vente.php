@@ -94,7 +94,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['edit_vehicle']) && $_
     $est_visible = isset($_POST['est_visible']) ? 1 : 0;
 
     // Gestion de l'upload de l'image
-    $image_path = $_POST['current_image'];
+    $current_images = json_decode($_POST['current_image'], true); // Decode current images
     if (!empty($_FILES['image']['name'])) {
         $target_dir = "../Frontend/assets/uploads/";
         $target_file = $target_dir . basename($_FILES['image']['name']);
@@ -104,13 +104,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['edit_vehicle']) && $_
         $valid_extensions = ['jpg', 'jpeg', 'png', 'gif'];
         if (in_array($file_type, $valid_extensions)) {
             if (move_uploaded_file($_FILES['image']['tmp_name'], $target_file)) {
-                $image_path = "assets/uploads/" . basename($_FILES['image']['name']);
+                $current_images = ["assets/uploads/" . basename($_FILES['image']['name'])]; // Replace with new image
             }
         }
     }
 
     // Ensure the image path is always stored as a JSON array
-    $images_json = json_encode([$image_path]);
+    $images_json = json_encode($current_images);
 
     $query = "UPDATE voitures SET 
               marque = '$marque', modele = '$modele', annee = $annee, prix = $prix, 
