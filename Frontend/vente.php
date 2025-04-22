@@ -65,6 +65,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_vehicle']) && $_S
         }
     }
 
+    // If no image is uploaded, set a default placeholder image
+    if (empty($image_paths)) {
+        $image_paths[] = "assets/images/car_placeholder.png";
+    }
+
     // Convertir les chemins des images en JSON pour stockage
     $images_json = json_encode($image_paths);
 
@@ -104,10 +109,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['edit_vehicle']) && $_
         }
     }
 
+    // Ensure the image path is always stored as a JSON array
+    $images_json = json_encode([$image_path]);
+
     $query = "UPDATE voitures SET 
               marque = '$marque', modele = '$modele', annee = $annee, prix = $prix, 
               kilometrage = $kilometrage, carburant = '$carburant', boite = '$boite', 
-              description = '$description', images = '$image_path', est_visible = $est_visible 
+              description = '$description', images = '$images_json', est_visible = $est_visible 
               WHERE id = $id";
     $conn->query($query);
     header("Location: vente.php?success=2");
@@ -239,13 +247,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_vehicle']) && 
                     </div>
                     <div class="input-group">
                         <label for="carburant">Carburant</label>
-                        <input type="text" id="carburant" name="carburant">
+                        <select id="carburant" name="carburant" required>
+                            <option value="">Choisir le carburant</option>
+                            <option value="Essence">Essence</option>
+                            <option value="Diesel">Diesel</option>
+                            <option value="Électrique">Électrique</option>
+                            <option value="Hybride">Hybride</option>
+                        </select>
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="input-group">
                         <label for="boite">Boîte</label>
-                        <input type="text" id="boite" name="boite">
+                        <select id="boite" name="boite" required>
+                            <option value="">Choisir la boîte</option>
+                            <option value="Manuelle">Manuelle</option>
+                            <option value="Automatique">Automatique</option>
+                        </select>
                     </div>
                     <div class="input-group">
                         <label for="description">Description</label>
@@ -324,13 +342,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_vehicle']) && 
                     </div>
                     <div class="input-group">
                         <label for="edit_carburant">Carburant</label>
-                        <input type="text" id="edit_carburant" name="carburant">
+                        <select id="edit_carburant" name="carburant" required>
+                            <option value="">Choisir le carburant</option>
+                            <option value="Essence">Essence</option>
+                            <option value="Diesel">Diesel</option>
+                            <option value="Électrique">Électrique</option>
+                            <option value="Hybride">Hybride</option>
+                        </select>
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="input-group">
                         <label for="edit_boite">Boîte</label>
-                        <input type="text" id="edit_boite" name="boite">
+                        <select id="edit_boite" name="boite" required>
+                            <option value="">Choisir la boîte</option>
+                            <option value="Manuelle">Manuelle</option>
+                            <option value="Automatique">Automatique</option>
+                        </select>
                     </div>
                     <div class="input-group">
                         <label for="edit_description">Description</label>
