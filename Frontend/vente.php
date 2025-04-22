@@ -4,9 +4,9 @@ include '../Backend/config/db_connection.php';
 session_start();
 
 // Récupération des véhicules disponibles
-$filter_query = "SELECT * FROM voitures WHERE est_vendu = 0";
+$filter_query = "SELECT * FROM voitures";
 if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
-    $filter_query .= " AND est_visible = 1"; // Only show visible vehicles for non-admin users
+    $filter_query .= " WHERE est_visible = 1"; // Only show visible vehicles for non-admin users
 }
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $filters = [];
@@ -23,7 +23,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         $filters[] = "prix <= " . intval($_GET['prix_max']);
     }
     if ($filters) {
-        $filter_query .= " AND " . implode(" AND ", $filters);
+        $filter_query .= isset($_SESSION['role']) && $_SESSION['role'] === 'admin' ? " WHERE " : " AND ";
+        $filter_query .= implode(" AND ", $filters);
     }
 }
 
@@ -33,9 +34,9 @@ $page_actuelle = isset($_GET['page']) ? max(1, intval($_GET['page'])) : 1; // Cu
 $offset = ($page_actuelle - 1) * $annonces_par_page; // Offset for SQL query
 
 // Count total number of announcements
-$total_annonces_query = "SELECT COUNT(*) AS total FROM voitures WHERE est_vendu = 0";
+$total_annonces_query = "SELECT COUNT(*) AS total FROM voitures";
 if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
-    $total_annonces_query .= " AND est_visible = 1";
+    $total_annonces_query .= " WHERE est_visible = 1";
 }
 $total_annonces_result = $conn->query($total_annonces_query);
 $total_annonces = $total_annonces_result->fetch_assoc()['total'];
@@ -46,11 +47,11 @@ $filter_query .= " LIMIT $annonces_par_page OFFSET $offset";
 $result = $conn->query($filter_query);
 
 // Récupérer les marques distinctes
-$marques_result = $conn->query("SELECT DISTINCT marque FROM voitures WHERE est_vendu = 0");
+$marques_result = $conn->query("SELECT DISTINCT marque FROM voitures");
 $marques = $marques_result->fetch_all(MYSQLI_ASSOC);
 
 // Récupérer les modèles distincts
-$modeles_result = $conn->query("SELECT DISTINCT modele FROM voitures WHERE est_vendu = 0");
+$modeles_result = $conn->query("SELECT DISTINCT modele FROM voitures");
 $modeles = $modeles_result->fetch_all(MYSQLI_ASSOC);
 
 // Ajout d'une annonce (réservé aux administrateurs)
@@ -109,6 +110,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['edit_vehicle']) && $_
     $boite = $conn->real_escape_string($_POST['boite']);
     $description = $conn->real_escape_string($_POST['description']);
     $est_visible = isset($_POST['est_visible']) ? 1 : 0;
+    $est_vendu = isset($_POST['est_vendu']) ? 1 : 0;
 
     // Gestion de l'upload de l'image
     $current_images = json_decode($_POST['current_image'], true); // Decode current images
@@ -132,7 +134,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['edit_vehicle']) && $_
     $query = "UPDATE voitures SET 
               marque = '$marque', modele = '$modele', annee = $annee, prix = $prix, 
               kilometrage = $kilometrage, carburant = '$carburant', boite = '$boite', 
-              description = '$description', images = '$images_json', est_visible = $est_visible 
+              description = '$description', images = '$images_json', est_visible = $est_visible, est_vendu = $est_vendu 
               WHERE id = $id";
     $conn->query($query);
     header("Location: vente.php?success=2");
@@ -145,6 +147,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_vehicle']) && 
     $query = "DELETE FROM voitures WHERE id = $id";
     $conn->query($query);
     header("Location: vente.php?success=3");
+    exit();
+}
+
+// Marquer une voiture comme vendue
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['mark_as_sold'])) {
+    $id = intval($_POST['id']);
+    $query = "UPDATE voitures SET est_vendu = 1 WHERE id = $id";
+    if ($conn->query($query)) {
+        echo json_encode(['success' => true]);
+    } else {
+        echo json_encode(['success' => false]);
+    }
     exit();
 }
 ?>
@@ -313,7 +327,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_vehicle']) && 
                         $images = json_decode($vehicle['images'], true);
                         $first_image = !empty($images) ? $images[0] : 'assets/images/car_placeholder.png';
                         ?>
-                        <img src="<?php echo htmlspecialchars($first_image); ?>" alt="Image voiture">
+                        <div class="carte-image-wrapper">
+                            <img src="<?php echo htmlspecialchars($first_image); ?>" alt="Image voiture">
+                            <?php if ($vehicle['est_vendu'] == 1): ?>
+                                <div class="vendu-overlay">
+                                    <img src="assets/images/vendu.png" alt="Vendu">
+                                </div>
+                            <?php endif; ?>
+                        </div>
                         <h2><?php echo htmlspecialchars($vehicle['marque'] . ' ' . $vehicle['modele']); ?></h2>
                         <p>Année : <?php echo htmlspecialchars($vehicle['annee']); ?></p>
                         <p>Kilométrage : <?php echo htmlspecialchars($vehicle['kilometrage']); ?> km</p>
@@ -420,6 +441,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_vehicle']) && 
                         <label for="edit_est_visible">Visibilité</label>
                         <input type="checkbox" id="edit_est_visible" name="est_visible">
                     </div>
+                    <div class="visibility-group">
+                        <label for="edit_est_vendu">Vendu</label>
+                        <input type="checkbox" id="edit_est_vendu" name="est_vendu">
+                    </div>
                 </div>
                 <div class="form-row" style="margin-top: 20px; justify-content: center;">
                     <button type="submit" name="edit_vehicle" class="btn-submit">Modifier</button>
@@ -441,6 +466,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_vehicle']) && 
             document.getElementById('edit_description').value = vehicle.description;
             document.getElementById('current_image').value = vehicle.images;
             document.getElementById('edit_est_visible').checked = vehicle.est_visible == 1;
+            document.getElementById('edit_est_vendu').checked = vehicle.est_vendu == 1;
             document.getElementById('editPopupForm').style.display = 'block';
         }
 
