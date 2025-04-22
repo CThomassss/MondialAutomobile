@@ -50,7 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap"
         rel="stylesheet">
-
+    <script src="/MondialAutomobile/Frontend/js/transition.js" defer></script>
 </head>
 
 <body>
@@ -69,12 +69,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <li><a href="/MondialAutomobile/Frontend/reprise.php">Reprise</a></li>
                         <li class="dropdown">
                             <a href="/MondialAutomobile/Frontend/service.php">Service</a>
-                            <ul class="dropdown-menu ">
-                                <li><a href="/MondialAutomobile/Frontend/service-entretien.php">Carte grise / immatriculation</a></li>
-                                <li><a href="/MondialAutomobile/Frontend/service-financement.php">Achat/Revente</a></li>
-                                <li><a href="/MondialAutomobile/Frontend/service-financement.php">Nettoyage</a></li>
-                                <li><a href="/MondialAutomobile/Frontend/service-garantie.php">Contrôle technique</a></li>
-                            </ul>
                         </li>
                         <li><a href="/MondialAutomobile/Frontend/contact.php">Contact</a></li>
                         <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin'): ?>

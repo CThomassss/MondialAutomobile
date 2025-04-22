@@ -236,7 +236,7 @@ INSERT INTO faq (question, reponse) VALUES
 ('Peut-on avoir une attestation de reprise ?', 'Oui, une attestation vous est remise lors de la reprise.'),
 ('Proposez-vous un accompagnement pour l’assurance ?', 'Non, mais nous pouvons vous conseiller sur les démarches à suivre.'),
 ('Puis-je venir tester plusieurs véhicules ?', 'Oui, sur rendez-vous, vous pouvez tester plusieurs modèles.'),
-('Les prix affichés sont-ils TTC ?', 'Oui, tous les prix affichés sont en TTC.');
+('Les prix affichés sont-ils TTC ?', 'Oui, tous les prix affichés sont en TTC.'),
 ('Bonjour', 'Bonjours, comment je peux vous aider ? ');
 
 

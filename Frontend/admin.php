@@ -159,6 +159,7 @@ $account_info = $account_result->fetch_assoc();
         rel="stylesheet">
     <script src="/MondialAutomobile/Frontend/js/admin_effects.js" defer></script>
     <script src="/MondialAutomobile/Frontend/js/alert.js" defer></script>
+    <script src="/MondialAutomobile/Frontend/js/transition.js" defer></script>
 </head>
 
 <body>
@@ -177,12 +178,6 @@ $account_info = $account_result->fetch_assoc();
                         <li><a href="/MondialAutomobile/Frontend/reprise.php">Reprise</a></li>
                         <li class="dropdown">
                             <a href="/MondialAutomobile/Frontend/service.php">Service</a>
-                            <ul class="dropdown-menu ">
-                                <li><a href="/MondialAutomobile/Frontend/service-entretien.php">Carte grise / immatriculation</a></li>
-                                <li><a href="/MondialAutomobile/Frontend/service-financement.php">Achat/Revente</a></li>
-                                <li><a href="/MondialAutomobile/Frontend/service-financement.php">Nettoyage</a></li>
-                                <li><a href="/MondialAutomobile/Frontend/service-garantie.php">Contrôle technique</a></li>
-                            </ul>
                         </li>
                         <li><a href="/MondialAutomobile/Frontend/contact.php">Contact</a></li>
                         <?php if (isset($_SESSION['user_id'])): ?>
