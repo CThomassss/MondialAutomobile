@@ -274,12 +274,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_vehicle']) && 
                 <p class="prix"><?php echo htmlspecialchars(number_format($vehicle['prix'], 2, ',', ' ')); ?> €</p>
                 <button class="btn-submit">Plus de détails</button>
                 <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin'): ?>
-                    <p>Visible : <?php echo isset($vehicle['est_visible']) && $vehicle['est_visible'] ? 'Oui' : 'Non'; ?></p>
                     <button class="btn-submit" onclick="openEditPopup(<?php echo htmlspecialchars(json_encode($vehicle)); ?>)">Modifier</button>
                     <form method="POST" action="vente.php" style="display:inline;">
                         <input type="hidden" name="id" value="<?php echo $vehicle['id']; ?>">
                         <button type="submit" name="delete_vehicle" class="btn-submit" style="background-color: #af2e34;">Supprimer</button>
                     </form>
+                    <p>Visible : <?php echo isset($vehicle['est_visible']) && $vehicle['est_visible'] ? 'Oui' : 'Non'; ?></p>
+
                 <?php endif; ?>
             </div>
         <?php endwhile; ?>
