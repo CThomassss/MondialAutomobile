@@ -238,6 +238,12 @@
     position: relative;
 }
 
+.carte-image-wrapper img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+}
+
 .vendu-overlay {
     position: absolute;
     top: 0;
