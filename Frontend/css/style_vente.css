@@ -4,180 +4,204 @@
     margin: 40px 0 20px;
 }
 
+/* Filter Section */
 .filtre-section {
+    background-color: #fff;
+    padding: 20px;
+    margin: 20px auto;
+    max-width: 1200px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     display: flex;
+    flex-wrap: wrap;
     gap: 20px;
     justify-content: center;
-    align-items: center;
-    margin-bottom: 40px;
-    flex-wrap: wrap;
 }
 
-.filtre-section input,
-.filtre-section button,
-.filtre-section .btn-reset,
 .filtre-section select,
-.btn-submit {
-    padding: 10px;
+.filtre-section input,
+.filtre-section button {
+    padding: 10px 15px;
+    border: 1px solid #ddd;
     border-radius: 8px;
-    border: 1px solid #ccc;
-    font-size: 16px;
+    font-size: 14px;
     background-color: #fff;
     color: #333;
-    transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+    transition: all 0.3s ease;
+}
+
+.filtre-section select:focus,
+.filtre-section input:focus {
+    border-color: #af2e34;
+    box-shadow: 0 0 5px rgba(175, 46, 52, 0.5);
+    outline: none;
+}
+
+.filtre-section button {
+    background-color: #af2e34;
+    color: #fff;
     cursor: pointer;
-    text-align: center;
-    text-decoration: none;
+    border: none;
 }
 
 .filtre-section button:hover {
-    background-color: #af2e34;
-    color: #fff;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    background-color: #86181f;
 }
 
-.filtre-section .btn-reset:hover {
-    background-color: #af2e34;
-    color: #fff;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-.btn-submit:hover {
-    background-color: #af2e34;
-    color: #fff;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
+/* Vehicle Showcase Section */
 .vitrine-venda {
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
     justify-content: center;
     padding: 40px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
 .carte {
-    background-color: white;
+    background-color: #fff;
     border-radius: 10px;
-    padding: 20px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    transition: transform 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
     width: 300px;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .carte:hover {
     transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
 }
 
 .carte img {
-    width: 260px;
-    height: 137px;
+    width: 100%;
+    height: 180px;
     object-fit: cover;
-    border-radius: 8px;
 }
 
 .carte h2 {
-    font-size: 20px;
+    font-size: 18px;
     margin: 15px 0 10px;
+    color: #333;
 }
 
 .carte p {
     font-size: 14px;
     margin: 5px 0;
+    color: #555;
 }
 
-.prix {
+.carte .prix {
     font-weight: bold;
     color: #af2e34;
-    font-size: 18px;
+    font-size: 16px;
     margin: 10px 0;
 }
 
-.btn-submit {
-    display: inline-block;
+.carte button {
     background-color: #af2e34;
-    color: white;
-    padding: 10px 20px;
+    color: #fff;
+    padding: 10px 15px;
+    border: none;
     border-radius: 8px;
-    text-decoration: none;
+    font-size: 14px;
+    cursor: pointer;
     transition: background-color 0.3s ease;
+    margin: 10px auto;
 }
 
-.btn-submit:hover {
-    background-color: #af2e34;
+.carte button:hover {
+    background-color: #86181f;
 }
 
-.btn-reset {
-    display: inline-block;
-    background-color: #af2e34;
-    color: white;
-    padding: 10px 20px;
-    border-radius: 8px;
-    text-decoration: none;
-    transition: background-color 0.3s ease;
-}
-
-.btn-reset:hover {
-    background-color: #bbb;
-    color: #000;
-}
-
+/* Popup Form */
 .popup {
     display: none;
     position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.7);
+    width: 90%;
+    max-width: 800px;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
     z-index: 1000;
-    justify-content: center;
-    align-items: center;
-    animation: fadeIn 0.3s ease-in-out;
+    overflow-y: auto;
+    max-height: 90vh;
 }
 
 .popup-content {
-    background: #ffffff;
-    padding: 20px;
-    border-radius: 15px;
-    width: 80%;
-    max-width: 600px;
-    max-height: 80vh;
-    /* Limit the height to 80% of the viewport */
-    overflow-y: auto;
-    /* Enable vertical scrolling if content overflows */
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-    position: relative;
-    animation: slideIn 0.4s ease-in-out;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
 }
 
-.popup-content form {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    /* Space between sections */
+.popup-content h2 {
+    grid-column: span 2;
+    text-align: center;
+    font-size: 1.8rem;
+    color: #af2e34;
+    margin-bottom: 20px;
 }
 
 .popup-content .input-group {
-    flex: 1 1 calc(50% - 20px);
-    /* Two columns layout */
-    min-width: 200px;
+    display: flex;
+    flex-direction: column;
 }
 
-.popup-content .input-group textarea {
-    flex: 1 1 100%;
-    /* Textarea spans full width */
+.popup-content .input-group label {
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #333;
 }
 
-.popup-content .btn-submit {
-    flex: 1 1 100%;
-    /* Submit button spans full width */
-    margin-top: 10px;
+.popup-content .input-group input,
+.popup-content .input-group textarea,
+.popup-content .input-group select {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    font-size: 1rem;
+    background: #fff;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.popup-content .input-group input:focus,
+.popup-content .input-group textarea:focus,
+.popup-content .input-group select:focus {
+    border-color: #af2e34;
+    box-shadow: 0 0 5px rgba(175, 46, 52, 0.5);
+    outline: none;
+}
+
+.popup-content textarea {
+    resize: none;
+}
+
+.popup-content button {
+    grid-column: span 2;
+    padding: 12px 15px;
+    background: #af2e34;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.popup-content button:hover {
+    background: #86181f;
+    transform: translateY(-3px);
 }
 
 .close-popup {
@@ -196,161 +220,74 @@
     color: #86181f;
 }
 
-.popup-content h2 {
-    font-size: 1.8rem;
-    margin-bottom: 20px;
-    color: #af2e34;
-    text-align: center;
-    font-weight: 600;
-}
-
-.popup-content .input-group label {
-    display: block;
-    font-weight: 600;
-    margin-bottom: 8px;
-    color: #333;
-}
-
-.popup-content .input-group input,
-.popup-content .input-group textarea {
+.form-row {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
     width: 100%;
-    padding: 12px 15px;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    font-size: 1rem;
-    background: #fff;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-.popup-content .input-group input:focus,
-.popup-content .input-group textarea:focus {
-    border-color: #af2e34;
-    box-shadow: 0 0 5px rgba(212, 39, 39, 0.5);
-    outline: none;
+.input-group {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    max-width: 250px;
 }
 
-.popup-content .btn-submit {
-    width: 100%;
-    padding: 12px 15px;
-    background: #af2e34;
+.input-group textarea {
+    resize: none;
+}
+
+.btn-submit {
+    padding: 12px 20px;
+    background-color: #af2e34;
     color: #fff;
     border: none;
     border-radius: 10px;
     font-size: 1rem;
     font-weight: 600;
     cursor: pointer;
-    transition: background 0.3s ease, transform 0.3s ease;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    text-align: center;
+    margin-top: 20px;
 }
 
-.popup-content .btn-submit:hover {
-    background: #af2e34;
+.btn-submit:hover {
+    background-color: #86181f;
     transform: translateY(-3px);
 }
 
-.image-modal {
-    display: none;
-    position: fixed;
-    z-index: 2000;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0, 0, 0, 0.9);
-}
-
-.image-modal-content {
-    margin: auto;
-    display: block;
-    max-width: 80%;
-    max-height: 80%;
-    border-radius: 10px;
-    animation: zoomIn 0.3s ease-in-out;
-}
-
-.close-image-modal {
-    position: absolute;
-    top: 20px;
-    right: 35px;
-    color: #fff;
-    font-size: 40px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: color 0.3s ease;
-}
-
-.close-image-modal:hover {
-    color: #ccc;
-}
-
-.details-modal {
-    display: none;
-    position: fixed;
-    z-index: 2000;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0, 0, 0, 0.9);
+/* Visibilité Section */
+.visibility-row {
+    display: flex;
     justify-content: center;
-    align-items: center;
+    margin-top: 20px;
 }
 
-.details-modal-content {
-    background: #ffffff;
-    margin: auto;
-    padding: 20px;
-    border-radius: 10px;
-    width: 80%;
-    max-width: 600px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-    animation: fadeIn 0.3s ease-in-out;
+.visibility-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background-color: #f9f9f9;
+    padding: 10px 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.visibility-group label {
+    font-weight: 600;
     color: #333;
 }
 
-.details-modal-content h2 {
-    text-align: center;
-    color: #af2e34;
-    margin-bottom: 20px;
-}
-
-.details-modal-content p {
-    font-size: 16px;
-    margin: 10px 0;
-    line-height: 1.5;
-}
-
-.close-details-modal {
-    position: absolute;
-    top: 15px;
-    right: 15px;
-    font-size: 1.8rem;
+.visibility-group input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    accent-color: #af2e34;
     cursor: pointer;
-    color: #af2e34;
-    font-weight: bold;
-    transition: transform 0.3s ease, color 0.3s ease;
-}
-
-.close-details-modal:hover {
-    transform: scale(1.2);
-    color: #86181f;
-}
-
-@keyframes zoomIn {
-    from {
-        transform: scale(0.8);
-        opacity: 0;
-    }
-
-    to {
-        transform: scale(1);
-        opacity: 1;
-    }
 }
 
 /* Responsive Design */
-@media (max-width: 1024px) {
+@media (max-width: 768px) {
     .filtre-section {
         flex-direction: column;
         gap: 15px;
@@ -361,95 +298,40 @@
     }
 
     .carte {
-        width: 250px;
-    }
-
-    .carte img {
-        width: 220px;
-        height: 120px;
-    }
-
-    .carte h2 {
-        font-size: 18px;
-    }
-
-    .carte p {
-        font-size: 14px;
-    }
-
-    .prix {
-        font-size: 16px;
-    }
-
-    .btn-submit {
-        font-size: 0.9rem;
-        padding: 10px;
-    }
-}
-
-@media (max-width: 768px) {
-
-    .filtre-section input,
-    .filtre-section select,
-    .filtre-section button {
         width: 100%;
     }
 
-    .carte {
-        width: 200px;
+    .popup-content {
+        grid-template-columns: 1fr;
     }
 
-    .carte img {
-        width: 180px;
-        height: 100px;
+    .popup-content h2 {
+        grid-column: span 1;
     }
 
-    .carte h2 {
-        font-size: 16px;
+    .popup-content button {
+        grid-column: span 1;
     }
 
-    .carte p {
-        font-size: 12px;
+    .popup-content {
+        width: 95%;
     }
 
-    .prix {
-        font-size: 14px;
+    .form-row {
+        flex-direction: column;
+        align-items: center;
     }
 
-    .btn-submit {
-        font-size: 0.8rem;
-        padding: 8px;
-    }
-}
-
-@media (max-width: 480px) {
-    .filtre-section {
-        gap: 10px;
+    .input-group {
+        max-width: 100%;
     }
 
-    .carte {
-        width: 180px;
+    .visibility-row {
+        flex-direction: column;
+        align-items: center;
     }
 
-    .carte img {
-        width: 160px;
-        height: 90px;
-    }
-
-    .carte h2 {
-        font-size: 14px;
-    }
-
-    .carte p {
-        font-size: 10px;
-    }
-
-    .prix {
-        font-size: 12px;
-    }
-
-    .btn-submit {
-        font-size: 0.7rem;
-        padding: 6px;
+    .visibility-group {
+        justify-content: center;
     }
 }

@@ -216,43 +216,51 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_vehicle']) && 
             <span class="close-popup" id="closePopup">&times;</span>
             <h2>Poster une annonce</h2>
             <form method="POST" action="vente.php" enctype="multipart/form-data">
-                <div class="input-group">
-                    <label for="marque">Marque</label>
-                    <input type="text" id="marque" name="marque" required>
+                <div class="form-row">
+                    <div class="input-group">
+                        <label for="marque">Marque</label>
+                        <input type="text" id="marque" name="marque" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="modele">Modèle</label>
+                        <input type="text" id="modele" name="modele" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="annee">Année</label>
+                        <input type="number" id="annee" name="annee" required>
+                    </div>
                 </div>
-                <div class="input-group">
-                    <label for="modele">Modèle</label>
-                    <input type="text" id="modele" name="modele" required>
+                <div class="form-row">
+                    <div class="input-group">
+                        <label for="prix">Prix</label>
+                        <input type="number" id="prix" name="prix" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="kilometrage">Kilométrage</label>
+                        <input type="number" id="kilometrage" name="kilometrage" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="carburant">Carburant</label>
+                        <input type="text" id="carburant" name="carburant">
+                    </div>
                 </div>
-                <div class="input-group">
-                    <label for="annee">Année</label>
-                    <input type="number" id="annee" name="annee" required>
+                <div class="form-row">
+                    <div class="input-group">
+                        <label for="boite">Boîte</label>
+                        <input type="text" id="boite" name="boite">
+                    </div>
+                    <div class="input-group">
+                        <label for="description">Description</label>
+                        <textarea id="description" name="description" rows="2"></textarea>
+                    </div>
+                    <div class="input-group">
+                        <label for="images">Images</label>
+                        <input type="file" id="images" name="images[]" accept="image/*" multiple>
+                    </div>
                 </div>
-                <div class="input-group">
-                    <label for="prix">Prix</label>
-                    <input type="number" id="prix" name="prix" required>
+                <div class="form-row" style="margin-top: 20px; justify-content: center;">
+                    <button type="submit" name="add_vehicle" class="btn-submit">Poster</button>
                 </div>
-                <div class="input-group">
-                    <label for="kilometrage">Kilométrage</label>
-                    <input type="number" id="kilometrage" name="kilometrage" required>
-                </div>
-                <div class="input-group">
-                    <label for="carburant">Carburant</label>
-                    <input type="text" id="carburant" name="carburant">
-                </div>
-                <div class="input-group">
-                    <label for="boite">Boîte</label>
-                    <input type="text" id="boite" name="boite">
-                </div>
-                <div class="input-group">
-                    <label for="description">Description</label>
-                    <textarea id="description" name="description" rows="4"></textarea>
-                </div>
-                <div class="input-group">
-                    <label for="images">Images</label>
-                    <input type="file" id="images" name="images[]" accept="image/*" multiple>
-                </div>
-                <button type="submit" name="add_vehicle" class="btn-submit">Poster</button>
             </form>
         </div>
     </div>
@@ -293,47 +301,57 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_vehicle']) && 
             <form method="POST" action="vente.php" enctype="multipart/form-data">
                 <input type="hidden" id="edit_id" name="id">
                 <input type="hidden" id="current_image" name="current_image">
-                <div class="input-group">
-                    <label for="edit_marque">Marque</label>
-                    <input type="text" id="edit_marque" name="marque" required>
+                <div class="form-row">
+                    <div class="input-group">
+                        <label for="edit_marque">Marque</label>
+                        <input type="text" id="edit_marque" name="marque" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="edit_modele">Modèle</label>
+                        <input type="text" id="edit_modele" name="modele" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="edit_annee">Année</label>
+                        <input type="number" id="edit_annee" name="annee" required>
+                    </div>
                 </div>
-                <div class="input-group">
-                    <label for="edit_modele">Modèle</label>
-                    <input type="text" id="edit_modele" name="modele" required>
+                <div class="form-row">
+                    <div class="input-group">
+                        <label for="edit_prix">Prix</label>
+                        <input type="number" id="edit_prix" name="prix" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="edit_kilometrage">Kilométrage</label>
+                        <input type="number" id="edit_kilometrage" name="kilometrage" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="edit_carburant">Carburant</label>
+                        <input type="text" id="edit_carburant" name="carburant">
+                    </div>
                 </div>
-                <div class="input-group">
-                    <label for="edit_annee">Année</label>
-                    <input type="number" id="edit_annee" name="annee" required>
+                <div class="form-row">
+                    <div class="input-group">
+                        <label for="edit_boite">Boîte</label>
+                        <input type="text" id="edit_boite" name="boite">
+                    </div>
+                    <div class="input-group">
+                        <label for="edit_description">Description</label>
+                        <textarea id="edit_description" name="description" rows="2"></textarea>
+                    </div>
+                    <div class="input-group">
+                        <label for="edit_image">Image</label>
+                        <input type="file" id="edit_image" name="image" accept="image/*">
+                    </div>
                 </div>
-                <div class="input-group">
-                    <label for="edit_prix">Prix</label>
-                    <input type="number" id="edit_prix" name="prix" required>
+                <div class="form-row visibility-row">
+                    <div class="visibility-group">
+                        <label for="edit_est_visible">Visibilité</label>
+                        <input type="checkbox" id="edit_est_visible" name="est_visible">
+                    </div>
                 </div>
-                <div class="input-group">
-                    <label for="edit_kilometrage">Kilométrage</label>
-                    <input type="number" id="edit_kilometrage" name="kilometrage" required>
+                <div class="form-row" style="margin-top: 20px; justify-content: center;">
+                    <button type="submit" name="edit_vehicle" class="btn-submit">Modifier</button>
                 </div>
-                <div class="input-group">
-                    <label for="edit_carburant">Carburant</label>
-                    <input type="text" id="edit_carburant" name="carburant">
-                </div>
-                <div class="input-group">
-                    <label for="edit_boite">Boîte</label>
-                    <input type="text" id="edit_boite" name="boite">
-                </div>
-                <div class="input-group">
-                    <label for="edit_description">Description</label>
-                    <textarea id="edit_description" name="description" rows="4"></textarea>
-                </div>
-                <div class="input-group">
-                    <label for="edit_image">Image</label>
-                    <input type="file" id="edit_image" name="image" accept="image/*">
-                </div>
-                <div class="input-group">
-                    <label for="edit_est_visible">Visible</label>
-                    <input type="checkbox" id="edit_est_visible" name="est_visible">
-                </div>
-                <button type="submit" name="edit_vehicle" class="btn-submit">Modifier</button>
             </form>
         </div>
     </div>
