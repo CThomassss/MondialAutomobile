@@ -113,9 +113,132 @@ textarea {
     }
 }
 
-@media (max-width: 768px) {
+/* Responsive styles */
+@media (max-width: 1024px) {
+    .reprise-container {
+        max-width: 800px;
+        padding: 15px;
+    }
+
     .form-row {
         flex-direction: column;
         gap: 15px;
+    }
+
+    .input-group {
+        width: 100%;
+    }
+
+    .btn-submit {
+        font-size: 0.9rem;
+        padding: 10px 12px;
+    }
+}
+
+@media (max-width: 768px) {
+    .reprise-container {
+        max-width: 600px;
+        padding: 10px;
+    }
+
+    .reprise-container h2 {
+        font-size: 1.5rem;
+    }
+
+    .form-row {
+        gap: 10px;
+    }
+
+    .input-group label {
+        font-size: 0.9rem;
+    }
+
+    .input-group input,
+    .input-group textarea,
+    .input-group select {
+        font-size: 0.9rem;
+        padding: 10px 12px;
+    }
+
+    .btn-submit {
+        font-size: 0.85rem;
+        padding: 8px 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .reprise-container {
+        max-width: 100%;
+        margin: 20px 10px;
+        padding: 10px;
+    }
+
+    .reprise-container h2 {
+        font-size: 1.2rem;
+    }
+
+    .form-row {
+        gap: 8px;
+    }
+
+    .input-group label {
+        font-size: 0.8rem;
+    }
+
+    .input-group input,
+    .input-group textarea,
+    .input-group select {
+        font-size: 0.8rem;
+        padding: 8px 10px;
+    }
+
+    .btn-submit {
+        font-size: 0.8rem;
+        padding: 6px 8px;
+    }
+}
+
+/* Responsive styles for announcements */
+.annonce-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    /* Default: 4 announcements per row */
+    gap: 20px;
+}
+
+.annonce {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    overflow: hidden;
+    text-align: center;
+    padding: 10px;
+}
+
+.annonce img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+
+/* Adjust grid layout for smaller screens */
+@media (max-width: 1024px) {
+    .annonce-container {
+        grid-template-columns: repeat(3, 1fr);
+        /* 3 announcements per row */
+    }
+}
+
+@media (max-width: 768px) {
+    .annonce-container {
+        grid-template-columns: repeat(2, 1fr);
+        /* 2 announcements per row */
+    }
+}
+
+@media (max-width: 480px) {
+    .annonce-container {
+        grid-template-columns: 1fr;
+        /* 1 announcement per row */
     }
 }
