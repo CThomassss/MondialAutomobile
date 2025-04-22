@@ -6,36 +6,74 @@
 
 /* Filter Section */
 .filtre-section {
-    background-color: #fff;
-    padding: 20px;
-    margin: 20px auto;
-    max-width: 1200px;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    background-color: #f7f7f7;
+    /* Softer background */
+    padding: 30px 20px;
+    /* Add padding to prevent sticking to the edges */
+    margin: 20px 20px;
+    /* Add equal margin on left and right to prevent sticking */
+    width: calc(100% - 40px);
+    /* Subtract padding from the total width */
+    box-sizing: border-box;
+    /* Include padding and border in the element's width */
+    border-radius: 20px;
+    /* Ensure all corners are rounded, including the right side */
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+    /* Enhanced shadow */
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
     justify-content: center;
+    /* Center elements horizontally */
     align-items: center;
+    /* Center elements vertically */
+    text-align: center;
+    /* Ensure text alignment is centered */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    /* Smooth hover effect */
+}
+
+.filtre-section:hover {
+    transform: translateY(-5px);
+    /* Slight lift on hover */
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    /* Stronger shadow on hover */
 }
 
 .filtre-section select,
 .filtre-section input,
 .filtre-section button {
-    padding: 10px 15px;
+    padding: 15px 20px;
+    /* Increased padding for a modern look */
+    font-size: 1rem;
+    /* Slightly larger font size for better readability */
     border: 1px solid #ddd;
-    border-radius: 8px;
-    font-size: 14px;
+    /* Softer border */
+    border-radius: 12px;
+    /* More rounded corners */
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+    /* Subtle shadow for depth */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    /* Smooth hover effect */
     background-color: #fff;
     color: #333;
-    transition: all 0.3s ease;
 }
 
 .filtre-section select:focus,
 .filtre-section input:focus {
     border-color: #af2e34;
-    box-shadow: 0 0 5px rgba(175, 46, 52, 0.5);
+    box-shadow: 0 0 8px rgba(175, 46, 52, 0.5);
+    /* Enhanced focus effect */
     outline: none;
+}
+
+.filtre-section select:hover,
+.filtre-section input:hover,
+.filtre-section button:hover {
+    transform: translateY(-2px);
+    /* Slight lift on hover */
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    /* Enhanced shadow on hover */
 }
 
 .filtre-section button {
@@ -43,19 +81,26 @@
     color: #fff;
     cursor: pointer;
     border: none;
+    font-weight: bold;
+    transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
 .filtre-section button:hover {
     background-color: #86181f;
+    transform: translateY(-3px);
+    /* Lift effect on hover */
 }
 
 /* Filter Row */
 .filter-row {
     display: flex;
     flex-wrap: wrap;
-    gap: 20px;
-    justify-content: center;
-    margin-bottom: 20px;
+    gap: 30px;
+    /* Increased gap between elements for better spacing */
+    justify-content: space-between;
+    /* Spread filters evenly */
+    width: 100%;
+    /* Ensure full width */
 }
 
 /* Button Row */
@@ -63,6 +108,10 @@
     display: flex;
     gap: 20px;
     justify-content: center;
+    width: 100%;
+    /* Center buttons across the section */
+    margin-top: 20px;
+    /* Add spacing between filter row and button row */
 }
 
 /* Button Styles */
