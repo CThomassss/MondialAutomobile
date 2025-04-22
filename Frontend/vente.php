@@ -328,10 +328,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['mark_as_sold'])) {
                         $first_image = !empty($images) ? $images[0] : 'assets/images/car_placeholder.png';
                         ?>
                         <div class="carte-image-wrapper">
+                            <img src="<?php echo htmlspecialchars($first_image); ?>" alt="Image voiture">
                             <?php if ($vehicle['est_vendu'] == 1): ?>
-                                <img src="assets/images/vendu.png" alt="Vendu">
-                            <?php else: ?>
-                                <img src="<?php echo htmlspecialchars($first_image); ?>" alt="Image voiture">
+                                <div class="vendu-overlay">
+                                    <img src="assets/images/vendu.png" alt="Vendu">
+                                </div>
                             <?php endif; ?>
                         </div>
                         <h2><?php echo htmlspecialchars($vehicle['marque'] . ' ' . $vehicle['modele']); ?></h2>
