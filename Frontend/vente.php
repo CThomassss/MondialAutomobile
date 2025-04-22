@@ -299,7 +299,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_vehicle']) && 
                 <button class="btn-submit">Plus de détails</button>
                 <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin'): ?>
                     <button class="btn-submit" onclick="openEditPopup(<?php echo htmlspecialchars(json_encode($vehicle)); ?>)">Modifier</button>
-                    <form method="POST" action="vente.php" style="display:inline;">
+                    <form method="POST" action="vente.php" style="display:inline;" onsubmit="return confirmDelete();">
                         <input type="hidden" name="id" value="<?php echo $vehicle['id']; ?>">
                         <button type="submit" name="delete_vehicle" class="btn-submit" style="background-color: #af2e34;">Supprimer</button>
                     </form>
@@ -401,6 +401,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_vehicle']) && 
         document.getElementById('closeEditPopup').onclick = function() {
             document.getElementById('editPopupForm').style.display = 'none';
         };
+
+        function confirmDelete() {
+            return confirm("Êtes-vous sûr de vouloir supprimer cette annonce ?");
+        }
     </script>
 </body>
 
