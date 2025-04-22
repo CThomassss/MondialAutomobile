@@ -182,32 +182,36 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_vehicle']) && 
     <!-- Section de filtrage -->
     <section class="filtre-section">
         <form method="GET" action="vente.php">
-            <select name="marque">
-                <option value="">Toutes les marques</option>
-                <?php foreach ($marques as $marque): ?>
-                    <option value="<?php echo htmlspecialchars($marque['marque']); ?>" 
-                        <?php echo isset($_GET['marque']) && $_GET['marque'] === $marque['marque'] ? 'selected' : ''; ?>>
-                        <?php echo htmlspecialchars($marque['marque']); ?>
-                    </option>
-                <?php endforeach; ?>
-            </select>
-            <select name="modele">
-                <option value="">Tous les modèles</option>
-                <?php foreach ($modeles as $modele): ?>
-                    <option value="<?php echo htmlspecialchars($modele['modele']); ?>" 
-                        <?php echo isset($_GET['modele']) && $_GET['modele'] === $modele['modele'] ? 'selected' : ''; ?>>
-                        <?php echo htmlspecialchars($modele['modele']); ?>
-                    </option>
-                <?php endforeach; ?>
-            </select>
-            <input type="number" name="prix_min" placeholder="Prix min" value="<?php echo isset($_GET['prix_min']) ? htmlspecialchars($_GET['prix_min']) : ''; ?>">
-            <input type="number" name="prix_max" placeholder="Prix max" value="<?php echo isset($_GET['prix_max']) ? htmlspecialchars($_GET['prix_max']) : ''; ?>">
-            <button type="submit" class="btn-submit">Filtrer</button>
-            <a href="vente.php" class="btn-reset">Réinitialiser</a>
+            <div class="filter-row">
+                <select name="marque">
+                    <option value="">Toutes les marques</option>
+                    <?php foreach ($marques as $marque): ?>
+                        <option value="<?php echo htmlspecialchars($marque['marque']); ?>" 
+                            <?php echo isset($_GET['marque']) && $_GET['marque'] === $marque['marque'] ? 'selected' : ''; ?>>
+                            <?php echo htmlspecialchars($marque['marque']); ?>
+                        </option>
+                    <?php endforeach; ?>
+                </select>
+                <select name="modele">
+                    <option value="">Tous les modèles</option>
+                    <?php foreach ($modeles as $modele): ?>
+                        <option value="<?php echo htmlspecialchars($modele['modele']); ?>" 
+                            <?php echo isset($_GET['modele']) && $_GET['modele'] === $modele['modele'] ? 'selected' : ''; ?>>
+                            <?php echo htmlspecialchars($modele['modele']); ?>
+                        </option>
+                    <?php endforeach; ?>
+                </select>
+                <input type="number" name="prix_min" placeholder="Prix min" value="<?php echo isset($_GET['prix_min']) ? htmlspecialchars($_GET['prix_min']) : ''; ?>">
+                <input type="number" name="prix_max" placeholder="Prix max" value="<?php echo isset($_GET['prix_max']) ? htmlspecialchars($_GET['prix_max']) : ''; ?>">
+            </div>
+            <div class="button-row">
+                <button type="submit" class="btn-action">Filtrer</button>
+                <a href="vente.php" class="btn-action btn-reset">Réinitialiser</a>
+                <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin'): ?>
+                    <button type="button" class="btn-action" id="openPopup">Poster annonce</button>
+                <?php endif; ?>
+            </div>
         </form>
-        <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin'): ?>
-            <button type="button" class="btn-submit" id="openPopup">Poster une annonce</button>
-        <?php endif; ?>
     </section>
 
     <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin'): ?>

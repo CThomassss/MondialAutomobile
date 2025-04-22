@@ -16,6 +16,7 @@
     flex-wrap: wrap;
     gap: 20px;
     justify-content: center;
+    align-items: center;
 }
 
 .filtre-section select,
@@ -46,6 +47,66 @@
 
 .filtre-section button:hover {
     background-color: #86181f;
+}
+
+/* Filter Row */
+.filter-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+/* Button Row */
+.button-row {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+}
+
+/* Button Styles */
+.btn-action {
+    padding: 6px 12px;
+    /* Further reduced padding */
+    background-color: #af2e34;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    /* Slightly smaller border radius */
+    font-size: 0.8rem;
+    /* Reduced font size */
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    /* Center text horizontally */
+    align-items: center;
+    /* Center text vertically */
+    width: 100px;
+    /* Reduced width */
+    height: 35px;
+    /* Fixed height for consistent size */
+    text-decoration: none;
+}
+
+.btn-action:hover {
+    background-color: #86181f;
+    transform: translateY(-3px);
+}
+
+.btn-reset {
+    background-color: #fff;
+    color: #af2e34;
+    border: 2px solid #af2e34;
+}
+
+.btn-reset:hover {
+    background-color: #f9f9f9;
+    color: #86181f;
+    border-color: #86181f;
 }
 
 /* Vehicle Showcase Section */
