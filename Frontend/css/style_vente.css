@@ -7,17 +7,22 @@
 /* Filter Section */
 .filtre-section {
     padding: 30px 20px;
-    margin: 20px 20px;
+    margin: 20px auto;
+    /* Center horizontally */
     width: calc(100% - 40px);
+    /* Add spacing from the edges */
+    max-width: 1200px;
+    /* Limit the maximum width */
     box-sizing: border-box;
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
     justify-content: center;
+    /* Center content horizontally */
     align-items: center;
+    /* Center content vertically */
     text-align: center;
     transition: none;
-    /* Remove hover transition */
 }
 
 .filtre-section:hover {
@@ -30,10 +35,10 @@
 .filtre-section select,
 .filtre-section input,
 .filtre-section button {
-    padding: 15px 20px;
-    /* Increased padding for a modern look */
-    font-size: 1rem;
-    /* Slightly larger font size for better readability */
+    padding: 10px 15px;
+    /* Reduced padding */
+    font-size: 0.9rem;
+    /* Slightly smaller font size */
     border: 1px solid #ddd;
     /* Softer border */
     border-radius: 12px;
@@ -477,7 +482,33 @@
 @media (max-width: 768px) {
     .filtre-section {
         flex-direction: column;
+        /* Stack elements vertically */
         gap: 15px;
+        padding: 15px 10px;
+        /* Adjust padding */
+        margin: 15px 10px;
+        /* Add margin for smaller screens */
+        width: calc(100% - 20px);
+        /* Ensure spacing from the edges */
+    }
+
+    .filtre-section select,
+    .filtre-section input,
+    .filtre-section button {
+        font-size: 0.8rem;
+        /* Smaller font size for smaller screens */
+        padding: 8px 12px;
+        /* Further reduced padding */
+    }
+
+    .filter-row {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        /* 2x2 grid for filters */
+        gap: 10px;
+        /* Reduce gap for better spacing */
+        width: 100%;
+        /* Ensure it adapts to the screen width */
     }
 
     .vitrine-venda {
@@ -513,6 +544,31 @@
 }
 
 @media (max-width: 480px) {
+    .filtre-section {
+        padding: 10px 5px;
+        /* Further reduce padding */
+        margin: 10px 5px;
+        /* Add margin for very small screens */
+        width: calc(100% - 10px);
+        /* Ensure spacing from the edges */
+    }
+
+    .filtre-section select,
+    .filtre-section input,
+    .filtre-section button {
+        font-size: 0.7rem;
+        /* Even smaller font size for very small screens */
+        padding: 6px 10px;
+        /* Minimal padding */
+    }
+
+    .filter-row {
+        grid-template-columns: 1fr;
+        /* Stack filters vertically */
+        gap: 8px;
+        /* Reduce gap further */
+    }
+
     .carte {
         width: 100%;
         /* 1 card per row */
