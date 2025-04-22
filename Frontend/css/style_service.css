@@ -12,19 +12,19 @@
     border-radius: 20px;
     /* Increase border radius for rounder corners */
     overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
     margin-left: 20px;
     /* Add margin to prevent touching the screen edges */
     margin-right: 20px;
     /* Add margin to prevent touching the screen edges */
-    /* Removed hover effect */
 }
 
 .service-row:hover {
-    transform: none;
-    box-shadow: none;
+    transform: translateY(-10px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
 }
 
-.service-row.reverse {
+s .service-row.reverse {
     flex-direction: row-reverse;
 }
 
