@@ -16,13 +16,15 @@
     justify-content: center;
     align-items: center;
     text-align: center;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition: none;
+    /* Remove hover transition */
 }
 
 .filtre-section:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-    /* Stronger shadow on hover */
+    transform: none;
+    /* Disable transform on hover */
+    box-shadow: none;
+    /* Disable shadow on hover */
 }
 
 .filtre-section select,
