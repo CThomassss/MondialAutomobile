@@ -183,6 +183,8 @@
     flex-direction: column;
     text-align: center;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    margin: 0 10px;
+    /* Add horizontal spacing between announcements */
 }
 
 .carte:hover {
@@ -398,6 +400,43 @@
     height: 20px;
     accent-color: #af2e34;
     cursor: pointer;
+}
+
+/* Pagination and Announcement Rows */
+.annonces-container .row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 40px;
+    /* Increased spacing between rows */
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin: 60px 0 80px;
+    /* Increased bottom margin to add more space below pagination */
+    gap: 10px;
+}
+
+.pagination-link {
+    padding: 10px 15px;
+    background-color: #f7f7f7;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    text-decoration: none;
+    color: #333;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.pagination-link:hover {
+    background-color: #af2e34;
+    color: #fff;
+}
+
+.pagination-link.active {
+    background-color: #af2e34;
+    color: #fff;
+    font-weight: bold;
 }
 
 /* Responsive Design */

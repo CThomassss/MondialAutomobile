@@ -26,6 +26,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         $filter_query .= " AND " . implode(" AND ", $filters);
     }
 }
+
+// Pagination setup
+$annonces_par_page = 12; // Number of announcements per page
+$page_actuelle = isset($_GET['page']) ? max(1, intval($_GET['page'])) : 1; // Current page
+$offset = ($page_actuelle - 1) * $annonces_par_page; // Offset for SQL query
+
+// Count total number of announcements
+$total_annonces_query = "SELECT COUNT(*) AS total FROM voitures WHERE est_vendu = 0";
+if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
+    $total_annonces_query .= " AND est_visible = 1";
+}
+$total_annonces_result = $conn->query($total_annonces_query);
+$total_annonces = $total_annonces_result->fetch_assoc()['total'];
+$total_pages = ceil($total_annonces / $annonces_par_page);
+
+// Fetch announcements for the current page
+$filter_query .= " LIMIT $annonces_par_page OFFSET $offset";
 $result = $conn->query($filter_query);
 
 // Récupérer les marques distinctes
@@ -282,33 +299,62 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_vehicle']) && 
     </div>
     <?php endif; ?>
 
-    <!-- Section vitrine -->
     <section class="vitrine-venda">
-        <?php while ($vehicle = $result->fetch_assoc()): ?>
-            <div class="carte">
-                <?php 
-                // Décoder les chemins d'images stockés en JSON
-                $images = json_decode($vehicle['images'], true);
-                $first_image = !empty($images) ? $images[0] : 'assets/images/car_placeholder.png'; // Image par défaut si aucune image n'est disponible
-                ?>
-                <img src="<?php echo htmlspecialchars($first_image); ?>" alt="Image voiture">
-                <h2><?php echo htmlspecialchars($vehicle['marque'] . ' ' . $vehicle['modele']); ?></h2>
-                <p>Année : <?php echo htmlspecialchars($vehicle['annee']); ?></p>
-                <p>Kilométrage : <?php echo htmlspecialchars($vehicle['kilometrage']); ?> km</p>
-                <p class="prix"><?php echo htmlspecialchars(number_format($vehicle['prix'], 2, ',', ' ')); ?> €</p>
-                <button class="btn-submit">Plus de détails</button>
-                <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin'): ?>
-                    <button class="btn-submit" onclick="openEditPopup(<?php echo htmlspecialchars(json_encode($vehicle)); ?>)">Modifier</button>
-                    <form method="POST" action="vente.php" style="display:inline;" onsubmit="return confirmDelete();">
-                        <input type="hidden" name="id" value="<?php echo $vehicle['id']; ?>">
-                        <button type="submit" name="delete_vehicle" class="btn-submit" style="background-color: #af2e34;">Supprimer</button>
-                    </form>
-                    <p>Visible : <?php echo isset($vehicle['est_visible']) && $vehicle['est_visible'] ? 'Oui' : 'Non'; ?></p>
-
-                <?php endif; ?>
-            </div>
-        <?php endwhile; ?>
+        <div class="annonces-container">
+            <?php 
+            $compteur = 0; // Counter to track announcements per row
+            while ($vehicle = $result->fetch_assoc()): 
+                if ($compteur % 4 === 0): // Start a new row every 4 announcements
+            ?>
+                <div class="row">
+            <?php endif; ?>
+                    <div class="carte">
+                        <?php 
+                        $images = json_decode($vehicle['images'], true);
+                        $first_image = !empty($images) ? $images[0] : 'assets/images/car_placeholder.png';
+                        ?>
+                        <img src="<?php echo htmlspecialchars($first_image); ?>" alt="Image voiture">
+                        <h2><?php echo htmlspecialchars($vehicle['marque'] . ' ' . $vehicle['modele']); ?></h2>
+                        <p>Année : <?php echo htmlspecialchars($vehicle['annee']); ?></p>
+                        <p>Kilométrage : <?php echo htmlspecialchars($vehicle['kilometrage']); ?> km</p>
+                        <p class="prix"><?php echo htmlspecialchars(number_format($vehicle['prix'], 2, ',', ' ')); ?> €</p>
+                        <button class="btn-submit">Plus de détails</button>
+                        <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin'): ?>
+                            <button class="btn-submit" onclick="openEditPopup(<?php echo htmlspecialchars(json_encode($vehicle)); ?>)">Modifier</button>
+                            <form method="POST" action="vente.php" style="display:inline;" onsubmit="return confirmDelete();">
+                                <input type="hidden" name="id" value="<?php echo $vehicle['id']; ?>">
+                                <button type="submit" name="delete_vehicle" class="btn-submit" style="background-color: #af2e34;">Supprimer</button>
+                            </form>
+                            <p>Visible : <?php echo isset($vehicle['est_visible']) && $vehicle['est_visible'] ? 'Oui' : 'Non'; ?></p>
+                        <?php endif; ?>
+                    </div>
+            <?php 
+                $compteur++;
+                if ($compteur % 4 === 0): // Close the row after 4 announcements
+            ?>
+                </div>
+            <?php endif; ?>
+            <?php endwhile; ?>
+            <?php if ($compteur % 4 !== 0): // Close the last row if it's not complete ?>
+                </div>
+            <?php endif; ?>
+        </div>
     </section>
+
+    <!-- Pagination -->
+    <div class="pagination">
+        <?php if ($page_actuelle > 1): ?>
+            <a href="?page=<?php echo $page_actuelle - 1; ?>" class="pagination-link">Précédent</a>
+        <?php endif; ?>
+        <?php for ($i = 1; $i <= $total_pages; $i++): ?>
+            <a href="?page=<?php echo $i; ?>" class="pagination-link <?php echo $i === $page_actuelle ? 'active' : ''; ?>">
+                <?php echo $i; ?>
+            </a>
+        <?php endfor; ?>
+        <?php if ($page_actuelle < $total_pages): ?>
+            <a href="?page=<?php echo $page_actuelle + 1; ?>" class="pagination-link">Suivant</a>
+        <?php endif; ?>
+    </div>
 
     <div id="editPopupForm" class="popup">
         <div class="popup-content">
@@ -406,6 +452,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_vehicle']) && 
             return confirm("Êtes-vous sûr de vouloir supprimer cette annonce ?");
         }
     </script>
+    
 </body>
 
 </html>
