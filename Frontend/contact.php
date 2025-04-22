@@ -2,6 +2,9 @@
 // Inclusion de la configuration de la base de données
 include '../Backend/config/db_connection.php';
 session_start();
+if (empty($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -65,6 +68,7 @@ session_start();
             <section class="contact-section">
                 <h2>Contactez-nous</h2>
                 <form action="/MondialAutomobile/Backend/contact_handler.php" method="POST">
+                    <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
                     <div class="input-group">
                         <label for="name">Nom</label>
                         <input type="text" id="name" name="name" placeholder="Entrez votre nom" required>

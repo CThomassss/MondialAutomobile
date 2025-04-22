@@ -3,6 +3,10 @@
 include '../Backend/config/db_connection.php';
 session_start();
 
+if (empty($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
+
 // Vérification si l'utilisateur est connecté et est un administrateur
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
     header("Location: /MondialAutomobile/Frontend/connexion.php");
@@ -37,6 +41,10 @@ if (isset($_GET['delete_user'])) {
 
 // Suppression du compte de l'administrateur avec vérification du mot de passe
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirm_delete_account'])) {
+    if (!hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
+        die("Invalid CSRF token");
+    }
+
     $admin_id = $_SESSION['user_id'];
     $password = $_POST['password'];
 
@@ -90,6 +98,10 @@ if (isset($_GET['delete_reprise'])) {
 
 // Modification d'un utilisateur
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['edit_user'])) {
+    if (!hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
+        die("Invalid CSRF token");
+    }
+
     $user_id = intval($_POST['user_id']);
     $username = $conn->real_escape_string($_POST['username']);
     $email = $conn->real_escape_string($_POST['email']);
@@ -108,6 +120,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['edit_user'])) {
 
 // Gestion du compte de l'administrateur
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_account'])) {
+    if (!hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
+        die("Invalid CSRF token");
+    }
+
     $admin_id = $_SESSION['user_id'];
     $username = $conn->real_escape_string($_POST['username']);
     $email = $conn->real_escape_string($_POST['email']);
@@ -239,6 +255,7 @@ $account_info = $account_result->fetch_assoc();
                 <p style="color: red;"><?php echo $error; ?></p>
             <?php endif; ?>
             <form action="" method="POST">
+                <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
                 <div class="input-group">
                     <label for="username">Nom d'utilisateur</label>
                     <input type="text" id="username" name="username" value="<?php echo $account_info['username']; ?>" required>
@@ -300,6 +317,7 @@ $account_info = $account_result->fetch_assoc();
         <section class="admin-section2">
             <h2>Modifier un Utilisateur</h2>
             <form action="" method="POST">
+                <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
                 <input type="hidden" name="user_id" value="<?php echo $edit_user['id']; ?>">
                 <div class="input-group">
                     <label for="username">Nom d'utilisateur</label>
