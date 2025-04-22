@@ -458,6 +458,22 @@
 }
 
 /* Responsive Design */
+@media (max-width: 1024px) {
+    .vitrine-venda {
+        gap: 15px;
+    }
+
+    .annonces-container .row {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .carte {
+        width: calc(50% - 20px);
+        /* 2 cards per row */
+    }
+}
+
 @media (max-width: 768px) {
     .filtre-section {
         flex-direction: column;
@@ -465,23 +481,12 @@
     }
 
     .vitrine-venda {
-        gap: 15px;
+        gap: 10px;
     }
 
     .carte {
-        width: 100%;
-    }
-
-    .popup-content {
-        grid-template-columns: 1fr;
-    }
-
-    .popup-content h2 {
-        grid-column: span 1;
-    }
-
-    .popup-content button {
-        grid-column: span 1;
+        width: calc(50% - 10px);
+        /* 2 cards per row */
     }
 
     .popup-content {
@@ -504,5 +509,41 @@
 
     .visibility-group {
         justify-content: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .carte {
+        width: 100%;
+        /* 1 card per row */
+    }
+
+    .filtre-section {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .vitrine-venda {
+        gap: 10px;
+    }
+
+    .popup-content {
+        width: 100%;
+        padding: 15px;
+    }
+
+    .form-row {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .pagination {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .pagination-link {
+        width: 100%;
+        text-align: center;
     }
 }
