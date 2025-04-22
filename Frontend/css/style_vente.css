@@ -6,36 +6,21 @@
 
 /* Filter Section */
 .filtre-section {
-    background-color: #f7f7f7;
-    /* Softer background */
     padding: 30px 20px;
-    /* Add padding to prevent sticking to the edges */
     margin: 20px 20px;
-    /* Add equal margin on left and right to prevent sticking */
     width: calc(100% - 40px);
-    /* Subtract padding from the total width */
     box-sizing: border-box;
-    /* Include padding and border in the element's width */
-    border-radius: 20px;
-    /* Ensure all corners are rounded, including the right side */
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
-    /* Enhanced shadow */
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
     justify-content: center;
-    /* Center elements horizontally */
     align-items: center;
-    /* Center elements vertically */
     text-align: center;
-    /* Ensure text alignment is centered */
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    /* Smooth hover effect */
 }
 
 .filtre-section:hover {
     transform: translateY(-5px);
-    /* Slight lift on hover */
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
     /* Stronger shadow on hover */
 }
