@@ -25,7 +25,7 @@ session_start();
         <div class="container">
             <div class="navbar">
                 <div class="logo">
-                    <img src="assets/images/logo.png" width="100px" alt="Logo Mondial Automobile">
+                <img src="assets/images/logomondial.png" width="100px" alt="Logo Mondial Automobile">
                 </div>
                 <nav>
                     <ul id="MenuItems">
@@ -57,14 +57,14 @@ session_start();
             <!-- Service 1 (Image on Right) -->
             <section id="carte-grise" class="service-row reverse">
                 <div class="service-text">
-                    <h2>Carte grise / immatriculation</h2>
-                    <p>Vendez votre véhicule rapidement en toute simplicité :</p>
-                    <ul>
-                        <li>Une estimation gratuite et sans engagement</li>
-                        <li>Une vente rapide et paiement garanti</li>
-                        <li>Meilleur prix garanti</li>
-                        <li>Aucune contrainte administrative</li>
-                    </ul>
+                <h2>Carte grise / Immatriculation</h2>
+                <p>Faites immatriculer votre véhicule facilement et rapidement :</p>
+                <ul>
+                    <li>Prise en charge complète de votre demande de carte grise</li>
+                    <li>Traitement rapide et sécurisé de votre dossier</li>
+                    <li>Accompagnement personnalisé pour toutes vos démarches</li>
+                    <li>Aucune attente en préfecture, on s’occupe de tout !</li>
+                </ul>
                     <a href="/MondialAutomobile/Frontend/contact.php" class="btn-service">Prendre RDV</a>
                 </div>
                 <div class="service-image">
@@ -75,7 +75,7 @@ session_start();
             <!-- Service 2 (Image on Left) -->
             <section id="achat-revente" class="service-row">
                 <div class="service-image">
-                    <img src="assets/images/Achatrevente.png" alt="Achat/Revente">
+                    <img src="assets/images/Controletechnique.png" alt="Achat/Revente">
                 </div>
                 <div class="service-text">
                     <h2>Achat/Revente</h2>
@@ -92,14 +92,14 @@ session_start();
             <!-- Service 3 (Image on Right) -->
             <section id="nettoyage" class="service-row reverse">
                 <div class="service-text">
-                    <h2>Nettoyage</h2>
-                    <p>Confiez-nous l'entretien et la réparation de votre véhicule :</p>
-                    <ul>
-                        <li>Révision complète</li>
-                        <li>Changement de pneus</li>
-                        <li>Diagnostic électronique</li>
-                        <li>Réparations mécaniques</li>
-                    </ul>
+                <h2>Nettoyage & préparation esthétique</h2>
+                <p>Offrez une seconde jeunesse à votre véhicule grâce à notre service de nettoyage professionnel :</p>
+                <ul>
+                    <li>Nettoyage intérieur complet (aspiration, tissus, plastiques)</li>
+                    <li>Lustrage et polissage de la carrosserie</li>
+                    <li>Nettoyage extérieur haute pression et décontamination</li>
+                    <li>Rénovation des jantes et des optiques de phares</li>
+                </ul>
                     <a href="/MondialAutomobile/Frontend/contact.php" class="btn-service">Prendre RDV</a>
                 </div>
                 <div class="service-image">
@@ -110,7 +110,7 @@ session_start();
             <!-- Service 4 (Image on Left) -->
             <section id="controle-technique" class="service-row">
                 <div class="service-image">
-                    <img src="assets/images/Controletechnique.png" alt="Contrôle technique">
+                    <img src="assets/images/Achatrevente.png" alt="Contrôle technique">
                 </div>
                 <div class="service-text">
                     <h2>Contrôle technique</h2>
@@ -124,6 +124,26 @@ session_start();
                     <a href="/MondialAutomobile/Frontend/contact.php" class="btn-service">Prendre RDV</a>
                 </div>
             </section>
+
+            <!-- Service 5 (Image on Right) -->
+            <section id="nettoyage" class="service-row reverse">
+                <div class="service-text">
+                <h2>Extension de garantie</h2>
+                <p>Roulez l’esprit tranquille avec notre service d’extension de garantie :</p>
+                <ul>
+                    <li>Extension de garantie jusqu’à 24 mois maximum</li>
+                    <li>Couverture pièces et main-d’œuvre en cas de panne</li>
+                    <li>Prise en charge dans tout le réseau agréé</li>
+                    <li>Assistance 7j/7 selon les conditions du contrat</li>
+                </ul>
+                    <a href="/MondialAutomobile/Frontend/contact.php" class="btn-service">Prendre RDV</a>
+                </div>
+                <div class="service-image">
+                    <img src="assets/images/extension-de-garantie-image.png" alt="Nettoyage">
+                </div>
+            </section>
+
+
         </div>
     </main>
 </body>

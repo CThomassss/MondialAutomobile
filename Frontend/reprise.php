@@ -25,7 +25,7 @@ session_start();
         <div class="container">
             <div class="navbar">
                 <div class="logo">
-                    <img src="assets/images/logo.png" width="100px" alt="Logo Mondial Automobile">
+                <img src="assets/images/logomondial.png" width="100px" alt="Logo Mondial Automobile">
                 </div>
                 <nav>
                     <ul id="MenuItems">

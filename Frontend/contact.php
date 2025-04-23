@@ -31,7 +31,7 @@ if (empty($_SESSION['csrf_token'])) {
         <div class="container">
             <div class="navbar">
                 <div class="logo">
-                    <img src="assets/images/logo.png" width="100px" alt="Logo Mondial Automobile">
+                <img src="assets/images/logomondial.png" width="100px" alt="Logo Mondial Automobile">
                 </div>
                 <nav>
                     <ul id="MenuItems">
@@ -66,7 +66,12 @@ if (empty($_SESSION['csrf_token'])) {
         <div class="contact-layout">
             <!-- Section Contact -->
             <section class="contact-section">
+                
                 <h2>Contactez-nous</h2>
+                <!-- Section pour appeler directement -->
+                <div class="call-section">
+                    <a href="tel:0623154908" class="btn-call">Appeler le 06 23 15 49 08</a>
+                </div>
                 <form action="/MondialAutomobile/Backend/contact_handler.php" method="POST">
                     <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
                     <div class="input-group">
@@ -91,10 +96,6 @@ if (empty($_SESSION['csrf_token'])) {
                     </div>
                     <button type="submit" class="btn-submit">Envoyer</button>
                 </form>
-                <!-- Section pour appeler directement -->
-                <div class="call-section">
-                    <a href="tel:0623154908" class="btn-call">Appeler le 06 23 15 49 08</a>
-                </div>
             </section>
 
             <!-- Section Localisation -->

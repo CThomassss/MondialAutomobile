@@ -161,6 +161,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['mark_as_sold'])) {
     }
     exit();
 }
+
+// Point de terminaison pour récupérer les modèles dynamiquement
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['marque'])) {
+    $marque = $conn->real_escape_string($_POST['marque']);
+    $query = "SELECT DISTINCT modele FROM voitures WHERE marque = '$marque'";
+    $result = $conn->query($query);
+    $modeles = [];
+    while ($row = $result->fetch_assoc()) {
+        $modeles[] = $row['modele'];
+    }
+    echo json_encode($modeles);
+    exit();
+}
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -178,6 +191,35 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['mark_as_sold'])) {
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap"
         rel="stylesheet">
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const marqueSelect = document.querySelector('select[name="marque"]');
+            const modeleSelect = document.querySelector('select[name="modele"]');
+
+            marqueSelect.addEventListener('change', () => {
+                const marque = marqueSelect.value;
+                modeleSelect.innerHTML = '<option value="">Tous les modèles</option>'; // Reset modèles
+
+                if (marque) {
+                    fetch('vente.php', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                        body: `marque=${encodeURIComponent(marque)}`
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        data.forEach(modele => {
+                            const option = document.createElement('option');
+                            option.value = modele;
+                            option.textContent = modele;
+                            modeleSelect.appendChild(option);
+                        });
+                    })
+                    .catch(error => console.error('Erreur:', error));
+                }
+            });
+        });
+    </script>
 </head>
 
 <body>
@@ -186,7 +228,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['mark_as_sold'])) {
         <div class="container">
             <div class="navbar">
                 <div class="logo">
-                    <img src="assets/images/logo.png" width="100px" alt="Logo Mondial Automobile">
+                <img src="assets/images/logomondial.png" width="100px" alt="Logo Mondial Automobile">
                 </div>
                 <nav>
                     <ul id="MenuItems">
