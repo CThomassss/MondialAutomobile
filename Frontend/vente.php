@@ -56,20 +56,29 @@ $modeles = $modeles_result->fetch_all(MYSQLI_ASSOC);
 
 // Ajout d'une annonce (réservé aux administrateurs)
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_vehicle']) && $_SESSION['role'] === 'admin') {
-    $marque = $conn->real_escape_string($_POST['marque']);
-    $modele = $conn->real_escape_string($_POST['modele']);
+    $marque = $conn->real_escape_string(trim($_POST['marque']));
+    $modele = $conn->real_escape_string(trim($_POST['modele']));
     $annee = intval($_POST['annee']);
     $prix = floatval($_POST['prix']);
     $kilometrage = intval($_POST['kilometrage']);
-    $carburant = $conn->real_escape_string($_POST['carburant']);
-    $boite = $conn->real_escape_string($_POST['boite']);
-    $description = $conn->real_escape_string($_POST['description']);
+    $carburant = $conn->real_escape_string(trim($_POST['carburant']));
+    $boite = $conn->real_escape_string(trim($_POST['boite']));
+    $description = $conn->real_escape_string(trim($_POST['description']));
+
+    // Validation des champs obligatoires
+    if (empty($marque) || empty($modele) || empty($annee) || empty($prix) || empty($kilometrage) || empty($carburant) || empty($boite)) {
+        die("Tous les champs obligatoires doivent être remplis.");
+    }
 
     // Gestion de l'upload des images
     $image_paths = [];
     if (!empty($_FILES['images']['name'][0])) {
         $target_dir = "../Frontend/assets/uploads/";
         foreach ($_FILES['images']['name'] as $key => $image_name) {
+            if ($_FILES['images']['error'][$key] !== UPLOAD_ERR_OK) {
+                die("Erreur lors de l'upload du fichier : " . $_FILES['images']['name'][$key]);
+            }
+
             $target_file = $target_dir . basename($image_name);
             $file_type = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
 
@@ -78,22 +87,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_vehicle']) && $_S
             if (in_array($file_type, $valid_extensions)) {
                 if (move_uploaded_file($_FILES['images']['tmp_name'][$key], $target_file)) {
                     $image_paths[] = "assets/uploads/" . basename($image_name);
+                } else {
+                    die("Erreur lors du déplacement du fichier : " . $_FILES['images']['name'][$key]);
                 }
+            } else {
+                die("Extension de fichier non valide pour : " . $_FILES['images']['name'][$key]);
             }
         }
     }
 
-    // If no image is uploaded, set a default placeholder image
+    // Si aucune image n'est téléchargée, définir une image par défaut
     if (empty($image_paths)) {
         $image_paths[] = "assets/images/car_placeholder.png";
     }
 
     // Convertir les chemins des images en JSON pour stockage
-    $images_json = json_encode($image_paths);
+    $images_json = $conn->real_escape_string(json_encode($image_paths));
 
-    $query = "INSERT INTO voitures (marque, modele, annee, prix, kilometrage, carburant, boite, description, images) 
-              VALUES ('$marque', '$modele', $annee, $prix, $kilometrage, '$carburant', '$boite', '$description', '$images_json')";
-    $conn->query($query);
+    // Insertion dans la base de données
+    $query = "INSERT INTO voitures (marque, modele, annee, prix, kilometrage, carburant, boite, description, images, est_visible) 
+              VALUES ('$marque', '$modele', $annee, $prix, $kilometrage, '$carburant', '$boite', '$description', '$images_json', 1)";
+    if (!$conn->query($query)) {
+        die("Erreur lors de l'insertion dans la base de données : " . $conn->error);
+    }
+
+    // Redirection après succès
     header("Location: vente.php?success=1");
     exit();
 }
@@ -381,7 +399,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['marque'])) {
                         <p>Année : <?php echo htmlspecialchars($vehicle['annee']); ?></p>
                         <p>Kilométrage : <?php echo htmlspecialchars($vehicle['kilometrage']); ?> km</p>
                         <p class="prix"><?php echo htmlspecialchars(number_format($vehicle['prix'], 2, ',', ' ')); ?> €</p>
-                        <button class="btn-submit">Plus de détails</button>
+                        <a href="detail.php?id=<?php echo $vehicle['id']; ?>" class="btn-submit">Plus de détails</a>
                         <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin'): ?>
                             <button class="btn-submit" onclick="openEditPopup(<?php echo htmlspecialchars(json_encode($vehicle)); ?>)">Modifier</button>
                             <form method="POST" action="vente.php" style="display:inline;" onsubmit="return confirmDelete();">

@@ -25,7 +25,8 @@
 
 /* Style pour le titre principal dans l'en-tête */
 .col-2 h1 {
-    font-size: 2.5rem;
+    font-size: calc(1rem + 2vw);
+    /* La taille du texte s'ajuste dynamiquement à la largeur de l'écran */
     margin-bottom: 1.5rem;
     color: #333;
     text-align: center;
@@ -55,15 +56,15 @@
 /* Couleur pour le mot "Mondial" */
 .Mondial {
     color: #af2e34;
-    font-size: 3.5rem;
-    /* Agrandit le texte */
+    font-size: inherit;
+    /* Les mots héritent de la taille définie pour le parent <h1> */
 }
 
 /* Couleur pour le mot "Automobile" */
 .Automobile {
     color: rgb(7, 6, 6);
-    font-size: 3.5rem;
-    /* Agrandit le texte */
+    font-size: inherit;
+    /* Les mots héritent de la taille définie pour le parent <h1> */
 }
 
 /* ---------------------- */
@@ -309,6 +310,11 @@
         height: 40px;
         /* Maintain aspect ratio */
     }
+
+    .col-2 h1 {
+        font-size: calc(1.5rem + 2vw);
+        /* Réduction de la taille pour les écrans moyens */
+    }
 }
 
 @media (max-width: 480px) {
@@ -355,5 +361,10 @@
         /* Make the logo even smaller */
         height: 30px;
         /* Maintain aspect ratio */
+    }
+
+    .col-2 h1 {
+        font-size: calc(1rem + 3vw);
+        /* Réduction supplémentaire pour les très petits écrans */
     }
 }
