@@ -225,6 +225,29 @@
     background-color: #86181f;
 }
 
+.carte a.btn-submit,
+.carte button.btn-submit {
+    display: inline-block;
+    padding: 10px 15px;
+    background-color: #af2e34;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    text-align: center;
+    margin: 10px auto;
+    text-decoration: none;
+    /* Remove underline */
+}
+
+.carte a.btn-submit:hover,
+.carte button.btn-submit:hover {
+    background-color: #86181f;
+    transform: translateY(-3px);
+}
+
 /* Vendu Overlay */
 .carte-image-wrapper {
     position: relative;
