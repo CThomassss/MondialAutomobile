@@ -83,7 +83,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_vehicle']) && $_S
             $file_type = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
 
             // Vérifiez que le fichier est une image valide
-            $valid_extensions = ['jpg', 'jpeg', 'png', 'gif'];
+            $valid_extensions = ['jpg', 'jpeg', 'png', 'gif', 'webp']; // Added 'webp' to valid extensions
             if (in_array($file_type, $valid_extensions)) {
                 if (move_uploaded_file($_FILES['images']['tmp_name'][$key], $target_file)) {
                     $image_paths[] = "assets/uploads/" . basename($image_name);
