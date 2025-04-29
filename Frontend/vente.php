@@ -131,9 +131,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['edit_vehicle']) && $_
     $est_vendu = isset($_POST['est_vendu']) ? 1 : 0;
     $en_preparation = isset($_POST['en_preparation']) ? 1 : 0;
 
-    // Gestion de l'upload de l'image
-    $current_images = json_decode($_POST['current_image'], true);
-    if (!empty($_FILES['image']['name'])) {
+    // Récupérer les images actuelles et l'image originale depuis la base de données
+    $query = "SELECT images, image_originale FROM voitures WHERE id = $id";
+    $result = $conn->query($query);
+    $row = $result->fetch_assoc();
+    $current_images = json_decode($row['images'], true);
+    $image_originale = $row['image_originale'];
+
+    if ($en_preparation) {
+        // Sauvegarder l'image actuelle comme "image_originale" si elle n'est pas déjà définie
+        if (empty($image_originale)) {
+            $image_originale = $current_images[0];
+        }
+        // Remplacer l'image par "papa.jpg"
+        $current_images = ["assets/images/papa.jpg"];
+    } elseif (!$en_preparation && $current_images[0] === "assets/images/papa.jpg") {
+        // Restaurer l'image originale si "Préparation" est décochée
+        if (!empty($image_originale)) {
+            $current_images = [$image_originale];
+            $image_originale = null; // Réinitialiser l'image originale
+        }
+    } elseif (!empty($_FILES['image']['name'])) {
+        // Gérer le téléchargement d'une nouvelle image
         $target_dir = "../Frontend/assets/uploads/";
         $target_file = $target_dir . basename($_FILES['image']['name']);
 
@@ -145,13 +164,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['edit_vehicle']) && $_
     }
 
     $images_json = json_encode($current_images);
+    $image_originale_sql = $image_originale ? "'" . $conn->real_escape_string($image_originale) . "'" : "NULL";
 
-    // Update query
+    // Mettre à jour la base de données
     $query = "UPDATE voitures SET 
               marque = '$marque', modele = '$modele', annee = $annee, prix = $prix, 
               kilometrage = $kilometrage, carburant = '$carburant', boite = '$boite', 
-              description = '$description', images = '$images_json', est_visible = $est_visible, 
-              est_vendu = $est_vendu, en_preparation = $en_preparation 
+              description = '$description', images = '$images_json', image_originale = $image_originale_sql, 
+              est_visible = $est_visible, est_vendu = $est_vendu, en_preparation = $en_preparation 
               WHERE id = $id";
 
     if ($conn->query($query)) {
