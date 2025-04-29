@@ -163,7 +163,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['edit_vehicle']) && $_
         }
     }
 
-    $images_json = json_encode($current_images);
+    // Convertir les images en JSON et échapper correctement
+    $images_json = $conn->real_escape_string(json_encode($current_images));
     $image_originale_sql = $image_originale ? "'" . $conn->real_escape_string($image_originale) . "'" : "NULL";
 
     // Mettre à jour la base de données
