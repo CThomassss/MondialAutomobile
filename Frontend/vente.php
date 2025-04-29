@@ -129,34 +129,37 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['edit_vehicle']) && $_
     $description = $conn->real_escape_string($_POST['description']);
     $est_visible = isset($_POST['est_visible']) ? 1 : 0;
     $est_vendu = isset($_POST['est_vendu']) ? 1 : 0;
-    $en_preparation = isset($_POST['en_preparation']) ? 1 : 0; // New field for "Préparation"
+    $en_preparation = isset($_POST['en_preparation']) ? 1 : 0;
 
     // Gestion de l'upload de l'image
-    $current_images = json_decode($_POST['current_image'], true); // Decode current images
+    $current_images = json_decode($_POST['current_image'], true);
     if (!empty($_FILES['image']['name'])) {
         $target_dir = "../Frontend/assets/uploads/";
         $target_file = $target_dir . basename($_FILES['image']['name']);
 
-        // Move the uploaded file without validating the file type
         if (move_uploaded_file($_FILES['image']['tmp_name'], $target_file)) {
-            $current_images = ["assets/uploads/" . basename($_FILES['image']['name'])]; // Replace with new image
+            $current_images = ["assets/uploads/" . basename($_FILES['image']['name'])];
         } else {
             die("Erreur lors du déplacement du fichier : " . $_FILES['image']['name']);
         }
     }
 
-    // Ensure the image path is always stored as a JSON array
     $images_json = json_encode($current_images);
 
+    // Update query
     $query = "UPDATE voitures SET 
               marque = '$marque', modele = '$modele', annee = $annee, prix = $prix, 
               kilometrage = $kilometrage, carburant = '$carburant', boite = '$boite', 
               description = '$description', images = '$images_json', est_visible = $est_visible, 
               est_vendu = $est_vendu, en_preparation = $en_preparation 
-              WHERE id = $id"; // Updated query to include "Préparation"
-    $conn->query($query);
-    header("Location: vente.php?success=2");
-    exit();
+              WHERE id = $id";
+
+    if ($conn->query($query)) {
+        header("Location: vente.php?success=2");
+        exit();
+    } else {
+        die("Erreur lors de la mise à jour : " . $conn->error);
+    }
 }
 
 // Suppression d'une annonce (réservé aux administrateurs)
