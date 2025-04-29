@@ -102,7 +102,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_vehicle']) && $_S
     }
 
     // Convertir les chemins des images en JSON pour stockage
-    $images_json = $conn->real_escape_string(json_encode($image_paths));
+    $images_json = json_encode($image_paths);
 
     // Insertion dans la base de données
     $query = "INSERT INTO voitures (marque, modele, annee, prix, kilometrage, carburant, boite, description, images, est_visible) 
@@ -129,20 +129,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['edit_vehicle']) && $_
     $description = $conn->real_escape_string($_POST['description']);
     $est_visible = isset($_POST['est_visible']) ? 1 : 0;
     $est_vendu = isset($_POST['est_vendu']) ? 1 : 0;
+    $en_preparation = isset($_POST['en_preparation']) ? 1 : 0; // New field for "Préparation"
 
     // Gestion de l'upload de l'image
     $current_images = json_decode($_POST['current_image'], true); // Decode current images
     if (!empty($_FILES['image']['name'])) {
         $target_dir = "../Frontend/assets/uploads/";
         $target_file = $target_dir . basename($_FILES['image']['name']);
-        $file_type = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
 
-        // Vérifiez que le fichier est une image valide
-        $valid_extensions = ['jpg', 'jpeg', 'png', 'gif'];
-        if (in_array($file_type, $valid_extensions)) {
-            if (move_uploaded_file($_FILES['image']['tmp_name'], $target_file)) {
-                $current_images = ["assets/uploads/" . basename($_FILES['image']['name'])]; // Replace with new image
-            }
+        // Move the uploaded file without validating the file type
+        if (move_uploaded_file($_FILES['image']['tmp_name'], $target_file)) {
+            $current_images = ["assets/uploads/" . basename($_FILES['image']['name'])]; // Replace with new image
+        } else {
+            die("Erreur lors du déplacement du fichier : " . $_FILES['image']['name']);
         }
     }
 
@@ -152,8 +151,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['edit_vehicle']) && $_
     $query = "UPDATE voitures SET 
               marque = '$marque', modele = '$modele', annee = $annee, prix = $prix, 
               kilometrage = $kilometrage, carburant = '$carburant', boite = '$boite', 
-              description = '$description', images = '$images_json', est_visible = $est_visible, est_vendu = $est_vendu 
-              WHERE id = $id";
+              description = '$description', images = '$images_json', est_visible = $est_visible, 
+              est_vendu = $est_vendu, en_preparation = $en_preparation 
+              WHERE id = $id"; // Updated query to include "Préparation"
     $conn->query($query);
     header("Location: vente.php?success=2");
     exit();
@@ -505,6 +505,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['marque'])) {
                         <label for="edit_est_vendu">Vendu</label>
                         <input type="checkbox" id="edit_est_vendu" name="est_vendu">
                     </div>
+                    <div class="visibility-group">
+                        <label for="edit_en_preparation">Préparation</label>
+                        <input type="checkbox" id="edit_en_preparation" name="en_preparation"> <!-- New checkbox -->
+                    </div>
                 </div>
                 <div class="form-row" style="margin-top: 20px; justify-content: center;">
                     <button type="submit" name="edit_vehicle" class="btn-submit">Modifier</button>
@@ -527,6 +531,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['marque'])) {
             document.getElementById('current_image').value = vehicle.images;
             document.getElementById('edit_est_visible').checked = vehicle.est_visible == 1;
             document.getElementById('edit_est_vendu').checked = vehicle.est_vendu == 1;
+            document.getElementById('edit_en_preparation').checked = vehicle.en_preparation == 1; // Set "Préparation" checkbox
             document.getElementById('editPopupForm').style.display = 'block';
         }
 
