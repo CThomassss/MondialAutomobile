@@ -104,7 +104,7 @@ $images = json_decode($vehicle['images'], true);
                 speed: 500,
                 slidesToShow: 1,
                 adaptiveHeight: true,
-                arrows: true
+                arrows: true // Enable navigation arrows
             });
         });
     </script>

@@ -35,18 +35,43 @@ body {
     /* Add margin to separate from the right section */
 }
 
+.image-carousel {
+    position: relative;
+    width: 100%;
+    margin: 0 auto;
+}
+
 .image-carousel img {
     width: 100%;
     height: auto;
     max-height: 400px;
     object-fit: cover;
-    border-radius: 12px;
+    border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease;
 }
 
 .image-carousel img:hover {
     transform: scale(1.05);
+}
+
+.slick-prev,
+.slick-next {
+    background-color: #af2e34;
+    border-radius: 50%;
+    color: #fff;
+    font-size: 20px;
+    width: 40px;
+    height: 40px;
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.slick-prev:hover,
+.slick-next:hover {
+    background-color: #86181f;
 }
 
 /* Right Section (Details) */

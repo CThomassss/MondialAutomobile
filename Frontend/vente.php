@@ -83,7 +83,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_vehicle']) && $_S
             $file_type = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
 
             // Vérifiez que le fichier est une image valide
-            $valid_extensions = ['jpg', 'jpeg', 'png', 'gif', 'webp']; // Added 'webp' to valid extensions
+            $valid_extensions = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
             if (in_array($file_type, $valid_extensions)) {
                 if (move_uploaded_file($_FILES['images']['tmp_name'][$key], $target_file)) {
                     $image_paths[] = "assets/uploads/" . basename($image_name);
@@ -151,15 +151,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['edit_vehicle']) && $_
             $current_images = [$image_originale];
             $image_originale = null; // Réinitialiser l'image originale
         }
-    } elseif (!empty($_FILES['image']['name'])) {
-        // Gérer le téléchargement d'une nouvelle image
+    } elseif (!empty($_FILES['image']['name'][0])) {
         $target_dir = "../Frontend/assets/uploads/";
-        $target_file = $target_dir . basename($_FILES['image']['name']);
-
-        if (move_uploaded_file($_FILES['image']['tmp_name'], $target_file)) {
-            $current_images = ["assets/uploads/" . basename($_FILES['image']['name'])];
-        } else {
-            die("Erreur lors du déplacement du fichier : " . $_FILES['image']['name']);
+        foreach ($_FILES['image']['name'] as $key => $image_name) {
+            $target_file = $target_dir . basename($image_name);
+            if (move_uploaded_file($_FILES['image']['tmp_name'][$key], $target_file)) {
+                $current_images[] = "assets/uploads/" . basename($image_name);
+            } else {
+                die("Erreur lors du déplacement du fichier : " . $_FILES['image']['name'][$key]);
+            }
         }
     }
 
@@ -517,7 +517,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['marque'])) {
                     </div>
                     <div class="input-group">
                         <label for="edit_image">Image</label>
-                        <input type="file" id="edit_image" name="image" accept="image/*">
+                        <input type="file" id="edit_image" name="image[]" accept="image/*" multiple>
                     </div>
                 </div>
                 <div class="form-row visibility-row">
