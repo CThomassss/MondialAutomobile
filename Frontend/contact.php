@@ -41,7 +41,7 @@ if (empty($_SESSION['csrf_token'])) {
                         <li>
                             <a href="/MondialAutomobile/Frontend/service.php">Service</a>
                         </li>
-                        <li class="dropdown">
+                        <li class="dropdown active">
                             <a href="/MondialAutomobile/Frontend/contact.php">Contact</a>
                             <?php if (isset($_SESSION['user_id']) && $_SESSION['role'] === 'admin'): ?>
                                 <ul class="dropdown-menu">
