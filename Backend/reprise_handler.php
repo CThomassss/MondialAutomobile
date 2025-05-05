@@ -12,6 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $immatriculation = htmlspecialchars(trim($_POST['immatriculation']));
     $etat = htmlspecialchars(trim($_POST['etat']));
     $historique = htmlspecialchars(trim($_POST['historique']));
+    $description = htmlspecialchars(trim($_POST['description'])); // Ensure description is included
 
     if (!$email) {
         header("Location: /MondialAutomobile/Frontend/reprise.php?error=email_invalid");
@@ -19,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     // Préparer la requête SQL
-    $stmt = $conn->prepare("INSERT INTO reprises (nom, telephone, email, marque, modele, annee, kilometrage, statut, date_demande, immatriculation, etat, historique) VALUES (?, ?, ?, ?, ?, ?, ?, 'En attente', NOW(), ?, ?, ?)");
+    $stmt = $conn->prepare("INSERT INTO reprises (nom, telephone, email, marque, modele, annee, kilometrage, statut, date_demande, immatriculation, etat, historique, description) VALUES (?, ?, ?, ?, ?, ?, ?, 'En attente', NOW(), ?, ?, ?, ?)");
 
     // Vérifiez si la requête a été correctement préparée
     if (!$stmt) {
@@ -28,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     // Lier les paramètres
-    $stmt->bind_param("sssssiisss", $name, $phone, $email, $marque, $modele, $annee, $kilometrage, $immatriculation, $etat, $historique);
+    $stmt->bind_param("sssssiissss", $name, $phone, $email, $marque, $modele, $annee, $kilometrage, $immatriculation, $etat, $historique, $description);
 
     // Exécuter la requête
     if ($stmt->execute()) {
