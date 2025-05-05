@@ -179,9 +179,8 @@ $account_info = $account_result->fetch_assoc();
 </head>
 
 <body>
-
-<!-- En-tête avec logo, menu et bannière principale -->
-<div class="header">
+<!-- Header Section -->
+<header class="header">
         <div class="container">
             <div class="navbar">
                 <div class="logo">
@@ -195,11 +194,15 @@ $account_info = $account_result->fetch_assoc();
                         <li class="dropdown">
                             <a href="/MondialAutomobile/Frontend/service.php">Service</a>
                         </li>
-                        <li><a href="/MondialAutomobile/Frontend/contact.php">Contact</a></li>
-                        <?php if (isset($_SESSION['user_id'])): ?>
-                            <?php if ($_SESSION['role'] === 'admin'): ?>
-                                <li class="active"><a href="/MondialAutomobile/Frontend/admin.php">Compte</a></li>
+                        <li class="dropdown active">
+                            <a href="/MondialAutomobile/Frontend/contact.php">Contact</a>
+                            <?php if (isset($_SESSION['user_id']) && $_SESSION['role'] === 'admin'): ?>
+                                <ul class="dropdown-menu">
+                                    <li><a href="/MondialAutomobile/Frontend/admin.php">Compte</a></li>
+                                </ul>
                             <?php endif; ?>
+                        </li>
+                        <?php if (isset($_SESSION['user_id'])): ?>
                             <li><a href="javascript:void(0)" class="logout-link">Déconnexion</a></li>
                         <?php else: ?>
                             <li><a href="/MondialAutomobile/Frontend/connexion.php">Connexion</a></li>
@@ -208,6 +211,8 @@ $account_info = $account_result->fetch_assoc();
                 </nav>
                 <a href="cart.php"><img src="assets/images/cart.png" width="30px" height="30px" alt="Panier"></a>
             </div>
+        </div>
+    </header>
 
     <main class="admin-container">
         <section class="admin-section">

@@ -55,14 +55,18 @@ session_start();
                         <li class="active"><a href="/MondialAutomobile/Frontend/index.php">Accueil</a></li>
                         <li><a href="/MondialAutomobile/Frontend/vente.php">Ventes</a></li>
                         <li><a href="/MondialAutomobile/Frontend/reprise.php">Reprise</a></li>
-                        <li class="dropdown">
+                        <li>
                             <a href="/MondialAutomobile/Frontend/service.php">Service</a>
                         </li>
-                        <li><a href="/MondialAutomobile/Frontend/contact.php">Contact</a></li>
-                        <?php if (isset($_SESSION['user_id'])): ?>
-                            <?php if ($_SESSION['role'] === 'admin'): ?>
-                                <li><a href="/MondialAutomobile/Frontend/admin.php">Compte</a></li>
+                        <li class="dropdown">
+                            <a href="/MondialAutomobile/Frontend/contact.php">Contact</a>
+                            <?php if (isset($_SESSION['user_id']) && $_SESSION['role'] === 'admin'): ?>
+                                <ul class="dropdown-menu">
+                                    <li><a href="/MondialAutomobile/Frontend/admin.php">Compte</a></li>
+                                </ul>
                             <?php endif; ?>
+                        </li>
+                        <?php if (isset($_SESSION['user_id'])): ?>
                             <li><a href="javascript:void(0)" class="logout-link">Déconnexion</a></li>
                         <?php else: ?>
                             <li><a href="/MondialAutomobile/Frontend/connexion.php">Connexion</a></li>

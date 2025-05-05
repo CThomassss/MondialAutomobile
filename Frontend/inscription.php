@@ -76,13 +76,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <li><a href="/MondialAutomobile/Frontend/index.php">Accueil</a></li>
                         <li><a href="/MondialAutomobile/Frontend/vente.php">Ventes</a></li>
                         <li><a href="/MondialAutomobile/Frontend/reprise.php">Reprise</a></li>
-                        <li class="dropdown">
+                        <li>
                             <a href="/MondialAutomobile/Frontend/service.php">Service</a>
                         </li>
-                        <li><a href="/MondialAutomobile/Frontend/contact.php">Contact</a></li>
-                        <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin'): ?>
-                            <li class="active"><a href="/MondialAutomobile/Frontend/admin.php">Compte</a></li>
-                        <?php endif; ?>
+                        <li class="dropdown">
+                            <a href="/MondialAutomobile/Frontend/contact.php">Contact</a>
+                            <?php if (isset($_SESSION['user_id'])): ?>
+                                <ul class="dropdown-menu">
+                                    <?php if ($_SESSION['role'] === 'admin'): ?>
+                                        <li><a href="/MondialAutomobile/Frontend/admin.php">Compte</a></li>
+                                    <?php endif; ?>
+                                </ul>
+                            <?php endif; ?>
+                        </li>
                         <li class="active"><a href="/MondialAutomobile/Frontend/connexion.php">Connexion</a></li>
                     </ul>
                 </nav>
