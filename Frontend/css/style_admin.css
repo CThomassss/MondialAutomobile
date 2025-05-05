@@ -220,6 +220,16 @@
 }
 
 .admin-table td {
+    text-align: center;
+    /* Center-align text in table cells */
+    vertical-align: middle;
+    /* Vertically align text in the middle */
+    word-wrap: break-word;
+    /* Ensure long words break properly */
+    white-space: pre-wrap;
+    /* Preserve line breaks and wrap text */
+    padding: 10px;
+    /* Add padding for better spacing */
     color: #555;
     word-wrap: normal;
     max-width: none;

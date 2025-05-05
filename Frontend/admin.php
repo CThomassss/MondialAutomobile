@@ -341,38 +341,44 @@ $account_info = $account_result->fetch_assoc();
 
         <section class="admin-section">
             <h2>Messagerie</h2>
-            <table class="admin-table">
-                <thead>
-                    <tr>
-                        <th>Nom</th>
-                        <th>Email</th>
-                        <th>Téléphone</th>
-                        <th>Sujet</th>
-                        <th>Message</th>
-                        <th>Date d'envoi</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php
-                    $messages_query = "SELECT id, nom, email, phone, sujet, message, date_envoi FROM messages_contact ORDER BY date_envoi DESC";
-                    $messages_result = $conn->query($messages_query);
-                    while ($message = $messages_result->fetch_assoc()):
-                    ?>
+            <div class="admin-table-wrapper">
+                <table class="admin-table">
+                    <thead>
                         <tr>
-                            <td><?php echo htmlspecialchars($message['nom']); ?></td>
-                            <td><?php echo htmlspecialchars($message['email']); ?></td>
-                            <td><?php echo htmlspecialchars($message['phone']); ?></td>
-                            <td><?php echo htmlspecialchars($message['sujet']); ?></td>
-                            <td><?php echo htmlspecialchars($message['message']); ?></td>
-                            <td><?php echo $message['date_envoi']; ?></td>
-                            <td>
-                                <a href="?delete_message=<?php echo $message['id']; ?>" class="btn-delete" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce message ?');">Supprimer</a>
-                            </td>
+                            <th>Nom</th>
+                            <th>Email</th>
+                            <th>Téléphone</th>
+                            <th>Sujet</th>
+                            <th>Message</th>
+                            <th>Date d'envoi</th>
+                            <th>Actions</th>
                         </tr>
-                    <?php endwhile; ?>
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        <?php
+                        $messages_query = "SELECT id, nom, email, phone, sujet, message, date_envoi FROM messages_contact ORDER BY date_envoi DESC";
+                        $messages_result = $conn->query($messages_query);
+                        while ($message = $messages_result->fetch_assoc()):
+                        ?>
+                            <tr>
+                                <td><?php echo htmlspecialchars($message['nom']); ?></td>
+                                <td><?php echo htmlspecialchars($message['email']); ?></td>
+                                <td><?php echo htmlspecialchars($message['phone']); ?></td>
+                                <td style="white-space: pre-wrap; word-wrap: break-word;">
+                                    <?php echo nl2br(htmlspecialchars($message['sujet'])); ?>
+                                </td>
+                                <td style="white-space: pre-wrap; word-wrap: break-word;">
+                                    <?php echo nl2br(htmlspecialchars($message['message'])); ?>
+                                </td>
+                                <td><?php echo $message['date_envoi']; ?></td>
+                                <td>
+                                    <a href="?delete_message=<?php echo $message['id']; ?>" class="btn-delete" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce message ?');">Supprimer</a>
+                                </td>
+                            </tr>
+                        <?php endwhile; ?>
+                    </tbody>
+                </table>
+            </div>
         </section>
 
         <section class="admin-section">
