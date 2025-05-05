@@ -30,7 +30,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
 // Apply sorting logic
 if (!empty($_GET['sort_by'])) {
-    if ($_GET['sort_by'] === 'price_asc') {
+    if ($_GET['sort_by'] === 'pertinence') {
+        $filter_query .= " ORDER BY pertinence DESC, id DESC"; // Prioritize vehicles with "Pertinence" checked
+    } elseif ($_GET['sort_by'] === 'price_asc') {
         $filter_query .= " ORDER BY prix ASC";
     } elseif ($_GET['sort_by'] === 'price_desc') {
         $filter_query .= " ORDER BY prix DESC";
@@ -139,6 +141,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['edit_vehicle']) && $_
     $est_visible = isset($_POST['est_visible']) ? 1 : 0;
     $est_vendu = isset($_POST['est_vendu']) ? 1 : 0;
     $en_preparation = isset($_POST['en_preparation']) ? 1 : 0;
+    $pertinence = isset($_POST['pertinence']) ? 1 : 0; // New field for "Pertinence"
 
     // Récupérer les images actuelles et l'image originale depuis la base de données
     $query = "SELECT images, image_originale FROM voitures WHERE id = $id";
@@ -181,7 +184,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['edit_vehicle']) && $_
               marque = '$marque', modele = '$modele', annee = $annee, prix = $prix, 
               kilometrage = $kilometrage, carburant = '$carburant', boite = '$boite', 
               description = '$description', images = '$images_json', image_originale = $image_originale_sql, 
-              est_visible = $est_visible, est_vendu = $est_vendu, en_preparation = $en_preparation 
+              est_visible = $est_visible, est_vendu = $est_vendu, en_preparation = $en_preparation, pertinence = $pertinence 
               WHERE id = $id";
 
     if ($conn->query($query)) {
@@ -311,6 +314,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['marque'])) {
             <div class="filter-row">
                 <select name="sort_by">
                     <option value="">Trier par</option>
+                    <option value="pertinence" <?php echo isset($_GET['sort_by']) && $_GET['sort_by'] === 'pertinence' ? 'selected' : ''; ?>>Pertinence</option>
                     <option value="price_asc" <?php echo isset($_GET['sort_by']) && $_GET['sort_by'] === 'price_asc' ? 'selected' : ''; ?>>Prix croissant</option>
                     <option value="price_desc" <?php echo isset($_GET['sort_by']) && $_GET['sort_by'] === 'price_desc' ? 'selected' : ''; ?>>Prix décroissant</option>
                 </select>
@@ -549,7 +553,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['marque'])) {
                     </div>
                     <div class="visibility-group">
                         <label for="edit_en_preparation">Préparation</label>
-                        <input type="checkbox" id="edit_en_preparation" name="en_preparation"> <!-- New checkbox -->
+                        <input type="checkbox" id="edit_en_preparation" name="en_preparation">
+                    </div>
+                    <div class="visibility-group">
+                        <label for="edit_pertinence">Pertinence</label>
+                        <input type="checkbox" id="edit_pertinence" name="pertinence">
                     </div>
                 </div>
                 <div class="form-row" style="margin-top: 20px; justify-content: center;">
@@ -573,7 +581,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['marque'])) {
             document.getElementById('current_image').value = vehicle.images;
             document.getElementById('edit_est_visible').checked = vehicle.est_visible == 1;
             document.getElementById('edit_est_vendu').checked = vehicle.est_vendu == 1;
-            document.getElementById('edit_en_preparation').checked = vehicle.en_preparation == 1; // Set "Préparation" checkbox
+            document.getElementById('edit_en_preparation').checked = vehicle.en_preparation == 1;
+            document.getElementById('edit_pertinence').checked = vehicle.pertinence == 1;
             document.getElementById('editPopupForm').style.display = 'block';
         }
 
