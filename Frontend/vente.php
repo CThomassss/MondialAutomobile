@@ -28,6 +28,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     }
 }
 
+// Apply sorting logic
+if (!empty($_GET['sort_by'])) {
+    if ($_GET['sort_by'] === 'price_asc') {
+        $filter_query .= " ORDER BY prix ASC";
+    } elseif ($_GET['sort_by'] === 'price_desc') {
+        $filter_query .= " ORDER BY prix DESC";
+    }
+}
+
 // Pagination setup
 $annonces_par_page = 12; // Number of announcements per page
 $page_actuelle = isset($_GET['page']) ? max(1, intval($_GET['page'])) : 1; // Current page
@@ -300,6 +309,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['marque'])) {
     <section class="filtre-section">
         <form method="GET" action="vente.php">
             <div class="filter-row">
+                <select name="sort_by">
+                    <option value="">Trier par</option>
+                    <option value="price_asc" <?php echo isset($_GET['sort_by']) && $_GET['sort_by'] === 'price_asc' ? 'selected' : ''; ?>>Prix croissant</option>
+                    <option value="price_desc" <?php echo isset($_GET['sort_by']) && $_GET['sort_by'] === 'price_desc' ? 'selected' : ''; ?>>Prix décroissant</option>
+                </select>
                 <select name="marque">
                     <option value="">Toutes les marques</option>
                     <?php foreach ($marques as $marque): ?>
@@ -318,8 +332,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['marque'])) {
                         </option>
                     <?php endforeach; ?>
                 </select>
-                <input type="number" name="prix_min" placeholder="Prix min" value="<?php echo isset($_GET['prix_min']) ? htmlspecialchars($_GET['prix_min']) : ''; ?>">
-                <input type="number" name="prix_max" placeholder="Prix max" value="<?php echo isset($_GET['prix_max']) ? htmlspecialchars($_GET['prix_max']) : ''; ?>">
+                <div class="price-range">
+                    <div>
+                        <input type="number" name="prix_min" placeholder="Min €" value="<?php echo isset($_GET['prix_min']) ? htmlspecialchars($_GET['prix_min']) : ''; ?>">
+                        <input type="number" name="prix_max" placeholder="Max €" value="<?php echo isset($_GET['prix_max']) ? htmlspecialchars($_GET['prix_max']) : ''; ?>">
+                    </div>
+                </div>
             </div>
             <div class="button-row">
                 <button type="submit" class="btn-action">Filtrer</button>

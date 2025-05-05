@@ -16,6 +16,7 @@
     box-sizing: border-box;
     display: flex;
     flex-wrap: wrap;
+    flex-direction: row;
     gap: 20px;
     justify-content: center;
     /* Center content horizontally */
@@ -90,13 +91,27 @@
 /* Filter Row */
 .filter-row {
     display: flex;
-    flex-wrap: wrap;
-    gap: 30px;
-    /* Increased gap between elements for better spacing */
-    justify-content: space-between;
-    /* Spread filters evenly */
+    flex-wrap: nowrap;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
     width: 100%;
-    /* Ensure full width */
+}
+
+.filter-row .price-range {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: center;
+}
+
+.filter-row .price-range input {
+    width: 100px;
+    box-sizing: border-box;
+}
+
+.filter-row select {
+    width: auto;
 }
 
 /* Button Row */
@@ -507,8 +522,8 @@
 
 @media (max-width: 768px) {
     .filtre-section {
-        flex-direction: column;
-        /* Stack elements vertically */
+        flex-direction: row;
+        /* Stack elements horizontally */
         gap: 15px;
         padding: 15px 10px;
         /* Adjust padding */
@@ -528,9 +543,8 @@
     }
 
     .filter-row {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        /* 2x2 grid for filters */
+        display: flex;
+        flex-wrap: nowrap;
         gap: 10px;
         /* Reduce gap for better spacing */
         width: 100%;
@@ -589,8 +603,8 @@
     }
 
     .filter-row {
-        grid-template-columns: 1fr;
-        /* Stack filters vertically */
+        display: flex;
+        flex-wrap: nowrap;
         gap: 8px;
         /* Reduce gap further */
     }
@@ -601,7 +615,7 @@
     }
 
     .filtre-section {
-        flex-direction: column;
+        flex-direction: row;
         gap: 10px;
     }
 
