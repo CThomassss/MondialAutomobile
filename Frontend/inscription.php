@@ -1,13 +1,20 @@
 <?php
-// Inclusion de la configuration de la base de données
+// ----------------------
+// INCLUSION ET SESSION
+// ----------------------
 include '../Backend/config/db_connection.php';
-
 session_start();
+
+// ----------------------
+// CSRF TOKEN
+// ----------------------
 if (empty($_SESSION['csrf_token'])) {
     $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
 }
 
-// Limitation des tentatives d'inscription
+// ----------------------
+// LIMITATION DES TENTATIVES
+// ----------------------
 if (!isset($_SESSION['signup_attempts'])) {
     $_SESSION['signup_attempts'] = 0;
 }
@@ -15,6 +22,9 @@ if ($_SESSION['signup_attempts'] >= 5) {
     die("Trop de tentatives d'inscription. Veuillez réessayer plus tard.");
 }
 
+// ----------------------
+// TRAITEMENT DU FORMULAIRE
+// ----------------------
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
         die("Invalid CSRF token");
@@ -63,12 +73,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <html lang="fr">
 
 <head>
+    <!-- ---------------------- -->
+    <!-- MÉTADONNÉES ET CSS     -->
+    <!-- ---------------------- -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inscription | Mondial Automobile</title>
     <link rel="stylesheet" href="/MondialAutomobile/Frontend/css/style_inscription.css">
     <link rel="stylesheet" href="/MondialAutomobile/Frontend/css/style.css">
-    <!-- Importation de la police Poppins depuis Google Fonts -->
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap"
         rel="stylesheet">
@@ -76,9 +88,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 
 <body>
-
-    <!-- En-tête avec logo, menu et bannière principale -->
-<header class="header">
+    <!-- ---------------------- -->
+    <!-- HEADER - EN-TÊTE        -->
+    <!-- ---------------------- -->
+    <header class="header">
         <div class="container">
             <div class="navbar">
                 <div class="logo">
@@ -112,6 +125,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
     </header>
 
+    <!-- ---------------------- -->
+    <!-- SECTION PRINCIPALE      -->
+    <!-- ---------------------- -->
     <main class="login-container">
         <div class="login-left">
             <div class="illustration">

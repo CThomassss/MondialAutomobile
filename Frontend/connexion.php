@@ -1,13 +1,20 @@
 <?php
-// Inclusion de la configuration de la base de données
+// ----------------------
+// INCLUSION ET SESSION
+// ----------------------
 include '../Backend/config/db_connection.php';
 session_start();
 
+// ----------------------
+// CSRF TOKEN
+// ----------------------
 if (empty($_SESSION['csrf_token'])) {
     $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
 }
 
-// Limitation des tentatives de connexion
+// ----------------------
+// LIMITATION DES TENTATIVES
+// ----------------------
 if (!isset($_SESSION['login_attempts'])) {
     $_SESSION['login_attempts'] = 0;
 }
@@ -15,6 +22,9 @@ if ($_SESSION['login_attempts'] >= 5) {
     die("Trop de tentatives de connexion. Veuillez réessayer plus tard.");
 }
 
+// ----------------------
+// TRAITEMENT DU FORMULAIRE
+// ----------------------
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
         die("Invalid CSRF token");
@@ -60,6 +70,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <html lang="fr">
 
 <head>
+    <!-- ---------------------- -->
+    <!-- MÉTADONNÉES ET CSS     -->
+    <!-- ---------------------- -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mondial Automobile | Concessionnaire Auto</title>
@@ -78,7 +91,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 
 <body>
-    <!-- En-tête avec logo, menu et bannière principale -->
+    <!-- ---------------------- -->
+    <!-- HEADER - EN-TÊTE        -->
+    <!-- ---------------------- -->
     <header class="header">
         <div class="container">
             <div class="navbar">
@@ -123,7 +138,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
     </header>
 
-    <!-- Conteneur principal de connexion -->
+    <!-- ---------------------- -->
+    <!-- SECTION PRINCIPALE      -->
+    <!-- ---------------------- -->
     <main class="login-container">
         <!-- Colonne gauche : illustration -->
         <div class="login-left">

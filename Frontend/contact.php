@@ -1,13 +1,20 @@
 <?php
-// Inclusion de la configuration de la base de données
+// ----------------------
+// INCLUSION ET SESSION
+// ----------------------
 include '../Backend/config/db_connection.php';
 session_start();
 
+// ----------------------
+// CSRF TOKEN
+// ----------------------
 if (empty($_SESSION['csrf_token'])) {
     $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
 }
 
-// Limitation des tentatives de soumission du formulaire
+// ----------------------
+// LIMITATION DES TENTATIVES
+// ----------------------
 if (!isset($_SESSION['contact_attempts'])) {
     $_SESSION['contact_attempts'] = 0;
 }
@@ -19,6 +26,9 @@ if ($_SESSION['contact_attempts'] >= 5) {
 <html lang="fr">
 
 <head>
+    <!-- ---------------------- -->
+    <!-- MÉTADONNÉES ET CSS     -->
+    <!-- ---------------------- -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contact | Mondial Automobile</title>
@@ -28,14 +38,15 @@ if ($_SESSION['contact_attempts'] >= 5) {
     <script src="/MondialAutomobile/Frontend/js/alert.js" defer></script>
     <script src="/MondialAutomobile/Frontend/js/contact.js" defer></script>
     <script src="/MondialAutomobile/Frontend/js/transition.js" defer></script>
-    <!-- Importation de la police Poppins depuis Google Fonts -->
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap"
         rel="stylesheet">
 </head>
 
 <body>
-    <!-- En-tête avec logo, menu et bannière principale -->
+    <!-- ---------------------- -->
+    <!-- HEADER - EN-TÊTE        -->
+    <!-- ---------------------- -->
     <div class="header">
         <div class="container">
             <div class="navbar">
@@ -71,15 +82,16 @@ if ($_SESSION['contact_attempts'] >= 5) {
     </div>
     <!-- Image à gauche -->
     <div class="contact-image">
-                <img src="assets/images/bras.png" alt="Contact Image">
-            </div>
+        <img src="assets/images/bras.png" alt="Contact Image">
+    </div>
 
-    <!-- Section principale de contact -->
+    <!-- ---------------------- -->
+    <!-- SECTION PRINCIPALE      -->
+    <!-- ---------------------- -->
     <main class="contact-container">
         <div class="contact-layout">
             <!-- Section Contact -->
             <section class="contact-section">
-                
                 <h2>Contactez-nous</h2>
                 <!-- Section pour appeler directement -->
                 <div class="call-section">
@@ -128,7 +140,9 @@ if ($_SESSION['contact_attempts'] >= 5) {
         <link rel="stylesheet" href="/MondialAutomobile/Frontend/css/chatbot.css">
     </main>
 
-    <!-- Chatbot Interface -->
+    <!-- ---------------------- -->
+    <!-- CHATBOT                -->
+    <!-- ---------------------- -->
     <div id="chatbot" class="chatbot-container">
         <div class="chatbot-header">
             <h3>Chatbot</h3>

@@ -1,17 +1,28 @@
 <?php
-// Inclusion de la configuration de la base de données
+// ----------------------
+// INCLUSION ET SESSION
+// ----------------------
 include '../Backend/config/db_connection.php';
 session_start();
 
+// ----------------------
+// CSRF TOKEN
+// ----------------------
 if (empty($_SESSION['csrf_token'])) {
     $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
 }
 
-// Vérification si l'utilisateur est connecté et est un administrateur
+// ----------------------
+// VÉRIFICATION ADMIN
+// ----------------------
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
     header("Location: /MondialAutomobile/Frontend/connexion.php");
     exit();
 }
+
+// ----------------------
+// GESTION DES UTILISATEURS
+// ----------------------
 
 // Function to reset the IDs of the utilisateurs table
 function resetUserIds($conn) {
@@ -168,6 +179,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_account'])) {
     }
 }
 
+// ----------------------
+// RÉCUPÉRATION DES DONNÉES
+// ----------------------
+
 // Récupération des membres pour affichage (exclure l'administrateur connecté)
 $admin_id = $_SESSION['user_id'];
 $query = "SELECT id, username, email, role, date_creation FROM utilisateurs WHERE id != $admin_id";
@@ -185,14 +200,15 @@ $stmt->close();
 <html lang="fr">
 
 <head>
+    <!-- ---------------------- -->
+    <!-- MÉTADONNÉES ET CSS     -->
+    <!-- ---------------------- -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Administrateur | Mondial Automobile</title>
     <link rel="stylesheet" href="/MondialAutomobile/Frontend/css/style.css">
     <link rel="stylesheet" href="/MondialAutomobile/Frontend/css/style_admin.css">
     <link rel="stylesheet" href="/MondialAutomobile/Frontend/css/style_alert.css">
-
-    <!-- Importation de la police Poppins depuis Google Fonts -->
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap"
         rel="stylesheet">
@@ -202,8 +218,10 @@ $stmt->close();
 </head>
 
 <body>
-<!-- Header Section -->
-<header class="header">
+    <!-- ---------------------- -->
+    <!-- HEADER - EN-TÊTE        -->
+    <!-- ---------------------- -->
+    <header class="header">
         <div class="container">
             <div class="navbar">
                 <div class="logo">
@@ -237,6 +255,9 @@ $stmt->close();
         </div>
     </header>
 
+    <!-- ---------------------- -->
+    <!-- SECTION PRINCIPALE      -->
+    <!-- ---------------------- -->
     <main class="admin-container">
         <section class="admin-section">
             <h2>Mon Compte</h2>
