@@ -26,16 +26,21 @@ if (isset($_GET['delete_user'])) {
         header("HTTP/1.1 403 Forbidden");
         exit();
     }
-    $user_id = intval($_GET['delete_user']);
-    $stmt = $conn->prepare("DELETE FROM utilisateurs WHERE id = ?");
-    $stmt->bind_param("i", $user_id);
-    $stmt->execute();
-    $stmt->close();
+    $user_id = filter_var($_GET['delete_user'], FILTER_VALIDATE_INT);
+    if ($user_id) {
+        $stmt = $conn->prepare("DELETE FROM utilisateurs WHERE id = ?");
+        $stmt->bind_param("i", $user_id);
+        if ($stmt->execute()) {
+            $success_message = "Le membre a été supprimé avec succès.";
+        } else {
+            error_log("Erreur lors de la suppression de l'utilisateur : " . $stmt->error);
+        }
+        $stmt->close();
 
-    // Reset IDs after deletion
-    resetUserIds($conn);
-
-    header("Location: admin.php");
+        // Reset IDs après suppression
+        resetUserIds($conn);
+    }
+    header("Location: admin.php?success_message=" . urlencode($success_message));
     exit();
 }
 
@@ -70,12 +75,15 @@ if (isset($_GET['delete_message'])) {
         header("HTTP/1.1 403 Forbidden");
         exit();
     }
-    $message_id = intval($_GET['delete_message']);
-    $stmt = $conn->prepare("DELETE FROM messages_contact WHERE id = ?");
-    $stmt->bind_param("i", $message_id);
-    $stmt->execute();
-    $stmt->close();
-
+    $message_id = filter_var($_GET['delete_message'], FILTER_VALIDATE_INT);
+    if ($message_id) {
+        $stmt = $conn->prepare("DELETE FROM messages_contact WHERE id = ?");
+        $stmt->bind_param("i", $message_id);
+        if (!$stmt->execute()) {
+            error_log("Erreur lors de la suppression du message : " . $stmt->error);
+        }
+        $stmt->close();
+    }
     header("Location: admin.php");
     exit();
 }
@@ -86,12 +94,15 @@ if (isset($_GET['delete_reprise'])) {
         header("HTTP/1.1 403 Forbidden");
         exit();
     }
-    $reprise_id = intval($_GET['delete_reprise']);
-    $stmt = $conn->prepare("DELETE FROM reprises WHERE id = ?");
-    $stmt->bind_param("i", $reprise_id);
-    $stmt->execute();
-    $stmt->close();
-
+    $reprise_id = filter_var($_GET['delete_reprise'], FILTER_VALIDATE_INT);
+    if ($reprise_id) {
+        $stmt = $conn->prepare("DELETE FROM reprises WHERE id = ?");
+        $stmt->bind_param("i", $reprise_id);
+        if (!$stmt->execute()) {
+            error_log("Erreur lors de la suppression de la reprise : " . $stmt->error);
+        }
+        $stmt->close();
+    }
     header("Location: admin.php");
     exit();
 }
@@ -102,19 +113,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['edit_user'])) {
         die("Invalid CSRF token");
     }
 
-    $user_id = intval($_POST['user_id']);
-    $username = $conn->real_escape_string($_POST['username']);
-    $email = $conn->real_escape_string($_POST['email']);
-    $role = $conn->real_escape_string($_POST['role']);
+    $user_id = filter_var($_POST['user_id'], FILTER_VALIDATE_INT);
+    $username = htmlspecialchars(trim($_POST['username']), ENT_QUOTES, 'UTF-8');
+    $email = filter_var($_POST['email'], FILTER_VALIDATE_EMAIL);
+    $role = in_array($_POST['role'], ['admin', 'attente']) ? $_POST['role'] : 'attente';
 
-    // Vérification du rôle
-    if (!in_array($role, ['admin', 'attente'])) {
-        $role = 'attente'; // Par défaut, rôle "attente"
+    if ($user_id && $username && $email) {
+        $stmt = $conn->prepare("UPDATE utilisateurs SET username = ?, email = ?, role = ? WHERE id = ?");
+        $stmt->bind_param("sssi", $username, $email, $role, $user_id);
+        if ($stmt->execute()) {
+            $success_message = "Le membre a été modifié avec succès.";
+        } else {
+            error_log("Erreur lors de la modification de l'utilisateur : " . $stmt->error);
+        }
+        $stmt->close();
     }
-
-    $update_query = "UPDATE utilisateurs SET username = '$username', email = '$email', role = '$role' WHERE id = $user_id";
-    $conn->query($update_query);
-    header("Location: admin.php");
+    header("Location: admin.php?success_message=" . urlencode($success_message));
     exit();
 }
 
@@ -138,12 +152,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_account'])) {
         $error = "Les mots de passe ne correspondent pas.";
     } else {
         $update_query = "UPDATE utilisateurs SET username = '$username', email = '$email' WHERE id = $admin_id";
-        $success_message = "Les informations ont été mises à jour avec succès.";
+        if ($_POST['username'] !== $account_info['username']) {
+            $success_message = "Le nom a été modifié avec succès.";
+        } elseif ($_POST['email'] !== $account_info['email']) {
+            $success_message = "L'email a été modifié avec succès.";
+        } else {
+            $success_message = "Les informations ont été mises à jour avec succès.";
+        }
     }
 
     if (!isset($error)) {
         $conn->query($update_query);
-        header("Location: admin.php?success=1");
+        header("Location: admin.php?success_message=" . urlencode($success_message));
         exit();
     }
 }
@@ -154,9 +174,12 @@ $query = "SELECT id, username, email, role, date_creation FROM utilisateurs WHER
 $result = $conn->query($query);
 
 // Récupération des informations de l'administrateur
-$account_query = "SELECT username, email, role, date_creation FROM utilisateurs WHERE id = $admin_id";
-$account_result = $conn->query($account_query);
+$stmt = $conn->prepare("SELECT username, email, role, date_creation FROM utilisateurs WHERE id = ?");
+$stmt->bind_param("i", $admin_id);
+$stmt->execute();
+$account_result = $stmt->get_result();
 $account_info = $account_result->fetch_assoc();
+$stmt->close();
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -217,8 +240,8 @@ $account_info = $account_result->fetch_assoc();
     <main class="admin-container">
         <section class="admin-section">
             <h2>Mon Compte</h2>
-            <?php if (isset($_GET['success']) && $_GET['success'] == 1): ?>
-                <p id="success-message" style="color: green; text-align: center;">Le mot de passe a été modifié avec succès.</p>
+            <?php if (isset($_GET['success_message'])): ?>
+                <p id="success-message" style="color: green; text-align: center;"><?php echo htmlspecialchars($_GET['success_message']); ?></p>
                 <script>
                     setTimeout(() => {
                         const successMessage = document.getElementById('success-message');
