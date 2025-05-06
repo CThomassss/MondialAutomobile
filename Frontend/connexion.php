@@ -7,6 +7,14 @@ if (empty($_SESSION['csrf_token'])) {
     $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
 }
 
+// Limitation des tentatives de connexion
+if (!isset($_SESSION['login_attempts'])) {
+    $_SESSION['login_attempts'] = 0;
+}
+if ($_SESSION['login_attempts'] >= 5) {
+    die("Trop de tentatives de connexion. Veuillez réessayer plus tard.");
+}
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
         die("Invalid CSRF token");
@@ -15,28 +23,37 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
     $password = htmlspecialchars($_POST['password'], ENT_QUOTES, 'UTF-8');
 
-    // Préparer la requête pour éviter les injections SQL
-    $stmt = $conn->prepare("SELECT * FROM utilisateurs WHERE email = ?");
-    $stmt->bind_param("s", $email);
-    $stmt->execute();
-    $result = $stmt->get_result();
-
-    if ($result->num_rows === 1) {
-        $user = $result->fetch_assoc();
-        if (password_verify($password, $user['mot_de_passe'])) {
-            // Connexion réussie, stockage des informations utilisateur dans la session
-            $_SESSION['user_id'] = $user['id'];
-            $_SESSION['username'] = $user['username'];
-            $_SESSION['role'] = $user['role'];
-            header("Location: /MondialAutomobile/Frontend/index.php");
-            exit();
-        } else {
-            $error = "Mot de passe incorrect.";
-        }
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $error = "Email invalide.";
     } else {
-        $error = "Aucun compte trouvé avec cet email.";
+        // Préparer la requête pour éviter les injections SQL
+        $stmt = $conn->prepare("SELECT id, username, mot_de_passe, role FROM utilisateurs WHERE email = ?");
+        $stmt->bind_param("s", $email);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        if ($result->num_rows === 1) {
+            $user = $result->fetch_assoc();
+            if (password_verify($password, $user['mot_de_passe'])) {
+                // Réinitialiser les tentatives de connexion après un succès
+                $_SESSION['login_attempts'] = 0;
+
+                // Connexion réussie, stockage des informations utilisateur dans la session
+                $_SESSION['user_id'] = $user['id'];
+                $_SESSION['username'] = $user['username'];
+                $_SESSION['role'] = $user['role'];
+                header("Location: /MondialAutomobile/Frontend/index.php");
+                exit();
+            } else {
+                $error = "Mot de passe incorrect.";
+                $_SESSION['login_attempts']++;
+            }
+        } else {
+            $error = "Aucun compte trouvé avec cet email.";
+            $_SESSION['login_attempts']++;
+        }
+        $stmt->close();
     }
-    $stmt->close();
 }
 ?>
 <!DOCTYPE html>
@@ -121,7 +138,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <h1>Bienvenue sur <span>Mondial Automobile</span></h1>
                 <p>Connectez-vous pour accéder à votre espace personnel.</p>
                 <?php if (isset($error)): ?>
-                    <p style="color: red;"><?php echo $error; ?></p>
+                    <p style="color: red; text-align: center;"><?php echo htmlspecialchars($error); ?></p>
                 <?php endif; ?>
                 <form action="" method="POST">
                     <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
