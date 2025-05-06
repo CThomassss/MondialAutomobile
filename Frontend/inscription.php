@@ -7,6 +7,14 @@ if (empty($_SESSION['csrf_token'])) {
     $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
 }
 
+// Limitation des tentatives d'inscription
+if (!isset($_SESSION['signup_attempts'])) {
+    $_SESSION['signup_attempts'] = 0;
+}
+if ($_SESSION['signup_attempts'] >= 5) {
+    die("Trop de tentatives d'inscription. Veuillez réessayer plus tard.");
+}
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
         die("Invalid CSRF token");
@@ -20,6 +28,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $error = "Email invalide.";
     } elseif (strlen($password) < 8) {
         $error = "Le mot de passe doit contenir au moins 8 caractères.";
+    } elseif (!preg_match('/[A-Z]/', $password) || !preg_match('/[a-z]/', $password) || !preg_match('/\d/', $password)) {
+        $error = "Le mot de passe doit contenir au moins une lettre majuscule, une lettre minuscule et un chiffre.";
     } else {
         $hashed_password = password_hash($password, PASSWORD_BCRYPT);
 
@@ -36,6 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $stmt = $conn->prepare("INSERT INTO utilisateurs (username, email, mot_de_passe, role) VALUES (?, ?, ?, 'attente')");
             $stmt->bind_param("sss", $name, $email, $hashed_password);
             if ($stmt->execute()) {
+                $_SESSION['signup_attempts'] = 0; // Réinitialiser les tentatives après un succès
                 header("Location: /MondialAutomobile/Frontend/connexion.php?success=1");
                 exit();
             } else {
@@ -44,6 +55,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
         $stmt->close();
     }
+
+    $_SESSION['signup_attempts']++; // Incrémenter les tentatives en cas d'échec
 }
 ?>
 <!DOCTYPE html>
@@ -110,7 +123,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <h1>Créer un compte sur <span>Mondial Automobile</span></h1>
                 <p>Remplissez le formulaire ci-dessous pour vous inscrire.</p>
                 <?php if (isset($error)): ?>
-                    <p style="color: red;"><?php echo $error; ?></p>
+                    <p style="color: red; text-align: center;"><?php echo htmlspecialchars($error); ?></p>
                 <?php endif; ?>
                 <form action="" method="POST">
                     <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
