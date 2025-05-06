@@ -1,11 +1,16 @@
 <?php
+// ----------------------
+// SESSION ET CSRF TOKEN
+// ----------------------
 session_start();
 
 if (empty($_SESSION['csrf_token'])) {
     $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
 }
 
-// Limitation des tentatives de soumission du formulaire
+// ----------------------
+// LIMITATION DES TENTATIVES
+// ----------------------
 if (!isset($_SESSION['reprise_attempts'])) {
     $_SESSION['reprise_attempts'] = 0;
 }
@@ -17,6 +22,9 @@ if ($_SESSION['reprise_attempts'] >= 5) {
 <html lang="fr">
 
 <head>
+    <!-- ---------------------- -->
+    <!-- MÉTADONNÉES ET CSS     -->
+    <!-- ---------------------- -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reprise | Mondial Automobile</title>
@@ -24,7 +32,6 @@ if ($_SESSION['reprise_attempts'] >= 5) {
     <link rel="stylesheet" href="/MondialAutomobile/Frontend/css/style_reprise.css">
     <link rel="stylesheet" href="/MondialAutomobile/Frontend/css/style_alert.css">
     <script src="/MondialAutomobile/Frontend/js/alert.js" defer></script>
-    <!-- Importation de la police Poppins depuis Google Fonts -->
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap"
         rel="stylesheet">
@@ -32,7 +39,9 @@ if ($_SESSION['reprise_attempts'] >= 5) {
 </head>
 
 <body>
-    <!-- En-tête avec logo, menu et bannière principale -->
+    <!-- ---------------------- -->
+    <!-- HEADER - EN-TÊTE        -->
+    <!-- ---------------------- -->
     <div class="header">
         <div class="container">
             <div class="navbar">
@@ -67,7 +76,9 @@ if ($_SESSION['reprise_attempts'] >= 5) {
         </div>
     </div>
 
-    <!-- Section principale de reprise -->
+    <!-- ---------------------- -->
+    <!-- SECTION PRINCIPALE      -->
+    <!-- ---------------------- -->
     <main class="reprise-container">
         <h2>Proposez votre véhicule à la reprise</h2>
         <form action="/MondialAutomobile/Backend/reprise_handler.php" method="POST" enctype="multipart/form-data" onsubmit="return validateForm()">
@@ -138,7 +149,9 @@ if ($_SESSION['reprise_attempts'] >= 5) {
         <link rel="stylesheet" href="/MondialAutomobile/Frontend/css/chatbot.css">
     </main>
 
-    <!-- Chatbot Interface -->
+    <!-- ---------------------- -->
+    <!-- CHATBOT                -->
+    <!-- ---------------------- -->
     <div id="chatbot" class="chatbot-container">
         <div class="chatbot-header">
             <h3>Chatbot</h3>
@@ -154,6 +167,9 @@ if ($_SESSION['reprise_attempts'] >= 5) {
     </div>
     <button id="openChatbot" class="chatbot-toggle">💬</button>
 
+    <!-- ---------------------- -->
+    <!-- SCRIPTS                -->
+    <!-- ---------------------- -->
     <script src="/MondialAutomobile/Frontend/js/chatbot.js" defer></script>
     <script>
         function validateForm() {

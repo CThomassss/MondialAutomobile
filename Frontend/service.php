@@ -1,9 +1,13 @@
 <?php
-// Inclusion de la configuration de la base de données
+// ----------------------
+// INCLUSION ET SESSION
+// ----------------------
 include '../Backend/config/db_connection.php';
 session_start();
 
-// Protection contre les attaques XSS pour les données de session
+// ----------------------
+// PROTECTION XSS
+// ----------------------
 if (isset($_SESSION['username'])) {
     $_SESSION['username'] = htmlspecialchars($_SESSION['username'], ENT_QUOTES, 'UTF-8');
 }
@@ -12,6 +16,9 @@ if (isset($_SESSION['username'])) {
 <html lang="fr">
 
 <head>
+    <!-- ---------------------- -->
+    <!-- MÉTADONNÉES ET CSS     -->
+    <!-- ---------------------- -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Services | Mondial Automobile</title>
@@ -25,7 +32,9 @@ if (isset($_SESSION['username'])) {
 </head>
 
 <body>
-    <!-- Header Section -->
+    <!-- ---------------------- -->
+    <!-- HEADER - EN-TÊTE        -->
+    <!-- ---------------------- -->
     <header class="header">
         <div class="container">
             <div class="navbar">
@@ -62,10 +71,12 @@ if (isset($_SESSION['username'])) {
         </div>
     </header>
 
-    <!-- Main Section -->
+    <!-- ---------------------- -->
+    <!-- SECTION PRINCIPALE      -->
+    <!-- ---------------------- -->
     <main class="service-container">
         <div class="container">
-            <!-- Service 1 (Image on Right) -->
+            <!-- Service 1 -->
             <section id="carte-grise" class="service-row reverse">
                 <div class="service-text">
                     <h2>Carte grise / Immatriculation</h2>
@@ -83,7 +94,7 @@ if (isset($_SESSION['username'])) {
                 </div>
             </section>
 
-            <!-- Service 2 (Image on Left) -->
+            <!-- Service 2 -->
             <section id="achat-revente" class="service-row">
                 <div class="service-image">
                     <img src="assets/images/Controletechnique.png" alt="Achat/Revente">
@@ -100,7 +111,7 @@ if (isset($_SESSION['username'])) {
                 </div>
             </section>
 
-            <!-- Service 3 (Image on Right) -->
+            <!-- Service 3 -->
             <section id="nettoyage" class="service-row reverse">
                 <div class="service-text">
                     <h2>Nettoyage & préparation esthétique</h2>
@@ -118,7 +129,7 @@ if (isset($_SESSION['username'])) {
                 </div>
             </section>
 
-            <!-- Service 4 (Image on Left) -->
+            <!-- Service 4 -->
             <section id="controle-technique" class="service-row">
                 <div class="service-image">
                     <img src="assets/images/Achatrevente.png" alt="Contrôle technique">
@@ -136,7 +147,7 @@ if (isset($_SESSION['username'])) {
                 </div>
             </section>
 
-            <!-- Service 5 (Image on Right) -->
+            <!-- Service 5 -->
             <section id="extension-garantie" class="service-row reverse">
                 <div class="service-text">
                     <h2>Extension de garantie</h2>
@@ -156,6 +167,9 @@ if (isset($_SESSION['username'])) {
         </div>
     </main>
 
+    <!-- ---------------------- -->
+    <!-- SCRIPTS                -->
+    <!-- ---------------------- -->
     <script>
         // Protection contre les attaques XSS dans les liens de déconnexion
         document.querySelectorAll('.logout-link').forEach(link => {
