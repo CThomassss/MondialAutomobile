@@ -2,6 +2,11 @@
 // Inclusion de la configuration de la base de données
 include '../Backend/config/db_connection.php';
 session_start();
+
+// Protection contre les attaques XSS pour les données de session
+if (isset($_SESSION['username'])) {
+    $_SESSION['username'] = htmlspecialchars($_SESSION['username'], ENT_QUOTES, 'UTF-8');
+}
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -25,7 +30,7 @@ session_start();
         <div class="container">
             <div class="navbar">
                 <div class="logo">
-                <img src="assets/images/logomondial.png" width="100px" alt="Logo Mondial Automobile">
+                    <img src="assets/images/logomondial.png" width="100px" alt="Logo Mondial Automobile">
                 </div>
                 <nav>
                     <ul id="MenuItems">
@@ -63,14 +68,14 @@ session_start();
             <!-- Service 1 (Image on Right) -->
             <section id="carte-grise" class="service-row reverse">
                 <div class="service-text">
-                <h2>Carte grise / Immatriculation</h2>
-                <p>Faites immatriculer votre véhicule facilement et rapidement :</p>
-                <ul>
-                    <li>Prise en charge complète de votre demande de carte grise</li>
-                    <li>Traitement rapide et sécurisé de votre dossier</li>
-                    <li>Accompagnement personnalisé pour toutes vos démarches</li>
-                    <li>Aucune attente en préfecture, on s’occupe de tout !</li>
-                </ul>
+                    <h2>Carte grise / Immatriculation</h2>
+                    <p>Faites immatriculer votre véhicule facilement et rapidement :</p>
+                    <ul>
+                        <li>Prise en charge complète de votre demande de carte grise</li>
+                        <li>Traitement rapide et sécurisé de votre dossier</li>
+                        <li>Accompagnement personnalisé pour toutes vos démarches</li>
+                        <li>Aucune attente en préfecture, on s’occupe de tout !</li>
+                    </ul>
                     <a href="/MondialAutomobile/Frontend/contact.php" class="btn-service">Prendre RDV</a>
                 </div>
                 <div class="service-image">
@@ -91,21 +96,21 @@ session_start();
                         <li>Garantie sur les réparations</li>
                         <li>Prise en charge des démarches administratives</li>
                     </ul>
-                    <a href="/MondialAutomobile/Frontend/vente.php" class="btn-service">Contactez-nous</a>
+                    <a href="/MondialAutomobile/Frontend/vente.php" class="btn-service">Clique ici</a>
                 </div>
             </section>
 
             <!-- Service 3 (Image on Right) -->
             <section id="nettoyage" class="service-row reverse">
                 <div class="service-text">
-                <h2>Nettoyage & préparation esthétique</h2>
-                <p>Offrez une seconde jeunesse à votre véhicule grâce à notre service de nettoyage professionnel :</p>
-                <ul>
-                    <li>Nettoyage intérieur complet (aspiration, tissus, plastiques)</li>
-                    <li>Lustrage et polissage de la carrosserie</li>
-                    <li>Nettoyage extérieur haute pression et décontamination</li>
-                    <li>Rénovation des jantes et des optiques de phares</li>
-                </ul>
+                    <h2>Nettoyage & préparation esthétique</h2>
+                    <p>Offrez une seconde jeunesse à votre véhicule grâce à notre service de nettoyage professionnel :</p>
+                    <ul>
+                        <li>Nettoyage intérieur complet (aspiration, tissus, plastiques)</li>
+                        <li>Lustrage et polissage de la carrosserie</li>
+                        <li>Nettoyage extérieur haute pression et décontamination</li>
+                        <li>Rénovation des jantes et des optiques de phares</li>
+                    </ul>
                     <a href="/MondialAutomobile/Frontend/contact.php" class="btn-service">Prendre RDV</a>
                 </div>
                 <div class="service-image">
@@ -132,33 +137,36 @@ session_start();
             </section>
 
             <!-- Service 5 (Image on Right) -->
-            <section id="nettoyage" class="service-row reverse">
+            <section id="extension-garantie" class="service-row reverse">
                 <div class="service-text">
-                <h2>Extension de garantie</h2>
-                <p>Roulez l’esprit tranquille avec notre service d’extension de garantie :</p>
-                <ul>
-                    <li>Extension de garantie jusqu’à 24 mois maximum</li>
-                    <li>Couverture pièces et main-d’œuvre en cas de panne</li>
-                    <li>Prise en charge dans tout le réseau agréé</li>
-                    <li>Assistance 7j/7 selon les conditions du contrat</li>
-                </ul>
+                    <h2>Extension de garantie</h2>
+                    <p>Roulez l’esprit tranquille avec notre service d’extension de garantie :</p>
+                    <ul>
+                        <li>Extension de garantie jusqu’à 24 mois maximum</li>
+                        <li>Couverture pièces et main-d’œuvre en cas de panne</li>
+                        <li>Prise en charge dans tout le réseau agréé</li>
+                        <li>Assistance 7j/7 selon les conditions du contrat</li>
+                    </ul>
                     <a href="/MondialAutomobile/Frontend/contact.php" class="btn-service">Prendre RDV</a>
                 </div>
                 <div class="service-image">
-                    <img src="assets/images/extension-de-garantie-image.png" alt="Nettoyage">
+                    <img src="assets/images/extension-de-garantie-image.png" alt="Extension de garantie">
                 </div>
             </section>
-
-
         </div>
     </main>
 
-    <head>
-    <!-- ...existing code... -->
-    <script src="/MondialAutomobile/Frontend/js/transition.js" defer></script>
-</head>
-
-
+    <script>
+        // Protection contre les attaques XSS dans les liens de déconnexion
+        document.querySelectorAll('.logout-link').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                if (confirm('Êtes-vous sûr de vouloir vous déconnecter ?')) {
+                    window.location.href = '/MondialAutomobile/Backend/logout_handler.php';
+                }
+            });
+        });
+    </script>
 </body>
 
 </html>
