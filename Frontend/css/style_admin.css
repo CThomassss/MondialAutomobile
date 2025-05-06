@@ -291,11 +291,3 @@
     background-color: #e53935;
     transform: scale(1.05);
 }
-
-/* ---------------------- */
-/* BACKGROUND IMAGE */
-/* ---------------------- */
-body {
-    background: url('/MondialAutomobile/Frontend/assets/images/Apropos.jpg') no-repeat center center fixed;
-    background-size: cover;
-}

@@ -598,6 +598,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['marque'])) {
             return confirm("Êtes-vous sûr de vouloir supprimer cette annonce ?");
         }
     </script>
+
+<head>
+    <!-- ...existing code... -->
+    <script src="/MondialAutomobile/Frontend/js/transition.js" defer></script>
+</head>
+
     
 </body>
 

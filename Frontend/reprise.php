@@ -152,6 +152,13 @@ session_start();
             return true;
         }
     </script>
+
+<head>
+    <!-- ...existing code... -->
+    <script src="/MondialAutomobile/Frontend/js/transition.js" defer></script>
+</head>
+
+
 </body>
 
 </html>

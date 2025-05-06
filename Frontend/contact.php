@@ -136,6 +136,13 @@ if (empty($_SESSION['csrf_token'])) {
     <button id="openChatbot" class="chatbot-toggle">💬</button>
 
     <script src="/MondialAutomobile/Frontend/js/chatbot.js" defer></script>
+
+    <head>
+    <!-- ...existing code... -->
+    <script src="/MondialAutomobile/Frontend/js/transition.js" defer></script>
+</head>
+
+
 </body>
 
 </html>
