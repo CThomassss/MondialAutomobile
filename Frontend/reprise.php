@@ -1,5 +1,17 @@
 <?php
 session_start();
+
+if (empty($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
+
+// Limitation des tentatives de soumission du formulaire
+if (!isset($_SESSION['reprise_attempts'])) {
+    $_SESSION['reprise_attempts'] = 0;
+}
+if ($_SESSION['reprise_attempts'] >= 5) {
+    die("Trop de tentatives de soumission. Veuillez réessayer plus tard.");
+}
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -59,6 +71,7 @@ session_start();
     <main class="reprise-container">
         <h2>Proposez votre véhicule à la reprise</h2>
         <form action="/MondialAutomobile/Backend/reprise_handler.php" method="POST" enctype="multipart/form-data" onsubmit="return validateForm()">
+            <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
             <div class="form-row">
                 <div class="input-group">
                     <label for="name">Nom</label>
@@ -152,13 +165,6 @@ session_start();
             return true;
         }
     </script>
-
-<head>
-    <!-- ...existing code... -->
-    <script src="/MondialAutomobile/Frontend/js/transition.js" defer></script>
-</head>
-
-
 </body>
 
 </html>

@@ -241,6 +241,12 @@ session_start();
 
     <script src="/MondialAutomobile/Frontend/js/chatbot.js" defer></script>
 
+    <head>
+    <!-- ...existing code... -->
+    <script src="/MondialAutomobile/Frontend/js/transition.js" defer></script>
+</head>
+
+
 </body>
 
 </html>
