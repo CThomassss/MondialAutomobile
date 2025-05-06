@@ -1,14 +1,20 @@
 <?php
-// Inclusion de la configuration de la base de données
+// ----------------------
+// INCLUSION ET SESSION
+// ----------------------
 include '../Backend/config/db_connection.php';
 session_start();
 
-// Protection contre les attaques XSS pour les données de session
+// ----------------------
+// PROTECTION XSS
+// ----------------------
 if (isset($_SESSION['username'])) {
     $_SESSION['username'] = htmlspecialchars($_SESSION['username'], ENT_QUOTES, 'UTF-8');
 }
 
-// Récupération des véhicules disponibles
+// ----------------------
+// RÉCUPÉRATION DES VÉHICULES
+// ----------------------
 $filter_query = "SELECT * FROM voitures";
 if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
     $filter_query .= " WHERE est_visible = 1"; // Only show visible vehicles for non-admin users
@@ -33,7 +39,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     }
 }
 
-// Apply sorting logic
+// ----------------------
+// TRI DES VÉHICULES
+// ----------------------
 if (!empty($_GET['sort_by'])) {
     if ($_GET['sort_by'] === 'pertinence') {
         $filter_query .= " ORDER BY pertinence DESC, id DESC"; // Prioritize vehicles with "Pertinence" checked
@@ -44,7 +52,9 @@ if (!empty($_GET['sort_by'])) {
     }
 }
 
-// Pagination setup
+// ----------------------
+// PAGINATION
+// ----------------------
 $annonces_par_page = 12; // Number of announcements per page
 $page_actuelle = isset($_GET['page']) ? max(1, intval($_GET['page'])) : 1; // Current page
 $offset = ($page_actuelle - 1) * $annonces_par_page; // Offset for SQL query
@@ -68,15 +78,18 @@ if (!$result) {
     die("Une erreur est survenue. Veuillez réessayer plus tard.");
 }
 
-// Récupérer les marques distinctes
+// ----------------------
+// RÉCUPÉRATION DES MARQUES ET MODÈLES
+// ----------------------
 $marques_result = $conn->query("SELECT DISTINCT marque FROM voitures");
 $marques = $marques_result->fetch_all(MYSQLI_ASSOC);
 
-// Récupérer les modèles distincts
 $modeles_result = $conn->query("SELECT DISTINCT modele FROM voitures");
 $modeles = $modeles_result->fetch_all(MYSQLI_ASSOC);
 
-// Ajout d'une annonce (réservé aux administrateurs)
+// ----------------------
+// AJOUT D'UNE ANNONCE (ADMIN)
+// ----------------------
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_vehicle']) && $_SESSION['role'] === 'admin') {
     $marque = $conn->real_escape_string(trim($_POST['marque']));
     $modele = $conn->real_escape_string(trim($_POST['modele']));
@@ -138,7 +151,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_vehicle']) && $_S
     exit();
 }
 
-// Modification d'une annonce (réservé aux administrateurs)
+// ----------------------
+// MODIFICATION D'UNE ANNONCE (ADMIN)
+// ----------------------
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['edit_vehicle']) && $_SESSION['role'] === 'admin') {
     $id = intval($_POST['id']);
     $marque = $conn->real_escape_string($_POST['marque']);
@@ -206,7 +221,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['edit_vehicle']) && $_
     }
 }
 
-// Suppression d'une annonce (réservé aux administrateurs)
+// ----------------------
+// SUPPRESSION D'UNE ANNONCE (ADMIN)
+// ----------------------
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_vehicle']) && $_SESSION['role'] === 'admin') {
     $id = intval($_POST['id']);
     $query = "DELETE FROM voitures WHERE id = $id";
@@ -215,7 +232,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_vehicle']) && 
     exit();
 }
 
-// Marquer une voiture comme vendue
+// ----------------------
+// MARQUER UNE VOITURE COMME VENDUE
+// ----------------------
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['mark_as_sold'])) {
     $id = intval($_POST['id']);
     $query = "UPDATE voitures SET est_vendu = 1 WHERE id = $id";
@@ -227,7 +246,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['mark_as_sold'])) {
     exit();
 }
 
-// Point de terminaison pour récupérer les modèles dynamiquement
+// ----------------------
+// RÉCUPÉRATION DYNAMIQUE DES MODÈLES
+// ----------------------
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['marque'])) {
     $marque = $conn->real_escape_string($_POST['marque']);
     $query = "SELECT DISTINCT modele FROM voitures WHERE marque = '$marque'";
@@ -244,6 +265,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['marque'])) {
 <html lang="fr">
 
 <head>
+    <!-- ---------------------- -->
+    <!-- MÉTADONNÉES ET CSS     -->
+    <!-- ---------------------- -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vente | Mondial Automobile</title>
@@ -253,10 +277,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['marque'])) {
     <script src="/MondialAutomobile/Frontend/js/alert.js" defer></script>
     <script src="/MondialAutomobile/Frontend/js/popup.js" defer></script>
     <script src="/MondialAutomobile/Frontend/js/transition.js" defer></script>
-    <!-- Importation de la police Poppins depuis Google Fonts -->
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap"
         rel="stylesheet">
+
+    <!-- ---------------------- -->
+    <!-- SCRIPT POUR LES FILTRES -->
+    <!-- ---------------------- -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const marqueSelect = document.querySelector('select[name="marque"]');
@@ -289,7 +316,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['marque'])) {
 </head>
 
 <body>
-                    <!-- Header Section -->
+    <!-- ---------------------- -->
+    <!-- HEADER - EN-TÊTE        -->
+    <!-- ---------------------- -->
     <header class="header">
         <div class="container">
             <div class="navbar">
@@ -324,7 +353,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['marque'])) {
         </div>
     </header>
 
-    <!-- Section de filtrage -->
+    <!-- ---------------------- -->
+    <!-- SECTION DE FILTRAGE     -->
+    <!-- ---------------------- -->
     <section class="filtre-section">
         <form method="GET" action="vente.php">
             <div class="filter-row">
@@ -369,6 +400,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['marque'])) {
         </form>
     </section>
 
+    <!-- ---------------------- -->
+    <!-- FORMULAIRE ADMIN (AJOUT) -->
+    <!-- ---------------------- -->
     <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin'): ?>
     <div id="popupForm" class="popup">
         <div class="popup-content">
@@ -435,6 +469,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['marque'])) {
     </div>
     <?php endif; ?>
 
+    <!-- ---------------------- -->
+    <!-- VITRINE DES VÉHICULES   -->
+    <!-- ---------------------- -->
     <section class="vitrine-venda">
         <div class="annonces-container">
             <?php 
@@ -484,7 +521,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['marque'])) {
         </div>
     </section>
 
-    <!-- Pagination -->
+    <!-- ---------------------- -->
+    <!-- PAGINATION              -->
+    <!-- ---------------------- -->
     <div class="pagination">
         <?php if ($page_actuelle > 1): ?>
             <a href="?page=<?php echo $page_actuelle - 1; ?>" class="pagination-link">Précédent</a>
@@ -499,6 +538,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['marque'])) {
         <?php endif; ?>
     </div>
 
+    <!-- ---------------------- -->
+    <!-- FORMULAIRE ADMIN (MODIF) -->
+    <!-- ---------------------- -->
     <div id="editPopupForm" class="popup">
         <div class="popup-content">
             <span class="close-popup" id="closeEditPopup">&times;</span>
@@ -583,6 +625,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['marque'])) {
         </div>
     </div>
 
+    <!-- ---------------------- -->
+    <!-- SCRIPTS POUR LES ACTIONS -->
+    <!-- ---------------------- -->
     <script>
         function openEditPopup(vehicle) {
             document.getElementById('edit_id').value = vehicle.id;
