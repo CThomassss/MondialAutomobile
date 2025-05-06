@@ -1,34 +1,57 @@
 <?php
-// Inclusion de la configuration de la base de données
+// ----------------------
+// INCLUSION DES FICHIERS
+// ----------------------
 include '../Backend/config/db_connection.php';
 session_start();
 
-// Protection contre les attaques XSS pour les données de session
-if (isset($_SESSION['username'])) {
-    $_SESSION['username'] = htmlspecialchars($_SESSION['username'], ENT_QUOTES, 'UTF-8');
-}
 ?>
 <!DOCTYPE html>
 <html lang="fr">
 
 <head>
+    <?php
+    // ----------------------
+    // MÉTADONNÉES
+    // ----------------------
+    ?>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="description"
         content="Mondial Automobile - Le concessionnaire automobile pour acheter ou vendre votre voiture d'occasion. Découvrez notre sélection de véhicules de qualité.">
     <title>Mondial Automobile | Concessionnaire Auto</title>
 
+    <?php
+    // ----------------------
+    // LIENS CSS
+    // ----------------------
+    ?>
     <link rel="stylesheet" href="/MondialAutomobile/Frontend/css/style_index.css">
     <link rel="stylesheet" href="/MondialAutomobile/Frontend/css/style.css">
     <link rel="stylesheet" href="/MondialAutomobile/Frontend/css/style_alert.css">
+
+    <?php
+    // ----------------------
+    // SCRIPTS JAVASCRIPT
+    // ----------------------
+    ?>
     <script src="/MondialAutomobile/Frontend/js/alert.js" defer></script>
     <script src="/MondialAutomobile/Frontend/js/transition.js" defer></script>
 
-    <!-- Importation de la police Poppins depuis Google Fonts -->
+    <?php
+    // ----------------------
+    // POLICE POPPINS
+    // ----------------------
+    ?>
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap"
         rel="stylesheet">
 
+    <?php
+    // ----------------------
+    // SCRIPT DÉCONNEXION
+    // ----------------------
+    ?>
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             const logoutLinks = document.querySelectorAll(".logout-link");
@@ -47,13 +70,19 @@ if (isset($_SESSION['username'])) {
 </head>
 
 <body>
-    <!-- En-tête avec logo, menu et bannière principale -->
+    <?php
+    // ----------------------
+    // HEADER - EN-TÊTE
+    // ----------------------
+    ?>
     <div class="header">
         <div class="container">
             <div class="navbar">
+                <!-- Logo -->
                 <div class="logo">
                     <img src="assets/images/logomondial.png" width="100px" alt="Logo Mondial Automobile">
                 </div>
+                <!-- Menu de navigation -->
                 <nav>
                     <ul id="MenuItems">
                         <li><a href="/MondialAutomobile/Frontend/index.php">Accueil</a></li>
@@ -77,6 +106,7 @@ if (isset($_SESSION['username'])) {
                         <?php endif; ?>
                     </ul>
                 </nav>
+                <!-- Icône du panier -->
                 <a href="cart.php"><img src="assets/images/cart.png" width="30px" height="30px" alt="Panier"></a>
             </div>
 
@@ -90,11 +120,14 @@ if (isset($_SESSION['username'])) {
         </div>
     </div>
 
-
-    <!-- Section combinée À propos et Histoire -->
+    <?php
+    // ----------------------
+    // SECTION PRINCIPALE
+    // ----------------------
+    ?>
     <main class="about-history">
         <!-- Section À propos de l'entreprise -->
-        <section id="about-section" class="about-section"> <!-- Ajout d'un ID pour la section "À propos" -->
+        <section id="about-section" class="about-section">
             <div class="container">
                 <h2>À propos de Mondial Automobile</h2>
                 <p>
@@ -130,26 +163,26 @@ if (isset($_SESSION['username'])) {
             </div>
         </section>
 
+        <!-- Section des avis Google -->
         <link rel="stylesheet" href="/MondialAutomobile/Frontend/css/chatbot.css">
-
-        <!-- Elfsight Google Reviews | Untitled Google Reviews -->
         <script src="https://static.elfsight.com/platform/platform.js" async></script>
         <div class="elfsight-app-188e5a7e-e5cb-4411-a0f2-8c2c0858d7de" data-elfsight-app-lazy></div>
     </main>
 
+    <?php
+    // ----------------------
+    // SCRIPTS D'ANIMATIONS
+    // ----------------------
+    ?>
     <script>
-        // ------------------------------
-        // Défilement horizontal de l'image "ImageAbout.jpg"
-        // ------------------------------
+        // Animation de défilement horizontal pour l'image
         window.addEventListener('scroll', () => {
             const slideImage = document.querySelector('.history-image img');
             const scrollPosition = window.pageYOffset;
             slideImage.style.transform = `translateX(${scrollPosition * 0.05}px)`; // Déplacement horizontal
         });
 
-        // ------------------------------
-        // Effet d'apparition pour l'image "ImageAbout.jpg"
-        // ------------------------------
+        // Effet d'apparition pour l'image
         window.addEventListener('load', () => {
             const historyImage = document.querySelector('.history-image img');
             historyImage.style.opacity = '0'; // Initialement invisible
@@ -161,9 +194,7 @@ if (isset($_SESSION['username'])) {
             }, 200);
         });
 
-        // ------------------------------
-        // Barre animée entre "À propos" et "Histoire"
-        // ------------------------------
+        // Barre animée entre les sections
         const aboutHistorySection = document.querySelector('.about-history');
         const animatedBar = document.createElement('div');
         animatedBar.style.width = '80%'; // Largeur de la barre
@@ -174,7 +205,6 @@ if (isset($_SESSION['username'])) {
         animatedBar.style.overflow = 'hidden';
         aboutHistorySection.insertBefore(animatedBar, aboutHistorySection.children[1]); // Insertion dans le DOM
 
-        // Animation continue de la barre blanche
         const movingBar = document.createElement('div');
         movingBar.style.width = '20%'; // Largeur de la barre rouge
         movingBar.style.height = '100%'; // Hauteur identique à la barre noire
@@ -184,7 +214,6 @@ if (isset($_SESSION['username'])) {
         movingBar.style.animation = 'moveBar 5s linear infinite'; // Animation continue avec une durée plus lente
         animatedBar.appendChild(movingBar);
 
-        // Ajout de l'animation via CSS
         const style = document.createElement('style');
         style.textContent = `
             @keyframes moveBar {
@@ -198,9 +227,7 @@ if (isset($_SESSION['username'])) {
         `;
         document.head.appendChild(style); // Ajout des styles dans le <head>
 
-        // ------------------------------
-        // Effet d'apparition pour une photo de personnage à côté du texte "À propos"
-        // ------------------------------
+        // Effet d'apparition pour une photo de personnage
         const aboutContainer = document.querySelector('.about-section .container');
         const personImage = document.createElement('img'); // Création de l'image du personnage
         personImage.src = 'assets/images/imagepersonne.webp'; // Chemin de l'image du personnage
@@ -212,7 +239,6 @@ if (isset($_SESSION['username'])) {
         aboutContainer.style.position = 'relative'; // Positionnement relatif pour le conteneur
         aboutContainer.appendChild(personImage); // Ajout de l'image dans le DOM
 
-        // Animation de la photo de personnage lors du défilement
         window.addEventListener('scroll', () => {
             const aboutRect = aboutContainer.getBoundingClientRect();
             if (aboutRect.top <= window.innerHeight && aboutRect.bottom >= 0) {
@@ -223,11 +249,13 @@ if (isset($_SESSION['username'])) {
                 personImage.style.transform = 'scale(1)'; // Retour à la taille normale
             }
         });
-
-
     </script>
 
-    <!-- Chatbot Interface -->
+    <?php
+    // ----------------------
+    // CHATBOT
+    // ----------------------
+    ?>
     <div id="chatbot" class="chatbot-container">
         <div class="chatbot-header">
             <h3>Chatbot</h3>
@@ -244,12 +272,6 @@ if (isset($_SESSION['username'])) {
     <button id="openChatbot" class="chatbot-toggle">💬</button>
 
     <script src="/MondialAutomobile/Frontend/js/chatbot.js" defer></script>
-
-    <head>
-    <script src="/MondialAutomobile/Frontend/js/transition.js" defer></script>
-</head>
-
-
 </body>
 
 </html>
