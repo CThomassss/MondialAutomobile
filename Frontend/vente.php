@@ -3,6 +3,11 @@
 include '../Backend/config/db_connection.php';
 session_start();
 
+// Protection contre les attaques XSS pour les données de session
+if (isset($_SESSION['username'])) {
+    $_SESSION['username'] = htmlspecialchars($_SESSION['username'], ENT_QUOTES, 'UTF-8');
+}
+
 // Récupération des véhicules disponibles
 $filter_query = "SELECT * FROM voitures";
 if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
@@ -56,6 +61,12 @@ $total_pages = ceil($total_annonces / $annonces_par_page);
 // Fetch announcements for the current page
 $filter_query .= " LIMIT $annonces_par_page OFFSET $offset";
 $result = $conn->query($filter_query);
+
+// Gestion des erreurs SQL
+if (!$result) {
+    error_log("Erreur SQL : " . $conn->error);
+    die("Une erreur est survenue. Veuillez réessayer plus tard.");
+}
 
 // Récupérer les marques distinctes
 $marques_result = $conn->query("SELECT DISTINCT marque FROM voitures");
@@ -241,6 +252,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['marque'])) {
     <link rel="stylesheet" href="/MondialAutomobile/Frontend/css/style_alert.css">
     <script src="/MondialAutomobile/Frontend/js/alert.js" defer></script>
     <script src="/MondialAutomobile/Frontend/js/popup.js" defer></script>
+    <script src="/MondialAutomobile/Frontend/js/transition.js" defer></script>
     <!-- Importation de la police Poppins depuis Google Fonts -->
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap"
@@ -325,25 +337,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['marque'])) {
                 <select name="marque">
                     <option value="">Toutes les marques</option>
                     <?php foreach ($marques as $marque): ?>
-                        <option value="<?php echo htmlspecialchars($marque['marque']); ?>" 
+                        <option value="<?php echo htmlspecialchars($marque['marque'], ENT_QUOTES, 'UTF-8'); ?>" 
                             <?php echo isset($_GET['marque']) && $_GET['marque'] === $marque['marque'] ? 'selected' : ''; ?>>
-                            <?php echo htmlspecialchars($marque['marque']); ?>
+                            <?php echo htmlspecialchars($marque['marque'], ENT_QUOTES, 'UTF-8'); ?>
                         </option>
                     <?php endforeach; ?>
                 </select>
                 <select name="modele">
                     <option value="">Tous les modèles</option>
                     <?php foreach ($modeles as $modele): ?>
-                        <option value="<?php echo htmlspecialchars($modele['modele']); ?>" 
+                        <option value="<?php echo htmlspecialchars($modele['modele'], ENT_QUOTES, 'UTF-8'); ?>" 
                             <?php echo isset($_GET['modele']) && $_GET['modele'] === $modele['modele'] ? 'selected' : ''; ?>>
-                            <?php echo htmlspecialchars($modele['modele']); ?>
+                            <?php echo htmlspecialchars($modele['modele'], ENT_QUOTES, 'UTF-8'); ?>
                         </option>
                     <?php endforeach; ?>
                 </select>
                 <div class="price-range">
                     <div>
-                        <input type="number" name="prix_min" placeholder="Min €" value="<?php echo isset($_GET['prix_min']) ? htmlspecialchars($_GET['prix_min']) : ''; ?>">
-                        <input type="number" name="prix_max" placeholder="Max €" value="<?php echo isset($_GET['prix_max']) ? htmlspecialchars($_GET['prix_max']) : ''; ?>">
+                        <input type="number" name="prix_min" placeholder="Min €" value="<?php echo isset($_GET['prix_min']) ? htmlspecialchars($_GET['prix_min'], ENT_QUOTES, 'UTF-8') : ''; ?>">
+                        <input type="number" name="prix_max" placeholder="Max €" value="<?php echo isset($_GET['prix_max']) ? htmlspecialchars($_GET['prix_max'], ENT_QUOTES, 'UTF-8') : ''; ?>">
                     </div>
                 </div>
             </div>
@@ -438,20 +450,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['marque'])) {
                         $first_image = !empty($images) ? $images[0] : 'assets/images/car_placeholder.png';
                         ?>
                         <div class="carte-image-wrapper">
-                            <img src="<?php echo htmlspecialchars($first_image); ?>" alt="Image voiture">
+                            <img src="<?php echo htmlspecialchars($first_image, ENT_QUOTES, 'UTF-8'); ?>" alt="Image voiture">
                             <?php if ($vehicle['est_vendu'] == 1): ?>
                                 <div class="vendu-overlay">
                                     <img src="assets/images/vendu.png" alt="Vendu">
                                 </div>
                             <?php endif; ?>
                         </div>
-                        <h2><?php echo htmlspecialchars($vehicle['marque'] . ' ' . $vehicle['modele']); ?></h2>
-                        <p>Année : <?php echo htmlspecialchars($vehicle['annee']); ?></p>
-                        <p>Kilométrage : <?php echo htmlspecialchars($vehicle['kilometrage']); ?> km</p>
-                        <p class="prix"><?php echo htmlspecialchars(number_format($vehicle['prix'], 2, ',', ' ')); ?> €</p>
-                        <a href="detail.php?id=<?php echo $vehicle['id']; ?>" class="btn-submit">Plus de détails</a>
+                        <h2><?php echo htmlspecialchars($vehicle['marque'] . ' ' . $vehicle['modele'], ENT_QUOTES, 'UTF-8'); ?></h2>
+                        <p>Année : <?php echo htmlspecialchars($vehicle['annee'], ENT_QUOTES, 'UTF-8'); ?></p>
+                        <p>Kilométrage : <?php echo htmlspecialchars($vehicle['kilometrage'], ENT_QUOTES, 'UTF-8'); ?> km</p>
+                        <p class="prix"><?php echo htmlspecialchars(number_format($vehicle['prix'], 2, ',', ' '), ENT_QUOTES, 'UTF-8'); ?> €</p>
+                        <a href="detail.php?id=<?php echo urlencode($vehicle['id']); ?>" class="btn-submit">Plus de détails</a>
                         <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin'): ?>
-                            <button class="btn-submit" onclick="openEditPopup(<?php echo htmlspecialchars(json_encode($vehicle)); ?>)">Modifier</button>
+                            <button class="btn-submit" onclick="openEditPopup(<?php echo htmlspecialchars(json_encode($vehicle), ENT_QUOTES, 'UTF-8'); ?>)">Modifier</button>
                             <form method="POST" action="vente.php" style="display:inline;" onsubmit="return confirmDelete();">
                                 <input type="hidden" name="id" value="<?php echo $vehicle['id']; ?>">
                                 <button type="submit" name="delete_vehicle" class="btn-submit" style="background-color: #af2e34;">Supprimer</button>
@@ -597,14 +609,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['marque'])) {
         function confirmDelete() {
             return confirm("Êtes-vous sûr de vouloir supprimer cette annonce ?");
         }
+
+        // Protection contre les attaques XSS dans les liens de déconnexion
+        document.querySelectorAll('.logout-link').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                if (confirm('Êtes-vous sûr de vouloir vous déconnecter ?')) {
+                    window.location.href = '/MondialAutomobile/Backend/logout_handler.php';
+                }
+            });
+        });
     </script>
 
-<head>
-    <!-- ...existing code... -->
-    <script src="/MondialAutomobile/Frontend/js/transition.js" defer></script>
-</head>
-
-    
 </body>
 
 </html>
