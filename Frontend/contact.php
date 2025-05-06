@@ -2,8 +2,17 @@
 // Inclusion de la configuration de la base de données
 include '../Backend/config/db_connection.php';
 session_start();
+
 if (empty($_SESSION['csrf_token'])) {
     $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
+
+// Limitation des tentatives de soumission du formulaire
+if (!isset($_SESSION['contact_attempts'])) {
+    $_SESSION['contact_attempts'] = 0;
+}
+if ($_SESSION['contact_attempts'] >= 5) {
+    die("Trop de tentatives de soumission. Veuillez réessayer plus tard.");
 }
 ?>
 <!DOCTYPE html>
@@ -31,7 +40,7 @@ if (empty($_SESSION['csrf_token'])) {
         <div class="container">
             <div class="navbar">
                 <div class="logo">
-                <img src="assets/images/logomondial.png" width="100px" alt="Logo Mondial Automobile">
+                    <img src="assets/images/logomondial.png" width="100px" alt="Logo Mondial Automobile">
                 </div>
                 <nav>
                     <ul id="MenuItems">
@@ -80,7 +89,7 @@ if (empty($_SESSION['csrf_token'])) {
                     <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
                     <div class="input-group">
                         <label for="name">Nom</label>
-                        <input type="text" id="name" name="name" placeholder="Entrez votre nom" required>
+                        <input type="text" id="name" name="name" placeholder="Entrez votre nom" required pattern="[A-Za-zÀ-ÖØ-öø-ÿ\s]+" title="Le nom ne doit contenir que des lettres et des espaces.">
                     </div>
                     <div class="input-group">
                         <label for="email">Email</label>
@@ -88,7 +97,7 @@ if (empty($_SESSION['csrf_token'])) {
                     </div>
                     <div class="input-group">
                         <label for="phone">Téléphone</label>
-                        <input type="tel" id="phone" name="phone" placeholder="Entrez votre numéro de téléphone" required>
+                        <input type="tel" id="phone" name="phone" placeholder="Entrez votre numéro de téléphone" required pattern="\d{10}" title="Le numéro de téléphone doit contenir exactement 10 chiffres.">
                     </div>
                     <div class="input-group">
                         <label for="subject">Sujet</label>
@@ -106,7 +115,7 @@ if (empty($_SESSION['csrf_token'])) {
             <section class="map-section">
                 <h2>Notre Localisation</h2>
                 <iframe 
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5778.240789970537!2d1.096434976852411!3d43.60403477110445!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x12a94fb0f8c72919%3A0x490eb5021989d57c!2sMondial%20Automobile!5e0!3m2!1sen!2sfr!4v1744624285765!5m2!1sen!2sfr" 
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2886.517434123456!2d1.096434976852411!3d43.60403477110445!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x12a94fb0f8c72919%3A0x490eb5021989d57c!2sMondial%20Automobile!5e0!3m2!1sfr!2sfr!4v1744624285765!5m2!1sfr!2sfr" 
                     width="100%" 
                     height="450" 
                     style="border:0;" 
@@ -136,12 +145,6 @@ if (empty($_SESSION['csrf_token'])) {
     <button id="openChatbot" class="chatbot-toggle">💬</button>
 
     <script src="/MondialAutomobile/Frontend/js/chatbot.js" defer></script>
-
-    <head>
-    <!-- ...existing code... -->
-    <script src="/MondialAutomobile/Frontend/js/transition.js" defer></script>
-</head>
-
 
 </body>
 
