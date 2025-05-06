@@ -92,16 +92,50 @@ CREATE TABLE IF NOT EXISTS panier (
     FOREIGN KEY (voiture_id) REFERENCES voitures(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
+-- Table : faq
+CREATE TABLE IF NOT EXISTS faq (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    question VARCHAR(255) NOT NULL,
+    reponse TEXT NOT NULL
+);
+
 ALTER TABLE voitures ADD COLUMN en_preparation TINYINT(1) DEFAULT 0;
 ALTER TABLE voitures ADD COLUMN image_originale TEXT NULL;
 ALTER TABLE voitures ADD COLUMN pertinence TINYINT(1) DEFAULT 0;
 
--- Table : faq
-CREATE TABLE IF NOT EXISTS faq (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    question TEXT NOT NULL,
-    reponse TEXT NOT NULL
-);
+
+-- Insertion des questions/réponses
+INSERT INTO faq (question, reponse) VALUES
+('Quels sont vos horaires d\'ouverture ?', 'Nous sommes ouverts du lundi au vendredi de 9h à 18h et le samedi de 10h à 16h.'),
+('Proposez-vous des financements ?', 'Oui, nous proposons des solutions de financement adaptées à vos besoins. Contactez-nous pour plus d\'informations.'),
+('Puis-je vendre ma voiture chez vous ?', 'Oui, nous reprenons les véhicules d\'occasion. Veuillez remplir le formulaire de reprise sur notre site.'),
+('Quels documents sont nécessaires pour une reprise ?', 'Pour une reprise, vous aurez besoin de la carte grise, d\'une pièce d\'identité et du certificat de non-gage.'),
+('Faites-vous des réparations mécaniques ?', 'Oui, nous proposons des services de réparation et d\'entretien pour votre véhicule. Contactez notre service après-vente pour un rendez-vous.'),
+('Comment puis-je prendre rendez-vous ?', 'Vous pouvez prendre rendez-vous en nous appelant directement ou en remplissant le formulaire de contact sur notre site.'),
+('Quels types de véhicules proposez-vous ?', 'Nous proposons une large gamme de véhicules d\'occasion, allant des citadines aux SUV, en passant par les berlines.'),
+('Offrez-vous une garantie sur les véhicules ?', 'Oui, tous nos véhicules sont vendus avec une garantie minimale de 6 mois. Des extensions de garantie sont également disponibles.'),
+('Puis-je tester un véhicule avant de l\'acheter ?', 'Bien sûr ! Nous vous invitons à prendre rendez-vous pour un essai gratuit du véhicule de votre choix.'),
+('Où êtes-vous situés ?', 'Nous sommes situés à L\'Isle-Jourdain. Consultez notre page de contact pour l\'adresse exacte et un plan d\'accès.'),
+('Quels sont les modes de paiement acceptés ?', 'Nous acceptons les paiements par carte bancaire, virement bancaire et espèces.'),
+('Proposez-vous des véhicules électriques ?', 'Oui, nous avons une sélection de véhicules électriques et hybrides. Consultez notre section "Ventes" pour plus de détails.'),
+('Comment fonctionne la reprise de véhicule ?', 'Pour une reprise, remplissez le formulaire en ligne ou rendez-vous en agence avec les documents nécessaires. Nous vous fournirons une estimation rapide.'),
+('Quels sont les frais pour une carte grise ?', 'Les frais de carte grise dépendent de votre région et du type de véhicule. Contactez-nous pour une estimation précise.'),
+('Avez-vous des promotions en cours ?', 'Oui, nous proposons régulièrement des promotions. Consultez notre site ou contactez-nous pour plus d\'informations.'),
+('Puis-je réserver un véhicule en ligne ?', 'Oui, vous pouvez réserver un véhicule en ligne en nous contactant via le formulaire ou par téléphone.'),
+('Quels sont les délais pour une livraison de véhicule ?', 'Les délais de livraison varient en fonction du véhicule et de votre localisation. En général, cela prend entre 3 et 7 jours ouvrables.'),
+('Proposez-vous des assurances pour les véhicules ?', 'Oui, nous pouvons vous mettre en relation avec nos partenaires pour des solutions d\'assurance adaptées.'),
+('Comment puis-je annuler une réservation ?', 'Pour annuler une réservation, contactez-nous directement par téléphone ou via notre formulaire de contact.'),
+('Quels services proposez-vous pour l\'entretien des véhicules ?', 'Nous proposons des services de révision, changement de pneus, diagnostic électronique, et bien plus encore.'),
+('Quels sont les prix moyens des véhicules ?', 'Le prix moyen de nos véhicules est d\'environ 6000 euros. Consultez notre section "Ventes" pour voir les options disponibles.'),
+('Vendez-vous des voitures ?', 'Oui, nous vendons des voitures d\'occasion soigneusement sélectionnées et testées.'),
+('Quels sont les prix des véhicules les moins chers ?', 'Nos véhicules les moins chers commencent à partir de 3000 euros. Consultez notre section "Ventes" pour plus de détails.'),
+('Quels sont les prix des véhicules les plus chers ?', 'Nos véhicules haut de gamme peuvent atteindre jusqu\'à 20 000 euros. Consultez notre section "Ventes" pour voir les options disponibles.'),
+('Quels sont les critères pour fixer le prix d\'un véhicule ?', 'Le prix d\'un véhicule dépend de plusieurs facteurs, notamment son kilométrage, son état général, son année de fabrication et ses options.'),
+('Puis-je négocier le prix d\'un véhicule ?', 'Oui, nous sommes ouverts à la négociation dans la limite du raisonnable. Contactez-nous pour discuter des options.'),
+('Quels sont les frais supplémentaires lors de l\'achat d\'un véhicule ?', 'Les frais supplémentaires peuvent inclure les frais de carte grise, les frais d\'assurance et les frais de livraison, le cas échéant.'),
+('Proposez-vous des réductions pour les achats en espèces ?', 'Oui, nous offrons parfois des réductions pour les paiements en espèces. Contactez-nous pour plus d\'informations.'),
+('Quels sont les avantages d\'acheter chez vous ?', 'Nous offrons des véhicules de qualité, des garanties, des solutions de financement et un service client exceptionnel.'),
+('Puis-je obtenir une estimation gratuite pour ma voiture ?', 'Oui, nous offrons des estimations gratuites pour les reprises. Remplissez le formulaire en ligne ou visitez notre agence.');
 
 INSERT INTO faq (question, reponse) VALUES
 -- QUESTIONS EXISTANTES CORRIGÉES

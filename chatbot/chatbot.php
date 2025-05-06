@@ -13,9 +13,16 @@ function normalize_text($text) {
     return $text;
 }
 
+// Function to calculate similarity score
+function calculate_similarity($input, $stored) {
+    similar_text($input, $stored, $percent);
+    return $percent;
+}
+
 if (isset($_GET['question'])) {
     $user_question = normalize_text($_GET['question']); // Normalize user input
 
+    // Fetch all questions and answers from the database
     $stmt = $conn->query("SELECT question, reponse FROM faq");
     $faqs = $stmt->fetch_all(MYSQLI_ASSOC);
 
@@ -24,17 +31,23 @@ if (isset($_GET['question'])) {
 
     foreach ($faqs as $faq) {
         $stored_question = normalize_text($faq['question']); // Normalize stored question
-        similar_text($user_question, $stored_question, $percent);
-        if ($percent > $best_score) {
-            $best_score = $percent;
+        $score = calculate_similarity($user_question, $stored_question);
+
+        // Update the best match if the score is higher
+        if ($score > $best_score) {
+            $best_score = $score;
             $best_match = $faq;
         }
     }
 
-    if ($best_score > 50) { // Set a similarity threshold of 50%
+    // Set a higher similarity threshold for better accuracy
+    if ($best_score >= 70) { // 70% similarity threshold
         echo $best_match['reponse'];
+    } elseif ($best_score >= 50) { // 50% similarity threshold
+        echo "Je pense que vous voulez dire : \"" . $best_match['question'] . "\". Voici la réponse : " . $best_match['reponse'];
     } else {
-        echo "Désolé, je n'ai pas compris la question. Pouvez-vous reformuler ?";
+        // Suggest reformulating the question if no good match is found
+        echo "Désolé, je n'ai pas compris votre question. Pouvez-vous reformuler ou poser une autre question ?";
     }
 }
 ?>
