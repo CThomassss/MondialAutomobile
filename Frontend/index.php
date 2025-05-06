@@ -3,6 +3,10 @@
 include '../Backend/config/db_connection.php';
 session_start();
 
+// Protection contre les attaques XSS pour les données de session
+if (isset($_SESSION['username'])) {
+    $_SESSION['username'] = htmlspecialchars($_SESSION['username'], ENT_QUOTES, 'UTF-8');
+}
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -242,7 +246,6 @@ session_start();
     <script src="/MondialAutomobile/Frontend/js/chatbot.js" defer></script>
 
     <head>
-    <!-- ...existing code... -->
     <script src="/MondialAutomobile/Frontend/js/transition.js" defer></script>
 </head>
 
