@@ -4,7 +4,7 @@
 
 /* Style pour l'en-tête principale avec une image de fond */
 .header {
-    background: url('/MondialAutomobile/Frontend/assets/images/Voiturerouge.png') no-repeat center center;
+    background: url('/MondialAutomobile/Frontend/assets/images/ChatGPT Image 9 avr. 2025, 07_31_32.png') no-repeat center center;
     background-size: cover;
     height: 100vh;
     position: relative;
@@ -15,7 +15,7 @@
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    padding-top: 7vh;
+    padding-top: 6vh;
     padding-left: 10vw;
     padding-right: 5vw;
     width: 100%;
@@ -27,7 +27,7 @@
 .col-2 h1 {
     font-size: calc(1rem + 2vw);
     /* La taille du texte s'ajuste dynamiquement à la largeur de l'écran */
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
     color: #333;
     text-align: center;
 }
@@ -37,7 +37,7 @@
     display: inline-block;
     background-color: #352e2e;
     color: white;
-    padding: 0.8rem 1.5rem;
+    padding: 0.8rem 1rem;
     border-radius: 30px;
     font-size: 1rem;
     text-decoration: none;

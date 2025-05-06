@@ -106,6 +106,8 @@ nav ul li {
     font-weight: 500;
     border-radius: 30px;
     transition: all 0.3s ease;
+    font-size: 0.97rem;
+    /* Reduce font size */
 }
 
 /* Survol des autres liens */
