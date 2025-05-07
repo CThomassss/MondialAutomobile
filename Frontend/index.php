@@ -107,7 +107,7 @@ session_start();
                     </ul>
                 </nav>
                 <!-- Icône du panier -->
-                <a href="cart.php"><img src="assets/images/cart.png" width="30px" height="30px" alt="Panier"></a>
+                <a href="/MondialAutomobile/Frontend/vente.php"><img src="assets/images/cart.png" width="30px" height="30px" alt="Panier"></a>
             </div>
 
             <!-- Bannière d’accueil -->

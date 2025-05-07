@@ -21,32 +21,17 @@ document.addEventListener("DOMContentLoaded", () => {
     // Handle form submission
     chatbotForm.addEventListener("submit", async (e) => {
         e.preventDefault();
-        const userMessage = chatbotInput.value.trim();
-        if (!userMessage) return;
+        const input = document.getElementById('chatbotInput');
+        const question = input.value.trim();
+        if (!question) return;
 
-        // Display user message
-        const userMessageElement = document.createElement("div");
-        userMessageElement.classList.add("message", "user");
-        userMessageElement.textContent = userMessage;
-        chatbotMessages.appendChild(userMessageElement);
+        const responseDiv = document.getElementById('chatbotMessages');
+        responseDiv.innerHTML += `<div class="message user">${question}</div>`;
 
-        // Scroll to the bottom
-        chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+        const response = await fetch(`/MondialAutomobile/api.php?endpoint=chatbot&question=${encodeURIComponent(question)}`);
+        const data = await response.json();
 
-        // Send message to chatbot
-        const response = await fetch(`/MondialAutomobile/chatbot/chatbot.php?question=${encodeURIComponent(userMessage)}`);
-        const botMessage = await response.text();
-
-        // Display bot response
-        const botMessageElement = document.createElement("div");
-        botMessageElement.classList.add("message", "bot");
-        botMessageElement.textContent = botMessage;
-        chatbotMessages.appendChild(botMessageElement);
-
-        // Scroll to the bottom
-        chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
-
-        // Clear input
-        chatbotInput.value = "";
+        responseDiv.innerHTML += `<div class="message bot">${data.response}</div>`;
+        input.value = '';
     });
 });
