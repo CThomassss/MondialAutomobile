@@ -2,7 +2,7 @@
 // ----------------------
 // INCLUSION DES FICHIERS
 // ----------------------
-include '../Backend/config/db_connection.php';
+include './Backend/config/db_connection.php';
 session_start();
 
 ?>
@@ -26,9 +26,9 @@ session_start();
     // LIENS CSS
     // ----------------------
     ?>
-    <link rel="stylesheet" href="/MondialAutomobile/Frontend/css/style_index.css">
-    <link rel="stylesheet" href="/MondialAutomobile/Frontend/css/style.css">
-    <link rel="stylesheet" href="/MondialAutomobile/Frontend/css/style_alert.css">
+    <link rel="stylesheet" href="/MondialAutomobile/Frontend/css/style_index.css?v=1.0">
+    <link rel="stylesheet" href="/MondialAutomobile/Frontend/css/style.css?v=1.0">
+    <link rel="stylesheet" href="/MondialAutomobile/Frontend/css/style_alert.css?v=1.0">
 
     <?php
     // ----------------------
@@ -80,7 +80,7 @@ session_start();
             <div class="navbar">
                 <!-- Logo -->
                 <div class="logo">
-                    <img src="assets/images/logomondial.png" width="100px" alt="Logo Mondial Automobile">
+                    <img src="/MondialAutomobile/Frontend/assets/images/logomondial.png" width="100px" alt="Logo Mondial Automobile">
                 </div>
                 <!-- Menu de navigation -->
                 <nav>
@@ -107,7 +107,7 @@ session_start();
                     </ul>
                 </nav>
                 <!-- Icône du panier -->
-                <a href="/MondialAutomobile/Frontend/vente.php"><img src="assets/images/cart.png" width="30px" height="30px" alt="Panier"></a>
+                <a href="/MondialAutomobile/Frontend/vente.php"><img src="/MondialAutomobile/Frontend/assets/images/cart.png" width="30px" height="30px" alt="Panier"></a>
             </div>
 
             <!-- Bannière d’accueil -->
@@ -144,7 +144,7 @@ session_start();
             <div class="container">
                 <div class="history-content">
                     <div class="history-image">
-                        <img src="assets/images/ImageAbout.jpg" alt="Histoire de Mondial Automobile">
+                        <img src="/MondialAutomobile/Frontend/assets/images/ImageAbout.jpg" alt="Histoire de Mondial Automobile">
                     </div>
                     <div class="history-text">
                         <h2>L'Histoire de <br> Mondial Automobile</h2>
@@ -230,7 +230,7 @@ session_start();
         // Effet d'apparition pour une photo de personnage
         const aboutContainer = document.querySelector('.about-section .container');
         const personImage = document.createElement('img'); // Création de l'image du personnage
-        personImage.src = 'assets/images/imagepersonne.webp'; // Chemin de l'image du personnage
+        personImage.src = '/MondialAutomobile/Frontend/assets/images/imagepersonne.webp'; // Chemin de l'image du personnage
         personImage.alt = 'Photo de personnage';
         personImage.style.width = '170px'; // Taille initiale de l'image
         personImage.style.position = 'absolute';

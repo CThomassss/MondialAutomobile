@@ -52,7 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $_SESSION['user_id'] = $user['id'];
                 $_SESSION['username'] = $user['username'];
                 $_SESSION['role'] = $user['role'];
-                header("Location: /MondialAutomobile/Frontend/index.php");
+                header("Location: /MondialAutomobile/index.php");
                 exit();
             } else {
                 $error = "Mot de passe incorrect.";
@@ -102,7 +102,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </div>
                 <nav>
                     <ul id="MenuItems">
-                        <li><a href="/MondialAutomobile/Frontend/index.php">Accueil</a></li>
+                        <li><a href="/MondialAutomobile/index.php">Accueil</a></li>
                         <li><a href="/MondialAutomobile/Frontend/vente.php">Ventes</a></li>
                         <li><a href="/MondialAutomobile/Frontend/reprise.php">Reprise</a></li>
                         <li>
