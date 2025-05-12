@@ -532,6 +532,90 @@
 
 @media (max-width: 768px) {
     .filtre-section {
+        flex-direction: column;
+        /* Empile les éléments verticalement */
+        gap: 15px;
+        padding: 15px;
+        /* Ajuste le padding */
+        margin: 10px auto;
+        /* Centre la section avec une marge */
+        width: 100%;
+        /* Prend toute la largeur disponible */
+        box-sizing: border-box;
+        overflow-x: hidden;
+        /* Empêche le débordement horizontal */
+    }
+
+    .filter-row {
+        flex-wrap: wrap;
+        /* Permet aux éléments de passer à la ligne suivante */
+        flex-direction: column;
+        /* Empile les éléments verticalement */
+        gap: 15px;
+        /* Ajoute un espacement entre les éléments */
+        width: 100%;
+        /* Adapte la largeur à l'écran */
+        box-sizing: border-box;
+        /* Assure que les marges et le padding sont inclus dans la largeur */
+    }
+
+    .filter-row .price-range {
+        flex-direction: column;
+        /* Empile les champs de prix verticalement */
+        gap: 10px;
+        /* Ajoute un espacement entre les champs */
+        align-items: stretch;
+        /* Étire les champs pour occuper toute la largeur */
+    }
+
+    .filter-row select,
+    .filter-row input {
+        width: 100%;
+        /* Les champs prennent toute la largeur */
+        box-sizing: border-box;
+    }
+
+    .filter-row {
+        flex-direction: column;
+        /* Empile les éléments verticalement */
+        gap: 10px;
+        /* Réduit l'espacement entre les éléments */
+        width: 100%;
+        /* Adapte la largeur à l'écran */
+    }
+
+    .filter-row .price-range {
+        flex-direction: column;
+        /* Empile les champs de prix verticalement */
+        gap: 10px;
+        align-items: stretch;
+        /* Étire les champs pour occuper toute la largeur */
+    }
+
+    .filtre-section select,
+    .filtre-section input,
+    .filtre-section button {
+        width: 100%;
+        /* Les champs prennent toute la largeur */
+        box-sizing: border-box;
+    }
+
+    .button-row {
+        flex-direction: column;
+        /* Empile les boutons verticalement */
+        gap: 10px;
+        /* Réduit l'espacement entre les boutons */
+        width: 100%;
+        /* Adapte la largeur à l'écran */
+    }
+
+    .btn-action,
+    .btn-reset {
+        width: 100%;
+        /* Les boutons prennent toute la largeur */
+    }
+
+    .filtre-section {
         flex-direction: row;
         /* Stack elements horizontally */
         gap: 15px;
@@ -594,6 +678,28 @@
 }
 
 @media (max-width: 480px) {
+    .filtre-section {
+        padding: 10px;
+        /* Réduit davantage le padding */
+        gap: 10px;
+        /* Réduit l'espacement entre les éléments */
+    }
+
+    .filter-row {
+        gap: 10px;
+        /* Réduit l'espacement entre les éléments */
+    }
+
+    .filter-row .price-range input {
+        width: 100%;
+        /* Les champs de prix prennent toute la largeur */
+    }
+
+    .button-row {
+        gap: 8px;
+        /* Réduit l'espacement entre les boutons */
+    }
+
     .filtre-section {
         padding: 10px 5px;
         /* Further reduce padding */
