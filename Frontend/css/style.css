@@ -249,3 +249,133 @@ nav ul li {
         /* Hide the cart.png image */
     }
 }
+
+/* ---------------------- */
+/* RESPONSIVE HEADER */
+/* ---------------------- */
+
+/* Pour les écrans moyens (tablettes et petits ordinateurs) */
+@media (max-width: 1024px) {
+    .navbar {
+        flex-direction: column;
+        align-items: center;
+        padding: 10px;
+        /* Réduit le padding */
+    }
+
+    .logo {
+        margin: 0 auto;
+        /* Centre le logo horizontalement */
+        text-align: center;
+    }
+
+    .logo img {
+        width: 120px;
+        /* Réduit la taille du logo */
+    }
+
+    nav ul {
+        text-align: center;
+        padding: 0;
+    }
+
+    nav ul li {
+        margin: 10px 0;
+        /* Ajoute un espacement entre les éléments du menu */
+    }
+
+    #MenuItems li a {
+        font-size: 0.9rem;
+        /* Réduit la taille de la police */
+        padding: 10px 15px;
+        /* Ajuste le padding */
+    }
+}
+
+/* Pour les écrans petits (téléphones en mode paysage) */
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        align-items: center;
+        padding: 5px;
+    }
+
+    .logo img {
+        width: 100px;
+        /* Réduit davantage la taille du logo */
+    }
+
+    nav ul li {
+        margin: 8px 0;
+        /* Réduit l'espacement entre les éléments du menu */
+    }
+
+    #MenuItems li a {
+        font-size: 0.8rem;
+        /* Réduit encore la taille de la police */
+        padding: 8px 12px;
+        /* Ajuste le padding */
+    }
+}
+
+/* Pour les écrans très petits (téléphones en mode portrait) */
+@media (max-width: 480px) {
+    .navbar {
+        flex-direction: column;
+        align-items: center;
+        padding: 5px;
+    }
+
+    .logo img {
+        width: 80px;
+        /* Réduit encore la taille du logo */
+    }
+
+    nav ul {
+        text-align: center;
+        padding: 0;
+    }
+
+    nav ul li {
+        margin: 5px 0;
+        /* Réduit davantage l'espacement entre les éléments du menu */
+    }
+
+    #MenuItems li a {
+        font-size: 0.7rem;
+        /* Réduit encore la taille de la police */
+        padding: 6px 10px;
+        /* Ajuste le padding */
+    }
+
+    img[src*="cart.png"] {
+        display: none;
+        /* Cache l'icône du panier pour les très petits écrans */
+    }
+}
+
+/* Pour les écrans ultra-petits (moins de 360px) */
+@media (max-width: 360px) {
+    .navbar {
+        flex-direction: column;
+        align-items: center;
+        padding: 5px;
+    }
+
+    .logo img {
+        width: 60px;
+        /* Réduit encore davantage la taille du logo */
+    }
+
+    nav ul li {
+        margin: 3px 0;
+        /* Réduit encore l'espacement entre les éléments du menu */
+    }
+
+    #MenuItems li a {
+        font-size: 0.6rem;
+        /* Réduit au minimum la taille de la police */
+        padding: 5px 8px;
+        /* Ajuste le padding */
+    }
+}
