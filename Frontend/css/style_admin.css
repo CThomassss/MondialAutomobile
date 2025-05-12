@@ -198,6 +198,18 @@
     margin-top: 20px;
     overflow: hidden;
     border-radius: 10px;
+    max-height: 400px;
+    /* Limit the height of the table */
+    overflow-y: auto;
+    /* Enable vertical scrolling */
+    overflow-x: auto;
+    /* Enable horizontal scrolling */
+    -webkit-overflow-scrolling: touch;
+    /* Smooth scrolling for touch devices */
+    scrollbar-width: thin;
+    /* For Firefox: thin scrollbar */
+    scrollbar-color: #af2e34 #f4f4f4;
+    /* For Firefox: scrollbar colors */
 }
 
 .admin-table th,
@@ -248,11 +260,40 @@
     display: table-cell;
 }
 
+.admin-table::-webkit-scrollbar {
+    width: 8px;
+    /* Width of the scrollbar */
+}
+
+.admin-table::-webkit-scrollbar-thumb {
+    background-color: #af2e34;
+    /* Scrollbar color */
+    border-radius: 4px;
+    /* Rounded corners */
+}
+
+.admin-table::-webkit-scrollbar-track {
+    background-color: #f4f4f4;
+    /* Scrollbar track color */
+}
+
 /* Adjustments for responsive design */
 @media (max-width: 768px) {
     .admin-table td {
         max-width: 150px;
         /* Reduce max width for smaller screens */
+    }
+
+    .admin-table {
+        max-height: 300px;
+        /* Reduce max height for smaller screens */
+    }
+}
+
+@media (max-width: 480px) {
+    .admin-table {
+        max-height: 250px;
+        /* Further reduce max height for very small screens */
     }
 }
 
@@ -291,4 +332,157 @@
 .btn-delete:hover {
     background-color: #e53935;
     transform: scale(1.05);
+}
+
+
+/* Ajustements pour le design réactif */
+@media (max-width: 768px) {
+    .admin-table-wrapper {
+        padding: 0 10px;
+        /* Ajouter un espacement pour éviter que le contenu touche les bords de l'écran */
+    }
+
+    .admin-table td {
+        max-width: 150px;
+        /* Réduire la largeur maximale pour les écrans plus petits */
+    }
+
+    .admin-table th,
+    .admin-table td {
+        font-size: 0.8rem;
+        padding: 8px;
+        /* Réduire l'espacement pour les écrans plus petits */
+    }
+}
+
+/* Pour les téléphones (max-width: 768px) */
+@media (max-width: 768px) {
+    .admin-container {
+        padding: 15px;
+    }
+
+    .admin-section,
+    .admin-section2 {
+        padding: 15px;
+        overflow-x: auto;
+        /* Activer le défilement horizontal */
+    }
+
+    .admin-section h2,
+    .admin-section2 h2 {
+        font-size: 1.3rem;
+    }
+
+    .admin-section2 form {
+        padding: 10px;
+    }
+
+    .admin-section2 form h2 {
+        font-size: 1.3rem;
+    }
+
+    .admin-table-wrapper {
+        overflow-x: auto;
+        /* Activer le défilement horizontal */
+    }
+
+    .admin-table th,
+    .admin-table td {
+        font-size: 0.8rem;
+        padding: 8px;
+    }
+}
+
+/* Pour les petits téléphones (max-width: 480px) */
+@media (max-width: 480px) {
+    .admin-container {
+        padding: 10px;
+    }
+
+    .admin-section,
+    .admin-section2 {
+        padding: 10px;
+    }
+
+    .admin-section h2,
+    .admin-section2 h2 {
+        font-size: 1.2rem;
+    }
+
+    .admin-section2 form {
+        padding: 8px;
+    }
+
+    .admin-section2 form h2 {
+        font-size: 1.2rem;
+    }
+
+    .admin-table-wrapper {
+        padding: 0 5px;
+        /* Réduire davantage l'espacement pour les très petits écrans */
+        overflow-x: auto;
+    }
+
+    .admin-table th,
+    .admin-table td {
+        font-size: 0.7rem;
+        padding: 6px;
+        /* Réduire davantage l'espacement pour les très petits écrans */
+    }
+
+    .btn-edit,
+    .btn-delete {
+        font-size: 0.7rem;
+        padding: 5px 8px;
+    }
+}
+
+/* ---------------------- */
+/* SECTIONS DÉFILABLES */
+/* ---------------------- */
+
+/* Section défilable pour "Mon Compte" et "Gestion des Membres" */
+.admin-section-scrollable {
+    max-height: 400px;
+    /* Limiter la hauteur de la section */
+    overflow-y: auto;
+    /* Activer le défilement vertical */
+    padding-right: 10px;
+    /* Ajouter un espacement pour un meilleur espacement */
+    scrollbar-width: thin;
+    /* Pour Firefox : barre de défilement fine */
+    scrollbar-color: #af2e34 #f4f4f4;
+    /* Pour Firefox : couleurs de la barre de défilement */
+}
+
+.admin-section-scrollable::-webkit-scrollbar {
+    width: 8px;
+    /* Largeur de la barre de défilement */
+}
+
+.admin-section-scrollable::-webkit-scrollbar-thumb {
+    background-color: #af2e34;
+    /* Couleur de la barre de défilement */
+    border-radius: 4px;
+    /* Coins arrondis */
+}
+
+.admin-section-scrollable::-webkit-scrollbar-track {
+    background-color: #f4f4f4;
+    /* Couleur de la piste de la barre de défilement */
+}
+
+/* Ajustements pour les écrans plus petits */
+@media (max-width: 768px) {
+    .admin-section-scrollable {
+        max-height: 300px;
+        /* Réduire la hauteur maximale pour les écrans plus petits */
+    }
+}
+
+@media (max-width: 480px) {
+    .admin-section-scrollable {
+        max-height: 250px;
+        /* Réduire davantage la hauteur maximale pour les très petits écrans */
+    }
 }

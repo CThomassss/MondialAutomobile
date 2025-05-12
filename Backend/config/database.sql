@@ -107,6 +107,7 @@ ALTER TABLE voitures ADD COLUMN pertinence TINYINT(1) DEFAULT 0;
 -- Insertion des questions/réponses
 INSERT INTO faq (question, reponse) VALUES
 ('Quels sont vos horaires d\'ouverture ?', 'Nous sommes ouverts du lundi au vendredi de 9h à 18h et le samedi de 10h à 16h.'),
+('ou etes vous ?', 'Nous sommes situés au 31 Rue Motta Di Livenza, 32600 L\'Isle-Jourdain.'),
 ('Proposez-vous des financements ?', 'Oui, nous proposons des solutions de financement adaptées à vos besoins. Contactez-nous pour plus d\'informations.'),
 ('Puis-je vendre ma voiture chez vous ?', 'Oui, nous reprenons les véhicules d\'occasion. Veuillez remplir le formulaire de reprise sur notre site.'),
 ('Quels documents sont nécessaires pour une reprise ?', 'Pour une reprise, vous aurez besoin de la carte grise, d\'une pièce d\'identité et du certificat de non-gage.'),
